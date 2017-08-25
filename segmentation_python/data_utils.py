@@ -17,6 +17,9 @@ import time
 #                {"id": 7,  "name": "upper_right_leg","rgb_values": [100,100,0]},
 #                {"id": 8,  "name": "lower_left_leg", "rgb_values": [0,255,255]},
 #                {"id": 9,  "name": "lower_right_leg","rgb_values": [0,100,100]}]
+
+
+
 labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
                {"id": 1,  "name": "torso",          "rgb_values": [0,255,0]},
                {"id": 2,  "name": "head",           "rgb_values": [0,0,255]},
@@ -38,6 +41,7 @@ def _int64_feature(value):
 def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
+_PROJECT_PATH = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/'
 _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
 
 class DataSet:
@@ -61,7 +65,8 @@ class DataSet:
             # print('mask shape for label', label, ':  ', mask.shape)
             # print('number of pixels with label ', label, '= ', np.count_nonzero(mask))
             target_labels[mask] = label['id']
-        return np.array(target_labels, dtype=np.uint8)
+        #return np.array(target_labels, dtype=np.uint8)
+        return np.array(target_labels, dtype=np.int32)
 
     @staticmethod
     def label2rgb(labels):
@@ -95,7 +100,9 @@ class DataSet:
 
     def get_data_dim(self):
         # The depth and the label have the same dimension
-        first_label_file = os.path.join(self.dir_raw_data, _FIRST_LABEL_FILENAME)
+        #first_label_file = os.path.join(self.dir_raw_data, _FIRST_LABEL_FILENAME)
+        print(self.dir_raw_data)
+        first_label_file = _PROJECT_PATH + "/" + self.dir_raw_data + "/" + _FIRST_LABEL_FILENAME
         label = misc.imread(first_label_file, mode='RGB')
         return (label.shape[0], label.shape[1])
 
@@ -122,7 +129,7 @@ class DataSet:
                     if type=='test':
                         print(depthpath)
                 if (depthpath == ''):
-                    # print('error encountered!!! Could not find depth file')
+                    print('error encountered!!! Could not find depth file')
                     return -1
 
                 depth = misc.imread(depthpath, mode='F')
@@ -217,7 +224,8 @@ class DataSet:
             # height = tf.cast(features['height'], tf.int32)
             # width = tf.cast(features['width'], tf.int32)
             # channels = tf.cast(features['channels'], tf.int32)
-            label = tf.decode_raw(features['label'], tf.uint8)
+            #label = tf.decode_raw(features['label'], tf.uint8)
+            label = tf.decode_raw(features['label'], tf.int32)
             depth = tf.decode_raw(features['depth'], tf.float32)
 
             # label_shape = tf.stack([height, width])
@@ -321,7 +329,7 @@ if __name__ == '__main__':
 
     # test data utils
 
-    dataset = DataSet(num_poses=2, num_angles=8, max_pairs=4)
+    dataset = DataSet(num_poses=1, num_angles=360, max_pairs=100)
     #dataset.initialize_epoch()
 
     # dataset.get_permuted_batch_from_raw_data(3)
@@ -343,6 +351,10 @@ if __name__ == '__main__':
 
     #print('\nlabel: ', label, '\ntarget rgb: ', target_rgb)
 
+    '''
+    The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data
+    '''
+
     depths, labels = dataset.inputs(batch_size=1, num_epochs=1, type='test')
     coord = tf.train.Coordinator()
     init_op = tf.group(tf.global_variables_initializer(),
@@ -363,6 +375,7 @@ if __name__ == '__main__':
                 # will be returned in the tuple from the call.
                 #_, loss_value = sess.run([train_op, loss])
                 depths_val, labels_val = sess.run([tf.squeeze(depths), labels])
+                print('Depths size: ', sess.run(depths).shape, ' labels size: ', sess.run(labels).shape)
                 duration = time.time() - start_time
 
                 # Print an overview fairly often.
