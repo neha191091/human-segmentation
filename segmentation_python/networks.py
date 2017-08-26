@@ -101,8 +101,10 @@ class SegmentationNetwork:
 
 if __name__ == '__main__':
 
-    dataset = DataSet(num_poses=1, num_angles=360, max_pairs=100)
-    xbatch, ybatch = dataset.get_permuted_batch_from_raw_data(1)
+    # WARNING: Do not run this file directly ... use the following code for only testing the functionality #
+
+    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=100)
+    xbatch, ybatch = dataset.get_batch_from_raw_data(1)
     print('xbatxh shape: ', xbatch.shape)
     print('ybatch shape: ', ybatch.shape)
     x = tf.placeholder(tf.float32, xbatch.shape, name='placeholder_x')

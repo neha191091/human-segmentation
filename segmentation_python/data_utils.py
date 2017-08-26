@@ -84,19 +84,23 @@ class DataSet:
         print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
-    def __init__(self, num_poses, num_angles, dir_raw_data = 'raw_data', dir_tfrecords = 'data', convert_2_TfRecords = True, randomize_TfRecords = False,  max_pairs = 4, val_fraction = 0.1, test_fraction = 0.1):
+    def __init__(self, num_poses, num_angles, dir_raw_data = 'raw_data', dir_tfrecords = 'data', convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
         self.num_poses = num_poses
         self.num_angles = num_angles
         self.total_samples = self.num_poses*self.num_angles
-        self.next_index = 0
+
+        # For accessing raw data
+        self.next_index_for_raw_data = 0
+
         self.index_array = np.arange(self.total_samples)
         self.dir_raw_data = dir_raw_data
         self.dir_tfrecords = dir_tfrecords
         self.data_dim = self.get_data_dim()
+        self.max_records_in_tfrec_file = max_records_in_tfrec_file
         if not os.listdir(dir_tfrecords):
             if convert_2_TfRecords:
                 print('Converting Raw Data to TFRecods....')
-                self.convert_2_TfRecords(randomize= randomize_TfRecords,  max_pairs = max_pairs, val_fraction = val_fraction, test_fraction = test_fraction)
+                self.convert_2_TfRecords(randomize= randomize_TfRecords,  max_records_in_tfrec_file = max_records_in_tfrec_file, val_fraction = val_fraction, test_fraction = test_fraction)
 
     def get_data_dim(self):
         # The depth and the label have the same dimension
@@ -106,7 +110,7 @@ class DataSet:
         label = misc.imread(first_label_file, mode='RGB')
         return (label.shape[0], label.shape[1])
 
-    def convert_2_TfRecords(self, randomize = True, max_pairs = 4, val_fraction = 0.1, test_fraction = 0.1):
+    def convert_2_TfRecords(self, randomize = True, max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
 
         def conversion_sub_func(mask_i, mask_j, num_pairs , type='train'):
             count = -1
@@ -114,18 +118,19 @@ class DataSet:
 
                 count += 1
 
-                if (count % max_pairs == 0):
+                if (count % max_records_in_tfrec_file == 0):
                     tfRecordsFile = os.path.join(self.dir_tfrecords,
-                                                 'TfRecordFile_' + type + '_' + str(int(count / max_pairs)) + '.tfrecords')
+                                                 'TfRecordFile_' + type + '_' + str(int(count / max_records_in_tfrec_file)) + '.tfrecords')
                     print('Writing', tfRecordsFile)
                     writer = tf.python_io.TFRecordWriter(tfRecordsFile)
                 # depth
-                depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '*.png'
+                depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
                 depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
                 depthpath = ''
+                print('glob start: ', depthpartpath)
                 for file in glob.glob(depthpartpath):
                     depthpath = file
-
+                    print(depthpath)
                     if type=='test':
                         print(depthpath)
                 if (depthpath == ''):
@@ -135,15 +140,28 @@ class DataSet:
                 depth = misc.imread(depthpath, mode='F')
                 # depth = np.reshape(depth, (depth.shape[0], depth.shape[1], -1))
 
-                depth = depth.tostring()
+
 
                 # label
                 labelfilename = 'human_' + str(int(i)) + '_rgb_' + str(int(j)) + '.png'
                 labelpath = os.path.join(self.dir_raw_data, labelfilename)
+                print(depthpath, ' ', labelpath)
 
                 rgb_label = misc.imread(labelpath, mode='RGB')
                 label = self.rgb2label(rgb_label)
                 print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
+
+
+                if type == 'val' and count == 0:
+                    plt.subplot(1, 2, 1)
+                    plt.imshow(depth)
+                    plt.axis('off')
+                    plt.subplot(1, 2, 2)
+                    plt.imshow(label)
+                    plt.axis('off')
+                    plt.show()
+
+                depth = depth.tostring()
                 label = label.tostring()
 
                 example = tf.train.Example(features=tf.train.Features(feature={
@@ -151,7 +169,7 @@ class DataSet:
                     'depth': _bytes_feature(depth)}))
                 writer.write(example.SerializeToString())
 
-                if (count % max_pairs == max_pairs - 1 or count >= num_pairs - 1):
+                if (count % max_records_in_tfrec_file == max_records_in_tfrec_file - 1 or count >= num_pairs - 1):
                     writer.close()
 
         num_samples = self.total_samples
@@ -171,17 +189,17 @@ class DataSet:
         mask_val = index_array[num_train: num_train+num_vals]
         mask_test = index_array[num_train+num_vals:num_train+num_vals+num_test]
 
-        # Generate train tfrecords
-        mask_i = np.floor(mask_train / self.num_angles)
-        mask_j = mask_train - mask_i * self.num_angles
-        print('converting training....')
-        conversion_sub_func(mask_i, mask_j, num_train, type='train')
-
         # Generate val tfrecords
         mask_i = np.floor(mask_val / self.num_angles)
         mask_j = mask_val - mask_i * self.num_angles
         print('converting val....')
         conversion_sub_func(mask_i, mask_j, num_vals, type='val')
+
+        # Generate train tfrecords
+        mask_i = np.floor(mask_train / self.num_angles)
+        mask_j = mask_train - mask_i * self.num_angles
+        print('converting training....')
+        conversion_sub_func(mask_i, mask_j, num_train, type='train')
 
         # Generate test tfrecords
         mask_i = np.floor(mask_test / self.num_angles)
@@ -189,20 +207,20 @@ class DataSet:
         print('converting test....')
         conversion_sub_func(mask_i, mask_j, num_test, type='test')
 
-    def inputs(self, batch_size, num_epochs, type='train'):
+    def get_batch_from_tfrecords_via_queue(self, batch_size=1, num_epochs=1, type='train'):
 
         """Reads input data num_epochs times.
         Args:
-          train: Selects between the training (True) and validation (False) data.
           batch_size: Number of examples per returned batch.
           num_epochs: Number of times to read the input data, or 0/None to
              train forever.
+          type: 'train'/'val'/'test'
+
         Returns:
           A tuple (images, labels), where:
-          * images is a float tensor with shape [batch_size, mnist.IMAGE_PIXELS]
-            in the range [-0.5, 0.5].
-          * labels is an int32 tensor with shape [batch_size] with the true label,
-            a number in the range [0, mnist.NUM_CLASSES).
+          * depths is a float tensor with shape [batch_size, self.dim[0], self.dim[1], 1]
+          * labels is an int32 tensor with shape [batch_size, self.dim[0], self.dim[1]] with the true label,
+            a number in the range [0, 10].
           Note that an tf.train.QueueRunner is added to the graph, which
           must be run using e.g. tf.train.start_queue_runners().
         """
@@ -225,17 +243,17 @@ class DataSet:
             # width = tf.cast(features['width'], tf.int32)
             # channels = tf.cast(features['channels'], tf.int32)
             #label = tf.decode_raw(features['label'], tf.uint8)
-            label = tf.decode_raw(features['label'], tf.int32)
-            depth = tf.decode_raw(features['depth'], tf.float32)
+            tf_label = tf.decode_raw(features['label'], tf.int32)
+            tf_depth = tf.decode_raw(features['depth'], tf.float32)
 
             # label_shape = tf.stack([height, width])
             # depth_shape = tf.stack([height, width, channels])
             height = self.data_dim[0]
             width = self.data_dim[1]
-            label = tf.reshape(label, [height,width])
-            depth = tf.reshape(depth, [height,width,1])
+            tf_label = tf.reshape(tf_label, [height,width])
+            tf_depth = tf.reshape(tf_depth, [height,width,1])
 
-            return depth, label
+            return tf_depth, tf_label
 
         if not num_epochs: num_epochs = None
         filename_pattern = os.path.join(self.dir_tfrecords,
@@ -245,29 +263,32 @@ class DataSet:
         print('file names: ', filenames)
         with tf.name_scope('input'):
             filename_queue = tf.train.string_input_producer(
-                tf.constant(filenames), num_epochs=num_epochs)
+                filenames, num_epochs=num_epochs)
 
             # Even when reading in multiple threads, share the filename
             # queue.
-            depth, label = read_and_decode(filename_queue)
+            tf_depth, tf_label = read_and_decode(filename_queue)
 
             # Shuffle the examples and collect them into batch_size batches.
             # (Internally uses a RandomShuffleQueue.)
             # We run this in two threads to avoid being a bottleneck.
+            print('batch_size: ', batch_size)
             depths, labels = tf.train.shuffle_batch(
-                [depth, label], batch_size=batch_size, num_threads=1,
-                capacity=1000 + 3 * batch_size,
+                [tf_depth, tf_label], batch_size=batch_size, num_threads=2,
+                capacity=360,
                 # Ensures a minimum amount of shuffling of examples.
-                min_after_dequeue=1000)
+                min_after_dequeue=10,
+                allow_smaller_final_batch=True)
 
-            return depths, labels
+        return depths, labels
 
-    def initialize_epoch(self,permutate = True):
-        self.next_index = 0
+    def initialize_epoch_for_raw_data(self, permutate = True):
+        self.next_index_for_raw_data = 0
         if permutate:
             self.index_array = np.random.permutation(self.total_samples)
 
-    def get_permuted_batch_from_raw_data(self, batch_size, convert2tensor =  False):
+
+    def get_batch_from_raw_data(self, batch_size, convert2tensor =  False):
 
         # We return a dictionary of randomly selected depths and labels ...
         # in the form -> {depths: (N,H,W,C), labels: (N,H,W)}
@@ -275,7 +296,7 @@ class DataSet:
         if batch_size > self.total_samples:
             print('error encountered!!! Batch size should be lesser or equal to ', self.total_samples)
             return -1
-        mask_1d = self.index_array[self.next_index: self.next_index + batch_size]
+        mask_1d = self.index_array[self.next_index_for_raw_data: self.next_index_for_raw_data + batch_size]
         mask_i = np.floor(mask_1d/self.num_angles)
         mask_j = mask_1d - mask_i*self.num_angles
         depths = []
@@ -329,83 +350,136 @@ if __name__ == '__main__':
 
     # test data utils
 
-    dataset = DataSet(num_poses=1, num_angles=360, max_pairs=100)
-    #dataset.initialize_epoch()
-
-    # dataset.get_permuted_batch_from_raw_data(3)
-    # #general_image_test()
-    # test_label_path = "RawData/human_1_rgb_3.png"
-    # label = misc.imread(test_label_path, mode='RGB')
-    # target_label = dataset.rgb2label(label)
-    # print('rgb_label shape ', label.shape)
-    # print('label is :', target_label)
-    # target_rgb = dataset.label2rgb(target_label)
-    #
-    # plt.subplot(1, 2, 1)
-    # plt.imshow(target_rgb)
-    # plt.axis('off')
-    # plt.subplot(1, 2, 2)
-    # plt.imshow(label)
-    # plt.axis('off')
-    # plt.show()
-
-    #print('\nlabel: ', label, '\ntarget rgb: ', target_rgb)
+    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data
     '''
 
-    depths, labels = dataset.inputs(batch_size=1, num_epochs=1, type='test')
-    coord = tf.train.Coordinator()
-    init_op = tf.group(tf.global_variables_initializer(),
-                       tf.local_variables_initializer())
-    with tf.Session() as sess:
-        sess.run(init_op)
-        threads = tf.train.start_queue_runners(sess=sess, coord=coord)
-        step = 0
-        try:
-            while not coord.should_stop():
-                start_time = time.time()
+    # depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=1, num_epochs=1, type='test')
+    # coord = tf.train.Coordinator()
+    # init_op = tf.group(tf.global_variables_initializer(),
+    #                    tf.local_variables_initializer())
+    # with tf.Session() as sess:
+    #     sess.run(init_op)
+    #     threads = tf.train.start_queue_runners(sess=sess, coord=coord)
+    #     step = 0
+    #     try:
+    #         while not coord.should_stop():
+    #         #for iter in range(5):
+    #             start_time = time.time()
+    #
+    #             # Run one step of the model.  The return values are
+    #             # the activations from the `train_op` (which is
+    #             # discarded) and the `loss` op.  To inspect the values
+    #             # of your ops or variables, you may include them in
+    #             # the list passed to sess.run() and the value tensors
+    #             # will be returned in the tuple from the call.
+    #             #_, loss_value = sess.run([train_op, loss])
+    #             depths_val, labels_val = sess.run([tf.squeeze(depths[0]), labels])
+    #             print('Depths size: ', depths_val.shape, ' labels size: ', labels_val.shape)
+    #             duration = time.time() - start_time
+    #
+    #             # Print an overview fairly often.
+    #             # if step % 100 == 0:
+    #             #     print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value,
+    #             #                                                duration))
+    #
+    #             print('Step:', step, '; depths shape: ', depths_val.shape, '; label shape: ', labels_val.shape )
+    #
+    #
+    #             # rgb_label = DataSet.label2rgb(labels_val[0])
+    #             # plt.subplot(1, 2, 1)
+    #             # plt.imshow(depths_val)
+    #             # plt.axis('off')
+    #             # plt.subplot(1, 2, 2)
+    #             # plt.imshow(rgb_label)
+    #             # plt.axis('off')
+    #             # plt.show()
+    #
+    #             step += 1
+    #     except tf.errors.OutOfRangeError:
+    #         print('Done training for %d epochs, %d steps.' % (1, step))
+    #     finally:
+    #         # When done, ask the threads to stop.
+    #         coord.request_stop()
+    #
+    #
+    #     # Wait for threads to finish.
+    #     coord.join(threads)
 
-                # Run one step of the model.  The return values are
-                # the activations from the `train_op` (which is
-                # discarded) and the `loss` op.  To inspect the values
-                # of your ops or variables, you may include them in
-                # the list passed to sess.run() and the value tensors
-                # will be returned in the tuple from the call.
-                #_, loss_value = sess.run([train_op, loss])
-                depths_val, labels_val = sess.run([tf.squeeze(depths), labels])
-                print('Depths size: ', sess.run(depths).shape, ' labels size: ', sess.run(labels).shape)
-                duration = time.time() - start_time
+    '''The following code uses a record iterator to check if the .tfrecord files have been generated correctly'''
 
-                # Print an overview fairly often.
-                # if step % 100 == 0:
-                #     print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value,
-                #                                                duration))
-                print('Step:', step, '; depths shape: ', depths_val.shape, '; label shape: ', labels_val.shape )
+        # record_iterator = tf.python_io.tf_record_iterator(path='/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_0.tfrecords')
+        #
+        # count = 0
+        # depths_arr = []
+        # for string_record in record_iterator:
+        #     features = tf.parse_single_example(
+        #         string_record,
+        #         # Defaults are not specified since both keys are required.
+        #         features={
+        #             # 'height': tf.FixedLenFeature([], tf.int64),
+        #             # 'width': tf.FixedLenFeature([], tf.int64),
+        #             # 'channels': tf.FixedLenFeature([], tf.int64),
+        #             'label': tf.FixedLenFeature([], tf.string),
+        #             'depth': tf.FixedLenFeature([], tf.string),
+        #         })
+        #
+        #     # height = tf.cast(features['height'], tf.int32)
+        #     # width = tf.cast(features['width'], tf.int32)
+        #     # channels = tf.cast(features['channels'], tf.int32)
+        #     # label = tf.decode_raw(features['label'], tf.uint8)
+        #     label = tf.decode_raw(features['label'], tf.int32)
+        #     depth1 = tf.decode_raw(features['depth'], tf.float32)
+        #
+        #     # label_shape = tf.stack([height, width])
+        #     # depth_shape = tf.stack([height, width, channels])
+        #     height = 480
+        #     width = 640
+        #     label = tf.reshape(label, [height, width])
+        #     depth1 = tf.reshape(depth1, [height, width, 1])
+        #
+        #     label_val = sess.run(label)
+        #
+        #     depth_val = sess.run(tf.squeeze(depth1))
+        #     depths_arr.append(depth_val)
+        #     plt.subplot(1, 2, 1)
+        #     plt.imshow(depth_val)
+        #     plt.axis('off')
+        #     plt.subplot(1, 2, 2)
+        #     plt.imshow(label_val)
+        #     plt.axis('off')
+        #     plt.show()
+        #
+        #     cur = len(depths_arr) - 1
+        #     prev = (cur - 1)*((cur-1)>0)
+        #     print(count, ': ', label_val.shape, ' prev: ', prev, ' cur: ', cur,  ' depth difference from last', np.sum(np.abs(depths_arr[cur] - depths_arr[prev])))
+        #     count+=1
+        #
+        # print("count: ", count)
 
-                print(depths_val)
 
-                rgb_label = DataSet.label2rgb(labels_val[0])
-
-
-                print(labels_val[0])
+    ''' The following code is for when the training is ran using the raw data insteaf of the tfrecord files'''
 
 
-                plt.subplot(1, 2, 1)
-                plt.imshow(depths_val)
-                plt.axis('off')
-                plt.subplot(1, 2, 2)
-                plt.imshow(rgb_label)
-                plt.axis('off')
-                plt.show()
+        # dataset.initialize_epoch_for_raw_data()
 
-                step += 1
-        except tf.errors.OutOfRangeError:
-            print('Done training for %d epochs, %d steps.' % (1, step))
-        finally:
-            # When done, ask the threads to stop.
-            coord.request_stop()
+        # dataset.get_permuted_batch_from_raw_data(3)
+        # #general_image_test()
+        # test_label_path = "RawData/human_1_rgb_3.png"
+        # label = misc.imread(test_label_path, mode='RGB')
+        # target_label = dataset.rgb2label(label)
+        # print('rgb_label shape ', label.shape)
+        # print('label is :', target_label)
+        # target_rgb = dataset.label2rgb(target_label)
+        #
+        # plt.subplot(1, 2, 1)
+        # plt.imshow(target_rgb)
+        # plt.axis('off')
+        # plt.subplot(1, 2, 2)
+        # plt.imshow(label)
+        # plt.axis('off')
+        # plt.show()
 
-        # Wait for threads to finish.
-        coord.join(threads)
+        # print('\nlabel: ', label, '\ntarget rgb: ', target_rgb)
