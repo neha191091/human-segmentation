@@ -1,23 +1,11 @@
-import numpy as np
-from scipy import misc
-import tensorflow as tf
-import matplotlib.pyplot as plt
 import glob
 import os
-import time
 
-# labels_list = [{"id": -1, "name": "void",           "rgb_values": [0,0,0]},
-#                {"id": 0,  "name": "torso",          "rgb_values": [0,255,0]},
-#                {"id": 1,  "name": "head",           "rgb_values": [0,0,255]},
-#                {"id": 2,  "name": "upper_left_arm", "rgb_values": [255,0,0]},
-#                {"id": 3,  "name": "upper_right_arm","rgb_values": [100,0,0]},
-#                {"id": 4,  "name": "lower_left_arm", "rgb_values": [255,0,255]},
-#                {"id": 5,  "name": "lower_right_arm","rgb_values": [100,0,100]},
-#                {"id": 6,  "name": "upper_left_leg", "rgb_values": [255,255,0]},
-#                {"id": 7,  "name": "upper_right_leg","rgb_values": [100,100,0]},
-#                {"id": 8,  "name": "lower_left_leg", "rgb_values": [0,255,255]},
-#                {"id": 9,  "name": "lower_right_leg","rgb_values": [0,100,100]}]
-
+from segmentation_python.initialize import _MAIN_PATH
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+from scipy import misc
 
 
 labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
@@ -41,8 +29,9 @@ def _int64_feature(value):
 def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
-_PROJECT_PATH = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/'
 _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
+_DIR_TFRECORDS = _MAIN_PATH+'data'
+_DIR_RAWDATA = _MAIN_PATH+'raw_data'
 
 class DataSet:
 
@@ -84,7 +73,7 @@ class DataSet:
         print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
-    def __init__(self, num_poses, num_angles, dir_raw_data = 'raw_data', dir_tfrecords = 'data', convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
+    def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
         self.num_poses = num_poses
         self.num_angles = num_angles
         self.total_samples = self.num_poses*self.num_angles
@@ -93,20 +82,18 @@ class DataSet:
         self.next_index_for_raw_data = 0
 
         self.index_array = np.arange(self.total_samples)
-        self.dir_raw_data = dir_raw_data
-        self.dir_tfrecords = dir_tfrecords
-        self.data_dim = self.get_data_dim()
+        self.data_dim = self.get_data_dim(dim=dim)
         self.max_records_in_tfrec_file = max_records_in_tfrec_file
-        if not os.listdir(dir_tfrecords):
+        if not os.listdir(_DIR_TFRECORDS):
             if convert_2_TfRecords:
                 print('Converting Raw Data to TFRecods....')
                 self.convert_2_TfRecords(randomize= randomize_TfRecords,  max_records_in_tfrec_file = max_records_in_tfrec_file, val_fraction = val_fraction, test_fraction = test_fraction)
 
-    def get_data_dim(self):
+    def get_data_dim(self, dim=None):
         # The depth and the label have the same dimension
-        #first_label_file = os.path.join(self.dir_raw_data, _FIRST_LABEL_FILENAME)
-        print(self.dir_raw_data)
-        first_label_file = _PROJECT_PATH + "/" + self.dir_raw_data + "/" + _FIRST_LABEL_FILENAME
+        if dim:
+            return dim
+        first_label_file = _DIR_RAWDATA + "/" + _FIRST_LABEL_FILENAME
         label = misc.imread(first_label_file, mode='RGB')
         return (label.shape[0], label.shape[1])
 
@@ -119,13 +106,13 @@ class DataSet:
                 count += 1
 
                 if (count % max_records_in_tfrec_file == 0):
-                    tfRecordsFile = os.path.join(self.dir_tfrecords,
+                    tfRecordsFile = os.path.join(_DIR_TFRECORDS,
                                                  'TfRecordFile_' + type + '_' + str(int(count / max_records_in_tfrec_file)) + '.tfrecords')
                     print('Writing', tfRecordsFile)
                     writer = tf.python_io.TFRecordWriter(tfRecordsFile)
                 # depth
                 depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
-                depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
+                depthpartpath = os.path.join(_DIR_RAWDATA, depthpartfilename)
                 depthpath = ''
                 print('glob start: ', depthpartpath)
                 for file in glob.glob(depthpartpath):
@@ -144,7 +131,7 @@ class DataSet:
 
                 # label
                 labelfilename = 'human_' + str(int(i)) + '_rgb_' + str(int(j)) + '.png'
-                labelpath = os.path.join(self.dir_raw_data, labelfilename)
+                labelpath = os.path.join(_DIR_RAWDATA, labelfilename)
                 print(depthpath, ' ', labelpath)
 
                 rgb_label = misc.imread(labelpath, mode='RGB')
@@ -207,7 +194,15 @@ class DataSet:
         print('converting test....')
         conversion_sub_func(mask_i, mask_j, num_test, type='test')
 
-    def get_batch_from_tfrecords_via_queue(self, batch_size=1, num_epochs=1, type='train'):
+    def get_batch_from_tfrecords_via_queue(self, batch_size=1,
+                                           num_epochs=1,
+                                           type='train',
+                                           num_threads=2,
+                                           capacity=360,
+                                           # Ensures a minimum amount of shuffling of examples.
+                                           min_after_dequeue=10,
+                                           allow_smaller_final_batch=True,
+                                           override_tfrecords = None):
 
         """Reads input data num_epochs times.
         Args:
@@ -256,11 +251,17 @@ class DataSet:
             return tf_depth, tf_label
 
         if not num_epochs: num_epochs = None
-        filename_pattern = os.path.join(self.dir_tfrecords,
+        filename_pattern = os.path.join(_DIR_TFRECORDS,
                                 'TfRecordFile_' + type + '*' + '.tfrecords')
 
         filenames = glob.glob(filename_pattern)
+
+        if(override_tfrecords):
+            filenames = override_tfrecords
+
         print('file names: ', filenames)
+
+
         with tf.name_scope('input'):
             filename_queue = tf.train.string_input_producer(
                 filenames, num_epochs=num_epochs)
@@ -274,11 +275,11 @@ class DataSet:
             # We run this in two threads to avoid being a bottleneck.
             print('batch_size: ', batch_size)
             depths, labels = tf.train.shuffle_batch(
-                [tf_depth, tf_label], batch_size=batch_size, num_threads=2,
-                capacity=360,
+                [tf_depth, tf_label], batch_size=batch_size, num_threads=num_threads,
+                capacity=capacity,
                 # Ensures a minimum amount of shuffling of examples.
-                min_after_dequeue=10,
-                allow_smaller_final_batch=True)
+                min_after_dequeue=min_after_dequeue,
+                allow_smaller_final_batch=allow_smaller_final_batch)
 
         return depths, labels
 
@@ -305,12 +306,12 @@ class DataSet:
             #label
             labelfilename = 'human_' + str(int(i)) + '_rgb_' +  str(int(j)) +'.png'
             #print(labelfilename)
-            labelpath = os.path.join(self.dir_raw_data, labelfilename)
+            labelpath = os.path.join(_DIR_RAWDATA, labelfilename)
 
             #depth
             depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '*.png'
             #print(depthpartfilename)
-            depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
+            depthpartpath = os.path.join(_DIR_RAWDATA, depthpartfilename)
             depthpath = ''
             for file in glob.glob(depthpartpath):
                 depthpath = file

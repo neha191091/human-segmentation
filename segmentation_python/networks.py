@@ -2,7 +2,7 @@ import numpy as np
 from scipy import misc
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from data_utils import DataSet
+from segmentation_python.data_utils import DataSet
 from tensorflow.contrib import slim
 #import tfslimlocalcopy as slim
 from tfslimlocalcopy.nets import mobilenet_v1 as mob
