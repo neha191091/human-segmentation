@@ -3,7 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from segmentation_python.data_utils import labels_list
+from segmentation_python.data_utils import labels_list, DataSet
 from segmentation_python.initialize import _CHKPT_PATH, _RESULT_PATH, _TINY
 import dateutil.tz
 import datetime
@@ -38,8 +38,31 @@ def load_checkpoint(sess, filename):
     except:
         print("Failed to load model from %s" % fname)
 
-def print_metrics(loss, accuracy, step, metrics_file):
+def print_chkpoint_details(batch_size, num_epochs, override_tfrecords, lr, load_from_chkpt, chkpt_details_file_path):
+    chkpt_details_file = open(chkpt_details_file_path,'w')
+    print('batch_size = '+ str(batch_size), file=chkpt_details_file)
+    print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
+    if override_tfrecords:
+        print('override_tfrecords = '+ str(override_tfrecords), file=chkpt_details_file)
+    if load_from_chkpt:
+        print('load_from_chkpt = '+ load_from_chkpt, file=chkpt_details_file)
+    print('learning rate = '+ str(lr), file=chkpt_details_file)
+    chkpt_details_file.close()
+
+def print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt, test_details_file_path):
+    chkpt_details_file = open(test_details_file_path,'w')
+    print('batch_size = '+ str(batch_size), file=chkpt_details_file)
+    print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
+    if override_tfrecords:
+        print('override_tfrecords = '+ str(override_tfrecords), file=chkpt_details_file)
+    if load_from_chkpt:
+        print('load_from_chkpt = '+ load_from_chkpt, file=chkpt_details_file)
+    chkpt_details_file.close()
+
+def print_metrics(loss, accuracy, step, metrics_file_path):
+    metrics_file = open(metrics_file_path,'a+')
     print('Step %f: loss = %f acc = %f' % (step, loss, accuracy), file=metrics_file)
+    metrics_file.close()
 
 def plot_loss(points, loss_history, timestamp, data_type='train'):
     if not os.path.exists(_RESULT_PATH):
@@ -83,3 +106,18 @@ def accuracy_IOU(preds, labels):
         IOU += intersection / (union + _TINY)
 
     return IOU
+
+def visualize_predictions(pred,label,depth,path):
+    rgbPred = DataSet.label2rgb(pred)
+    plt.subplot(1, 3, 1)
+    plt.imshow(rgbPred)
+    plt.axis('off')
+    plt.subplot(1, 3, 2)
+    plt.imshow(DataSet.label2rgb(label))
+    plt.axis('off')
+    plt.subplot(1, 3, 3)
+    plt.imshow(depth)
+    plt.axis('off')
+    plt.savefig(path)
+    # Clear Plots
+    plt.gcf().clear()

@@ -6,9 +6,9 @@ from segmentation_python.data_utils import DataSet
 from segmentation_python.networks import SegmentationNetwork
 import time
 from segmentation_python import utils
-from segmentation_python.initialize import _RESULT_PATH
+from segmentation_python.initialize import _CHKPT_PATH ,_RESULT_PATH
 
-def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, show_last_prediction = True, override_tfrecords = None, load_from_chkpt=None):
+def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, lr=1e-4, show_last_prediction = True, override_tfrecords = None, load_from_chkpt=None):
     data_dim = dataset.data_dim
     depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size, num_epochs=num_epochs,
                                                                 type='train', override_tfrecords = override_tfrecords)
@@ -19,15 +19,19 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, show_last_pre
     print('prediction shape', predictions.shape)
 
     cross_entropy_loss = model.loss(labels)
-    train_op = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy_loss)
+    train_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cross_entropy_loss)
 
     coord = tf.train.Coordinator()
     init_op = tf.group(tf.global_variables_initializer(),
                        tf.local_variables_initializer())
 
     timestamp = utils.get_timestamp()
+
+    chkpt_details_file_path = _CHKPT_PATH + '%s' % timestamp + "_ckpt_details.txt"
+    utils.print_chkpoint_details(batch_size,num_epochs,override_tfrecords,lr,load_from_chkpt,chkpt_details_file_path)
+
     metrics_file_path = _RESULT_PATH + '%s' % timestamp + "_train_metrics.txt"
-    metrics_file = open(metrics_file_path,'w')
+    image_result_part_path = _RESULT_PATH + '%s' % timestamp + "_train_img_"
 
     with tf.Session() as sess:
         sess.run(init_op)
@@ -67,7 +71,7 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, show_last_pre
                 # Print an overview fairly often.
                 if step % chckpt_interval == 0:
                     acc = utils.accuracy_per_pixel(pred, corr_label)
-                    utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file=metrics_file)
+                    utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     utils.save_checkpoint(sess, timestamp, step)
                     utils.plot_loss(step_vector, loss_vector, timestamp)
 
@@ -78,7 +82,7 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, show_last_pre
         finally:
             # When done, ask the threads to stop.
             acc = utils.accuracy_per_pixel(pred, corr_label)
-            utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file=metrics_file)
+            utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
             # step_vector.append(step)
             # loss_vector.append(loss_value)
             utils.save_checkpoint(sess, timestamp, step)
@@ -93,24 +97,14 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 1000, show_last_pre
         utils.plot_loss(step_vector, loss_vector, timestamp)
 
         if show_last_prediction:
-            rgbPred = DataSet.label2rgb(pred[0])
-            plt.subplot(1, 3, 1)
-            plt.imshow(rgbPred)
-            plt.axis('off')
-            plt.subplot(1, 3, 2)
-            plt.imshow(DataSet.label2rgb(np.squeeze(corr_label[0])))
-            plt.axis('off')
-            plt.subplot(1, 3, 3)
-            plt.imshow(np.squeeze(corr_depth[0]))
-            plt.axis('off')
-            plt.show()
+            utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
 
 if __name__ == '__main__':
     dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
                       test_fraction=0.01)
-    batch_size = 4
-    num_epochs = 2
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_1.tfrecords', '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_2.tfrecords']
-    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_08_27_22_05_checkpoint7200.ckpt'
+    batch_size = 10
+    num_epochs = 5
+    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_0.tfrecords']
+    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_08_28_18_37_checkpoint1800.ckpt'
 
-    train(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
+    train(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, lr=5e-6, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)

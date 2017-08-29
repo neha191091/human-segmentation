@@ -8,7 +8,7 @@ import time
 from segmentation_python import utils
 from segmentation_python.initialize import _RESULT_PATH
 
-def eval(dataset, batch_size, num_epochs, show_last_prediction = True, override_tfrecords = None, load_from_chkpt=None):
+def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_interval = 1, override_tfrecords = None, load_from_chkpt=None):
     data_dim = dataset.data_dim
     depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size, num_epochs=num_epochs,
                                                                 type='test', override_tfrecords = override_tfrecords)
@@ -25,9 +25,12 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, override_
                        tf.local_variables_initializer())
 
     timestamp = utils.get_timestamp()
+    test_details_file_path = _RESULT_PATH + '%s' % timestamp + "_test_details.txt"
+    utils.print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt,
+                                 test_details_file_path)
     metrics_file_path = _RESULT_PATH + '%s' % timestamp + "_test_metrics.txt"
-    metrics_file = open(metrics_file_path,'w')
-    chckpt_interval = 10
+    image_result_part_path = _RESULT_PATH + '%s' % timestamp + "_test_image_"
+
     with tf.Session() as sess:
         sess.run(init_op)
         threads = tf.train.start_queue_runners(sess=sess, coord=coord)
@@ -65,11 +68,13 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, override_
 
 
                 # Print an overview fairly often.
-                if step % chckpt_interval == 0:
+                if step % chkpt_interval == 0:
                     acc = utils.accuracy_per_pixel(pred, corr_label)
-                    utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file=metrics_file)
+                    utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
                     loss_vector.append(loss_value)
+                    utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+
 
                 step += 1
 
@@ -78,7 +83,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, override_
         finally:
             # When done, ask the threads to stop.
             acc = utils.accuracy_IOU(pred, corr_label)
-            utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file=metrics_file)
+            utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
             step_vector.append(step)
             loss_vector.append(loss_value)
 
@@ -91,17 +96,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, override_
         coord.join(threads)
 
         if show_last_prediction:
-            rgbPred = DataSet.label2rgb(pred[0])
-            plt.subplot(1, 3, 1)
-            plt.imshow(rgbPred)
-            plt.axis('off')
-            plt.subplot(1, 3, 2)
-            plt.imshow(DataSet.label2rgb(np.squeeze(corr_label[0])))
-            plt.axis('off')
-            plt.subplot(1, 3, 3)
-            plt.imshow(np.squeeze(corr_depth[0]))
-            plt.axis('off')
-            plt.show()
+            utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
 
         utils.plot_loss(step_vector, loss_vector, timestamp, 'test')
 
@@ -110,8 +105,8 @@ if __name__ == '__main__':
                       test_fraction=0.01)
     batch_size = 1
     num_epochs = 1
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_0.tfrecords']
-    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_08_27_22_05_checkpoint6000.ckpt'
+    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_test_0.tfrecords']
+    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_08_28_13_42_checkpoint3600.ckpt'
 
     eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
 

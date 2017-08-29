@@ -1,10 +1,7 @@
-**/data
-**/data_old
-**/raw_data
-**/raw_data_exr
-**/raw_data_exr_backup_DONOT_DELETE_DONOT_MODIFY
-**/data_for_testing_data_utils
+**/data*/**
+**/raw_data*/**
 **/chkpt
+**/result
 .idea
 **/*.pyc
 **/virtualenv
