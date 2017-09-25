@@ -1,3 +1,5 @@
+#TODO: Incorrect Implementation: - either fix or remove!!!!
+
 import glob
 import os
 
@@ -6,7 +8,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from scipy import misc
-#TODO: Incorrect Implementation: - either fix or remove!!!!
 
 labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
                {"id": 1,  "name": "torso",          "rgb_values": [0,255,0]},
