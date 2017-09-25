@@ -60,13 +60,12 @@ bool isFileExist(char const* filename)
     return true;
 }
 
-double convertexr2png(std::string dataPath)
+double convertexr2png(std::string dataPath, bool resizeImg = false)
 {
     
     std::stringstream depthFilename;
    // depthFilename << dataPath << "human_" << pose << "_depth_" << angle <<"_0001.exr";
     
-    std::cout<<"Got Filenames\n";
     depthFilename << dataPath;
     
     bool isExist = isFileExist(depthFilename.str().c_str());
@@ -75,9 +74,12 @@ double convertexr2png(std::string dataPath)
         return false;
     }
     cv::Mat depthImage;
-    std::cout<<"depth111...\n";
     depthImage = cv::imread(depthFilename.str(), -1);//cv::IMREAD_ANYDEPTH); 
-    std::cout<<"depth...\n";
+    
+    if(resizeImg)
+    {
+        cv::resize(depthImage, depthImage, depthImage.size() / 4, 0, 0, cv::INTER_NEAREST);
+    }
     
     cv::Mat ch1, ch2, ch3;
     // "channels" is a vector of 3 Mat arrays:
@@ -99,13 +101,16 @@ double convertexr2png(std::string dataPath)
             if (d < 100.0f)
                 depthImage_short.at<unsigned short>(y, x) = d * 1000;
             else 
-                depthImage_short.at<unsigned short>(y, x) = 100000;
+                depthImage_short.at<unsigned short>(y, x) = 10000;     
+            
+            //TODO: change clipping val
+            //nearThresh = 400;
+            //farThresh  = 10000;
             
         }
     }
     
     
-    std::cout<<"Got Depth\n";
     
     std::string delimiter = ".";
     std::string newFilename = dataPath.substr(0, dataPath.find(delimiter));
@@ -119,7 +124,6 @@ double convertexr2png(std::string dataPath)
     
     depthImage = depthImage_short;
     
-    std::cout<<"Wrote Depth\n";
     
     //Check Range
     double minVal; 
@@ -137,9 +141,10 @@ double convertexr2png(std::string dataPath)
 }
 
 int main(int argc, char** argv) {
-    std::cout<<"Hello, dearest world\n";
-    std::string dataPath = "/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/raw_data/";
-   
+    std::cout<<"Start conversion\n";
+    std::string dataPath = "/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/raw_data_exr_complete/";
+    
+    bool resize = true; 
     //
     //bool convert = convertexr2png(depthFilename.str(),0,0);
     
@@ -148,16 +153,33 @@ int main(int argc, char** argv) {
     
     get_all(dataPath,ext,paths);
     
-    double min = 100000;
+    ext = ".png";
+    std::vector<fs::path> colorpaths;
+    
+    get_all(dataPath,ext,colorpaths);
+    
+    double min = 10000; //TODO: Change this to 5000 or a value in accordance with Keisuke's code
     for(int i=0; i < paths.size(); i++)
     {
-        //std::cout<<"path is : "<<paths[i]<<"\n";
-        double minVal = convertexr2png(paths[i].c_str());
+        std::cout<<"Current path is : "<<paths[i]<<"\n";
+        double minVal = convertexr2png(paths[i].c_str(), resize);
         if(min > minVal)
         {
             min = minVal;
         }
     }
+    if(resize)
+    {
+        for(int i=0; i < colorpaths.size(); i++)
+        {
+            std::cout<<"Current path is : "<<colorpaths[i]<<"\n";
+        
+            cv::Mat colorImg = cv::imread(colorpaths[i].c_str(), cv::IMREAD_COLOR);
+            cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_NEAREST);
+            cv::imwrite(colorpaths[i].c_str(), colorImg);
+        }
+    }
+    
     std::cout<<"min is : "<<min<<"\n";
     for(int i=0; i < paths.size(); i++)
     {

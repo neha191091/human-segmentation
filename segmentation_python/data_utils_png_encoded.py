@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from scipy import misc
-
+#TODO: Incorrect Implementation: - either fix or remove!!!!
 
 labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
                {"id": 1,  "name": "torso",          "rgb_values": [0,255,0]},
@@ -43,8 +43,8 @@ def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
 _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
-_DIR_TFRECORDS = _MAIN_PATH+'data_complete'
-_DIR_RAWDATA = _MAIN_PATH+'raw_data_complete'
+_DIR_TFRECORDS = _MAIN_PATH+'data_single_model_by_4_v2'
+_DIR_RAWDATA = _MAIN_PATH+'raw_data_single_model_by_4'
 
 class DataSet:
 
@@ -67,8 +67,8 @@ class DataSet:
             # print('mask shape for label', label, ':  ', mask.shape)
             # print('number of pixels with label ', label, '= ', np.count_nonzero(mask))
             target_labels[mask] = label['id']
-        #return np.array(target_labels, dtype=np.uint8)
-        return np.array(target_labels, dtype=np.int32)
+        return np.array(target_labels, dtype=np.uint16)
+        #return np.array(target_labels, dtype=np.int32)
 
     @staticmethod
     def label2rgb(labels):
@@ -157,8 +157,9 @@ class DataSet:
                     print('error encountered!!! Could not find depth file')
                     return -1
 
-                depth = misc.imread(depthpath, mode='F')
-                # depth = np.reshape(depth, (depth.shape[0], depth.shape[1], -1))
+                depth = misc.imread(depthpath, mode='I')
+                depth = depth.astype(np.uint16)
+
 
 
 
@@ -169,8 +170,6 @@ class DataSet:
 
                 rgb_label = misc.imread(labelpath, mode='RGB')
                 label = self.rgb2label(rgb_label)
-                print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
-
 
                 if type == 'val' and count == 0:
                     plt.subplot(1, 2, 1)
@@ -180,17 +179,33 @@ class DataSet:
                     plt.imshow(label)
                     plt.axis('off')
                     plt.show()
+                depth = np.reshape(depth, (depth.shape[0], depth.shape[1], -1))
+                label = np.reshape(label, (label.shape[0], label.shape[1], -1))
+                print('depth shape for step: ', count, ' : ', depth.shape, ' & type: ', depth.dtype)
+                print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
+                #depth = depth.tostring()
+                #label = label.tostring()
 
-                depth = depth.tostring()
-                label = label.tostring()
+                with tf.Graph().as_default():
+                    depth_placeholder = tf.placeholder(dtype=tf.uint16)
+                    encoded_depth = tf.image.encode_png(depth_placeholder)
+                    label_placeholder = tf.placeholder(dtype=tf.uint16)
+                    encoded_label = tf.image.encode_png(label_placeholder)
 
-                example = tf.train.Example(features=tf.train.Features(feature={
-                    'label': _bytes_feature(label),
-                    'depth': _bytes_feature(depth)}))
-                writer.write(example.SerializeToString())
+                    with tf.Session('') as sess:
 
-                if (count % max_records_in_tfrec_file == max_records_in_tfrec_file - 1 or count >= num_pairs - 1):
-                    writer.close()
+                        depth_png_string = sess.run(encoded_depth,
+                                              feed_dict={depth_placeholder: depth})
+                        label_png_string = sess.run(encoded_label,
+                                                    feed_dict={depth_placeholder: label})
+
+                        example = tf.train.Example(features=tf.train.Features(feature={
+                            'label': _bytes_feature(label_png_string),
+                            'depth': _bytes_feature(depth_png_string)}))
+                        writer.write(example.SerializeToString())
+
+                        if (count % max_records_in_tfrec_file == max_records_in_tfrec_file - 1 or count >= num_pairs - 1):
+                            writer.close()
 
         num_samples = self.total_samples
         if randomize:
@@ -271,17 +286,21 @@ class DataSet:
             # width = tf.cast(features['width'], tf.int32)
             # channels = tf.cast(features['channels'], tf.int32)
             #label = tf.decode_raw(features['label'], tf.uint8)
-            tf_label = tf.decode_raw(features['label'], tf.int32)
-            tf_depth = tf.decode_raw(features['depth'], tf.float32)
+
+            tf_label = tf.decode_raw(features['label'], tf.string)
+            tf_depth = tf.decode_raw(features['depth'], tf.string)
+
+            tf_label_decoded = tf.image.decode_png(tf_label, channels=1, dtype=tf.uint16)
+            tf_depth_decoded = tf.image.decode_png(tf_depth, channels=1, dtype=tf.uint16)
 
             # label_shape = tf.stack([height, width])
             # depth_shape = tf.stack([height, width, channels])
             height = self.data_dim[0]
             width = self.data_dim[1]
-            tf_label = tf.reshape(tf_label, [height,width])
-            tf_depth = tf.reshape(tf_depth, [height,width,1])
+            tf_label_decoded = tf.reshape(tf_label_decoded, [height,width])
+            tf_depth_decoded = tf.reshape(tf_depth_decoded, [height,width,1])
 
-            return tf_depth, tf_label
+            return tf_depth_decoded, tf_label_decoded
 
         if not num_epochs: num_epochs = None
         filename_pattern = os.path.join(_DIR_TFRECORDS,
@@ -394,7 +413,7 @@ if __name__ == '__main__':
 
     # test data utils
 
-    dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data

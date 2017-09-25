@@ -1,11 +1,10 @@
 import numpy as np
-from scipy import misc
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from segmentation_python.data_utils import DataSet
-from tensorflow.contrib import slim
 #import tfslimlocalcopy as slim
-from tfslimlocalcopy.nets import mobilenet_v1 as mob
+import mobilenet_v1 as mob
+from tensorflow.contrib import slim
+from data_utils import DataSet
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -28,35 +27,58 @@ class MobileNet:
                                reuse=reuse) as scope:
             with slim.arg_scope([slim.batch_norm, slim.dropout],
                                 is_training=is_training):
-                net, end_points = mob.mobilenet_v1_base(inputs, scope=scope,
-                                                    min_depth=min_depth,
-                                                    depth_multiplier=depth_multiplier,
-                                                    conv_defs=conv_defs)
-                with tf.variable_scope('ImageLogits'):
-                    ## Add prediction layers
-                    kernel_size = MobileNet._reduced_kernel_size_for_small_input(net, [7, 7])
-                    net = slim.avg_pool2d(net, kernel_size, padding='VALID',
-                                          scope='AvgPool_1a')
-                    end_points['AvgPool_1a'] = net
-                    # 1 x 1 x 1024
-                    net = slim.dropout(net, keep_prob=dropout_keep_prob, scope='Dropout_1b')
+                with slim.arg_scope([slim.batch_norm], decay=0.9):
+                    net, end_points = mob.mobilenet_v1_base(inputs, scope=scope,
+                                                        min_depth=min_depth,
+                                                        depth_multiplier=depth_multiplier,
+                                                        conv_defs=conv_defs)
+                    with tf.variable_scope('ImageLogits'):
+                        ## Add prediction layers
+                        kernel_size = MobileNet._reduced_kernel_size_for_small_input(net, [7, 7])
+                        net = slim.avg_pool2d(net, kernel_size, padding='VALID',
+                                              scope='AvgPool_1a')
+                        end_points['AvgPool_1a'] = net
+                        # 1 x 1 x 1024
+                        net = slim.dropout(net, keep_prob=dropout_keep_prob, scope='Dropout_1b')
 
-                    kernel_size = (net.shape[1], net.shape[2])
-                    # output should be Batch_sizex1x1xnum_classes
-                    logits = slim.conv2d(net, num_classes, kernel_size=kernel_size, padding='VALID', scope='Conv2d_1c_1x1')
-                    end_points['AvgPool_1a'] = logits
-                    # output should be Batch_sizexHxWxnum_classes where (H,W) = size of the original image
+                        kernel_size = (net.shape[1], net.shape[2])
+                        # output should be Batch_sizex1x1xnum_classes
+                        logits = slim.conv2d(net, num_classes, kernel_size=kernel_size, padding='VALID', scope='Conv2d_1c_1x1')
+                        end_points['AvgPool_1a'] = logits
+                        # output should be Batch_sizexHxWxnum_classes where (H,W) = size of the original image
 
-                    deconv_logits = slim.conv2d_transpose(logits, num_classes, kernel_size=deconv_size, padding='VALID')
-                end_points['ImageLogits'] = deconv_logits
-                predictions = tf.argmax(deconv_logits, axis=3)
-                end_points['Predictions'] = predictions
+                        deconv_logits = slim.conv2d_transpose(logits, num_classes, kernel_size=deconv_size, padding='VALID')
+                    end_points['ImageLogits'] = deconv_logits
+                    predictions = tf.argmax(deconv_logits, axis=3)
+                    end_points['Predictions'] = predictions
 
         self.deconv_logits = deconv_logits
         self.end_points = end_points
 
     def loss(self, labels, loss_func = tf.nn.sparse_softmax_cross_entropy_with_logits):
-        return loss_func(labels=labels, logits=self.deconv_logits)
+
+        mask_background = tf.multiply(tf.ones_like(labels, dtype=tf.float64),0.0)
+        mask_foreground = tf.multiply(tf.ones_like(labels, dtype=tf.float64),1.0)
+
+        mask = tf.where(tf.equal(labels,0), mask_background, mask_foreground)
+        print(mask.shape,' ',labels.shape, ' ', self.deconv_logits.shape)
+
+        # TODO: Remove this after fixing the masking
+        # masked_labels = tf.multiply(labels,mask)
+        #
+        # class_mask = tf.tile(labels,[10,1,1])
+        # class_mask = tf.reshape(class_mask, [10, -1, labels.shape.as_list()[1], labels.shape.as_list()[2]])
+        # class_mask = tf.transpose(class_mask, [1,2,3,0], name='trans')
+        # class_mask = tf.cast(class_mask, tf.float32)
+        #
+        # print('shape of class_mask: ', class_mask.get_shape(), ' shape of logits: ', self.deconv_logits.shape)
+        # masked_logits = tf.multiply(self.deconv_logits, class_mask)
+
+
+        loss = loss_func(labels=labels, logits=self.deconv_logits)
+        print(loss)
+        loss = tf.multiply(loss, tf.cast(mask, tf.float32))
+        return loss
 
 
     @staticmethod
@@ -82,10 +104,10 @@ class MobileNet:
         return kernel_size_out
 
 class SegmentationNetwork:
-    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet'):
+    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet', is_training = True, dropout_keep_prob=0.999):
 
         if(base_net_name == 'MobileNet'):
-            net_class = MobileNet(inputs, image_size, num_classes=num_classes, scope=scope)
+            net_class = MobileNet(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training, dropout_keep_prob=dropout_keep_prob)
         elif(base_net_name == 'ResNet50'):
             net_class = Resnet50(inputs, scope=scope)
         else:
