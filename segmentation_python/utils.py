@@ -87,7 +87,7 @@ def accuracy_per_pixel(preds, labels, mask_bkgrnd = True):
         return np.mean(bool_per_pixel[labels != 0])
     return np.mean(bool_per_pixel)
 
-def accuracy_IOU(preds, labels):
+def accuracy_IOU(preds, labels, mask_bkgrnd = True):
 
     '''
     Calculates the intersection over union for predicted and actual label
@@ -95,18 +95,62 @@ def accuracy_IOU(preds, labels):
     :param labels: actual label in the form (N, H, W)
     :return: IOU values
     '''
+
+    TP,TN,FP,FN = get_confusion_matrix(preds,labels,mask_bkgrnd)
+
+    IOU = np.mean(TP/(TP + FP + FN + _TINY))
+
+    return IOU
+
+def get_confusion_matrix(preds, labels, mask_bkgrnd = True):
+
+    '''
+    Calculates True Positives, True Negatives, False Positives, False Negatives for each class
+    :param preds: predicted label in the form (N, H, W)
+    :param labels: actual label in the form (N, H, W)
+    :return: TP, TN, FP, FN, all in the form of (C,N)
+    '''
     np_preds = np.array(preds)
     np_labels = np.array(labels)
 
-    IOU = 0
+    TP = []
+    TN = []
+    FP = []
+    FN = []
     for label_template in labels_list:
         np_pred_check = np_preds == np.ones_like(np_preds)*label_template['id']
         np_label_check = np_labels == np.ones_like(np_labels)*label_template['id']
-        intersection = np.sum(np.bitwise_and(np_pred_check, np_label_check))
-        union = np.sum(np.bitwise_or(np_pred_check, np_label_check))
-        IOU += intersection / (union + _TINY)
 
-    return IOU
+        truepos = np.logical_and(np_pred_check, np_label_check)                                 #Pred and Label
+        falsepos = np.logical_and(np_pred_check, np.logical_not(np_label_check))                #Pred and not(Label)
+        trueneg = np.logical_and(np.logical_not(np_pred_check), np.logical_not(np_label_check)) #not(Pred) and not(Label)
+        falseneg = np.logical_and(np.logical_not(np_pred_check),np_label_check)                 #not(Pred) and Label
+
+        if mask_bkgrnd:
+            if label_template['id'] == 0:
+                continue
+            else:
+                truepos = truepos[np_labels != 0]
+                trueneg = trueneg[np_labels != 0]
+                falsepos = falsepos[np_labels != 0]
+                falseneg = falseneg[np_labels != 0]
+
+        truepos = np.sum(np.sum(truepos, axis=-1), axis=-1)
+        trueneg = np.sum(np.sum(trueneg, axis=-1), axis=-1)
+        falsepos = np.sum(np.sum(falsepos, axis=-1), axis=-1)
+        falseneg = np.sum(np.sum(falseneg, axis=-1), axis=-1)
+
+        TP.append(truepos)
+        TN.append(trueneg)
+        FP.append(falsepos)
+        FN.append(falseneg)
+
+    TP = np.array(TP)
+    TN = np.array(TN)
+    FP = np.array(FP)
+    FN = np.array(FN)
+
+    return TP, TN, FP, FN
 
 def visualize_predictions(pred,label,depth,path):
 

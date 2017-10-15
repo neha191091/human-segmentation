@@ -6,3 +6,4 @@
 **/*.pyc
 **/virtualenv
 **/ext-lib
+**/*.zip

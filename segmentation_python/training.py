@@ -12,7 +12,7 @@ from networks import SegmentationNetwork
 def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_last_prediction = True, override_tfrecords = None, load_from_chkpt=None):
     data_dim = dataset.data_dim
     batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
-    depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size_tensor, num_epochs=num_epochs,
+    depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size, num_epochs=num_epochs,
                                                                 type='train', override_tfrecords = override_tfrecords)
     print('depths: ', depths, ' labels: ', labels)
 
@@ -114,13 +114,12 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
                 utils.visualize_predictions(pred[j],np.squeeze(corr_label[j]),np.squeeze(corr_depth[j]),path = image_result_part_path + str(step) + '_' + str(j) + '.png')
 
 if __name__ == '__main__':
-    dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
-                      test_fraction=0.01)
+    #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
 
-    #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
+    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
     batch_size = 144
-    num_epochs = 10
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_complete/TfRecordFile_train_0.tfrecords']
+    num_epochs = 200
+    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
     #chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_17_17_30_checkpoint100.ckpt'
 
     train(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, lr=1e-3, override_tfrecords=override_tfrecords, load_from_chkpt = None)

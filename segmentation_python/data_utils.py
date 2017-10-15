@@ -43,9 +43,11 @@ def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
 _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
-_DIR_TFRECORDS = _MAIN_PATH+'data_complete'
-_DIR_RAWDATA = _MAIN_PATH+'raw_data_complete'
+#_DIR_TFRECORDS = _MAIN_PATH+'data_complete'
+#_DIR_RAWDATA = _MAIN_PATH+'raw_data_complete'
 
+_DIR_TFRECORDS = _MAIN_PATH+'data_single_model_by_4'
+_DIR_RAWDATA = _MAIN_PATH+'raw_data_single_model_by_4'
 class DataSet:
 
     @staticmethod
@@ -453,61 +455,61 @@ if __name__ == '__main__':
     #     coord.join(threads)
 
     '''The following code uses a record iterator to check if the .tfrecord files have been generated correctly'''
-    # init_op = tf.group(tf.global_variables_initializer(),
-    #                    tf.local_variables_initializer())
-    # with tf.Session() as sess:
-    #     sess.run(init_op)
-    #     record_iterator = tf.python_io.tf_record_iterator(path=_DIR_TFRECORDS+'/TfRecordFile_train_0.tfrecords')
-    #
-    #     count = 0
-    #     depths_arr = []
-    #     for string_record in record_iterator:
-    #         features = tf.parse_single_example(
-    #             string_record,
-    #             # Defaults are not specified since both keys are required.
-    #             features={
-    #                 # 'height': tf.FixedLenFeature([], tf.int64),
-    #                 # 'width': tf.FixedLenFeature([], tf.int64),
-    #                 # 'channels': tf.FixedLenFeature([], tf.int64),
-    #                 'label': tf.FixedLenFeature([], tf.string),
-    #                 'depth': tf.FixedLenFeature([], tf.string),
-    #             })
-    #
-    #         # height = tf.cast(features['height'], tf.int32)
-    #         # width = tf.cast(features['width'], tf.int32)
-    #         # channels = tf.cast(features['channels'], tf.int32)
-    #         # label = tf.decode_raw(features['label'], tf.uint8)
-    #         label = tf.decode_raw(features['label'], tf.int32)
-    #         depth1 = tf.decode_raw(features['depth'], tf.float32)
-    #
-    #         # label_shape = tf.stack([height, width])
-    #         # depth_shape = tf.stack([height, width, channels])
-    #         height = 120
-    #         width = 160
-    #         label = tf.reshape(label, [height, width])
-    #         depth1 = tf.reshape(depth1, [height, width, 1])
-    #
-    #         label_val = sess.run(label)
-    #
-    #         depth_val = sess.run(tf.squeeze(depth1))
-    #         depths_arr.append(depth_val)
-    #         plt.subplot(1, 2, 1)
-    #         plt.imshow(depth_val)
-    #         plt.axis('off')
-    #         plt.subplot(1, 2, 2)
-    #         plt.imshow(label_val)
-    #         plt.axis('off')
-    #         plt.show()
-    #
-    #         print('depth shape: ', depth_val.shape,'depth', depth_val)
-    #         print('seg shape: ', label_val.shape,'segmentation', label_val)
-    #
-    #         cur = len(depths_arr) - 1
-    #         prev = (cur - 1)*((cur-1)>0)
-    #         print(count, ': ', label_val.shape, ' prev: ', prev, ' cur: ', cur,  ' depth difference from last', np.sum(np.abs(depths_arr[cur] - depths_arr[prev])))
-    #         count+=1
-    #
-    #     print("count: ", count)
+    init_op = tf.group(tf.global_variables_initializer(),
+                       tf.local_variables_initializer())
+    with tf.Session() as sess:
+        sess.run(init_op)
+        record_iterator = tf.python_io.tf_record_iterator(path=_DIR_TFRECORDS+'/TfRecordFile_val_0.tfrecords')
+
+        count = 0
+        depths_arr = []
+        for string_record in record_iterator:
+            features = tf.parse_single_example(
+                string_record,
+                # Defaults are not specified since both keys are required.
+                features={
+                    # 'height': tf.FixedLenFeature([], tf.int64),
+                    # 'width': tf.FixedLenFeature([], tf.int64),
+                    # 'channels': tf.FixedLenFeature([], tf.int64),
+                    'label': tf.FixedLenFeature([], tf.string),
+                    'depth': tf.FixedLenFeature([], tf.string),
+                })
+
+            # height = tf.cast(features['height'], tf.int32)
+            # width = tf.cast(features['width'], tf.int32)
+            # channels = tf.cast(features['channels'], tf.int32)
+            # label = tf.decode_raw(features['label'], tf.uint8)
+            label = tf.decode_raw(features['label'], tf.int32)
+            depth1 = tf.decode_raw(features['depth'], tf.float32)
+
+            # label_shape = tf.stack([height, width])
+            # depth_shape = tf.stack([height, width, channels])
+            height = 120
+            width = 160
+            label = tf.reshape(label, [height, width])
+            depth1 = tf.reshape(depth1, [height, width, 1])
+
+            label_val = sess.run(label)
+
+            depth_val = sess.run(tf.squeeze(depth1))
+            depths_arr.append(depth_val)
+            # plt.subplot(1, 2, 1)
+            # plt.imshow(depth_val)
+            # plt.axis('off')
+            # plt.subplot(1, 2, 2)
+            # plt.imshow(label_val)
+            # plt.axis('off')
+            # plt.show()
+
+            # print('depth shape: ', depth_val.shape,'depth', depth_val)
+            # print('seg shape: ', label_val.shape,'segmentation', label_val)
+
+            cur = len(depths_arr) - 1
+            prev = (cur - 1)*((cur-1)>0)
+            print(count, ': ', label_val.shape, ' prev: ', prev, ' cur: ', cur,  ' depth difference from last', np.sum(np.abs(depths_arr[cur] - depths_arr[prev])))
+            count+=1
+
+        print("count: ", count)
 
 
     ''' The following code is for when the training is ran using the raw data insteaf of the tfrecord files'''

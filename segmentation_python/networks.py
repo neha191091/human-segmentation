@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #import tfslimlocalcopy as slim
 import mobilenet_v1 as mob
 from tensorflow.contrib import slim
-from data_utils import DataSet
+from data_utils import DataSet, labels_list
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -57,28 +57,40 @@ class MobileNet:
 
     def loss(self, labels, loss_func = tf.nn.sparse_softmax_cross_entropy_with_logits):
 
-        mask_background = tf.multiply(tf.ones_like(labels, dtype=tf.float64),0.0)
-        mask_foreground = tf.multiply(tf.ones_like(labels, dtype=tf.float64),1.0)
+        loss = loss_func(labels=labels, logits=self.deconv_logits)
+        print('loss shape: ', loss)
 
-        mask = tf.where(tf.equal(labels,0), mask_background, mask_foreground)
+        mask_discard = tf.multiply(tf.ones_like(labels, dtype=tf.float64), 0.0)
+        mask_keep = tf.multiply(tf.ones_like(labels, dtype=tf.float64), 1.0)
+
+        size = tf.reduce_sum(tf.ones_like(labels, dtype=tf.float64))
+        print('size: ', size)
+
+        mask = tf.where(tf.equal(labels,0), mask_discard, mask_keep)
         print(mask.shape,' ',labels.shape, ' ', self.deconv_logits.shape)
 
-        # TODO: Remove this after fixing the masking
-        # masked_labels = tf.multiply(labels,mask)
-        #
-        # class_mask = tf.tile(labels,[10,1,1])
-        # class_mask = tf.reshape(class_mask, [10, -1, labels.shape.as_list()[1], labels.shape.as_list()[2]])
-        # class_mask = tf.transpose(class_mask, [1,2,3,0], name='trans')
-        # class_mask = tf.cast(class_mask, tf.float32)
-        #
-        # print('shape of class_mask: ', class_mask.get_shape(), ' shape of logits: ', self.deconv_logits.shape)
-        # masked_logits = tf.multiply(self.deconv_logits, class_mask)
+        # loss = tf.multiply(loss, tf.cast(mask, tf.float32))
+        # return loss
 
+        masked_loss =  tf.multiply(tf.ones_like(labels, dtype=tf.float64), 0.0)
+        for label in labels_list:
+            if(label['id'] == 0):
+                continue
+            mask_temp = tf.where(tf.equal(labels, label['id']), mask_keep, mask_discard)
+            sum = tf.reduce_sum(mask_temp, axis=[1,2])
+            #sum = sum + (sum == 0)
+            sum = tf.cast(sum, tf.float64) + (tf.where(tf.equal(sum, 0), tf.ones_like(sum, dtype=tf.float64), tf.multiply(tf.ones_like(sum, dtype=tf.float64), 0.0)))
+            print('sum: ',sum)
+            #tiled_sum = tf.tile(sum, 120*160)
+            #tf.reshape(tiled_sum,[tf.shape(sum)[0],120,160])
+            sum = tf.expand_dims(sum, 1)
+            sum = tf.expand_dims(sum, 2)
+            print('sum: ', sum)
+            mask_temp = mask_temp / sum
+            loss_temp = tf.multiply(tf.cast(loss, tf.float64), tf.cast(mask_temp, tf.float64))
+            masked_loss = masked_loss + loss_temp
 
-        loss = loss_func(labels=labels, logits=self.deconv_logits)
-        print(loss)
-        loss = tf.multiply(loss, tf.cast(mask, tf.float32))
-        return loss
+        return masked_loss
 
 
     @staticmethod

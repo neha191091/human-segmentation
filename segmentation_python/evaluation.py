@@ -8,6 +8,8 @@ import utils
 from initialize import _RESULT_PATH
 import os
 
+# TODO: Confusion matrix, IOU
+
 def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_interval = 1, override_tfrecords = None, load_from_chkpt=None):
     data_dim = dataset.data_dim
     default_batch_size = 144
@@ -77,7 +79,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
 
                 # Print an overview fairly often.
                 if step % chkpt_interval == 0:
-                    acc = utils.accuracy_per_pixel(pred, corr_label)
+                    acc = utils.accuracy_IOU(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
                     loss_vector.append(loss_value)
@@ -90,7 +92,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
             print('Done training for %d epochs, %d steps.' % (1, step))
         finally:
             # When done, ask the threads to stop.
-            acc = utils.accuracy_per_pixel(pred, corr_label)
+            acc = utils.accuracy_IOU(pred, corr_label)
             utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
             step_vector.append(step)
             loss_vector.append(loss_value)
@@ -113,8 +115,8 @@ if __name__ == '__main__':
                       test_fraction=0.01)
     batch_size = 1
     num_epochs = 1
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_test_0.tfrecords']
-    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_22_10_33_checkpoint-1.ckpt'
+    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
+    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_28_21_32_checkpoint-1.ckpt'
 
     eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
 

@@ -20,8 +20,8 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
 
     num_its = math.ceil(dataset.total_samples / batch_size)
 
-    depths = tf.placeholder(dtype=tf.float32, shape=[None, data_dim[0], data_dim[1], 1])
-    labels = tf.placeholder(dtype=tf.int32, shape=[None, data_dim[0], data_dim[1]])
+    depths = tf.placeholder(dtype=tf.float32, shape=[batch_size, data_dim[0], data_dim[1], 1])
+    labels = tf.placeholder(dtype=tf.int32, shape=[batch_size, data_dim[0], data_dim[1]])
 
     print('depths: ', depths, ' labels: ', labels)
 
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
     dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
     batch_size = 144
-    num_epochs = 100
+    num_epochs = 1
     override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
     chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_17_17_30_checkpoint100.ckpt'
 
