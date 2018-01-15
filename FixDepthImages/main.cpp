@@ -142,7 +142,7 @@ double convertexr2png(std::string dataPath, bool resizeImg = false)
 
 int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
-    std::string dataPath = "/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/raw_data_exr_complete/";
+    std::string dataPath = "/home/neha/Documents/repo/segmentation/segmentation_python/data/raw_data_part/";
     
     bool resize = true; 
     //
@@ -172,10 +172,68 @@ int main(int argc, char** argv) {
     {
         for(int i=0; i < colorpaths.size(); i++)
         {
-            std::cout<<"Current path is : "<<colorpaths[i]<<"\n";
-        
-            cv::Mat colorImg = cv::imread(colorpaths[i].c_str(), cv::IMREAD_COLOR);
-            cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_NEAREST);
+            //std::cout<<"Current path is : "<<colorpaths[i]<<"\n";
+            std::string colorpath = colorpaths[i].c_str();
+            std::size_t found = colorpath.find("depth");
+            cv::Mat colorImg;
+            if (found!=std::string::npos)
+            {
+                colorImg = cv::imread(colorpaths[i].c_str(),-1); 
+                double minVal; 
+                double maxVal; 
+                cv::minMaxLoc( colorImg, &minVal, &maxVal);
+
+                if (i == 0)
+                {std::cout << "depthImage.dims = " << colorImg.dims << " depthImage.size = " << colorImg.size() << " depthImage.channels = " << colorImg.channels() << std::endl;
+
+                std::cout << "min val depth: " << minVal << "\n";
+                std::cout << "max val depth: " << maxVal << "\n";}
+
+                cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_AREA);
+                
+                cv::Mat depthImage_short(colorImg.size(), CV_16U);
+                for (int y = 0; y < colorImg.rows; y++)
+                {
+                    for (int x = 0; x < colorImg.cols; x++)
+                    {
+                        const float d = colorImg.at<unsigned short>(y, x);
+                        if(i == 0)
+                        {std::cout<<d<<" ";}
+                        if (d > 10000){
+                            
+                            //std::cout<<"Init depth: "<<colorImg.at<float>(y, x)<<std::endl;
+                            colorImg.at<unsigned short>(y, x) = 10000; 
+                            //std::cout<<"Changed depth: "<<colorImg.at<float>(y, x)<<std::endl;
+                        }
+                        else
+                        {
+                            colorImg.at<unsigned short>(y, x) = d;
+                        }
+
+                        //TODO: change clipping val
+                        //nearThresh = 400;
+                        //farThresh  = 10000;
+
+                    }
+                }
+                //colorImg = depthImage_short;
+                minVal = 0;
+                maxVal = 0;
+                cv::minMaxLoc( colorImg, &minVal, &maxVal);
+                if(i == 0)
+                {std::cout << "resized depthImage.dims = " << colorImg.dims << " depthImage.size = " << colorImg.size() << " depthImage.channels = " << colorImg.channels() << std::endl;
+
+                std::cout << "resized min val depth: " << minVal << "\n";
+                std::cout << "resized max val depth: " << maxVal << "\n";}
+                if(i == 0)
+                    std::cout << colorImg;
+                
+            }
+            else
+            {
+              colorImg = cv::imread(colorpaths[i].c_str(), cv::IMREAD_COLOR);
+              cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_NEAREST);
+            }
             cv::imwrite(colorpaths[i].c_str(), colorImg);
         }
     }

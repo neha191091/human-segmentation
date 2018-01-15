@@ -6,6 +6,9 @@ import dateutil.tz
 import datetime
 from data_utils import labels_list, DataSet
 from initialize import _CHKPT_PATH, _RESULT_PATH, _TINY
+from scipy import misc
+from scipy import ndimage
+
 
 # _CHKPT_PATH = _MAIN_PATH + 'chkpt/'
 # _RESULT_PATH = _MAIN_PATH + 'result/'
@@ -155,7 +158,7 @@ def get_confusion_matrix(preds, labels, mask_bkgrnd = True):
 def visualize_predictions(pred,label,depth,path):
 
     # predictionlabel2rgb masks out the background
-    rgbPred = DataSet.predictionlabel2rgb(pred, label)
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
     #rgbPred = DataSet.label2rgb(pred)
     plt.subplot(1, 3, 1)
     plt.imshow(rgbPred)
@@ -169,6 +172,18 @@ def visualize_predictions(pred,label,depth,path):
     plt.savefig(path)
     # Clear Plots
     plt.gcf().clear()
+
+def save_predictions(pred,depth,path):
+
+    # predictionlabel2rgb masks out the background
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
+    #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
+    #rgbPred = ndimage.median_filter(rgbPred,3)
+    #rgbPred = ndimage.gaussian_filter(rgbPred,3)
+    #rgbPred = DataSet.label2rgb(pred)
+    #print(rgbPred.shape)
+    rgbPred = misc.imresize(rgbPred, 400, 'nearest')
+    misc.imsave(path,rgbPred)
 
 def get_n_records_from_tf_record(tf_record, n=None):
 

@@ -49,7 +49,7 @@ class MobileNet:
 
                         deconv_logits = slim.conv2d_transpose(logits, num_classes, kernel_size=deconv_size, padding='VALID')
                     end_points['ImageLogits'] = deconv_logits
-                    predictions = tf.argmax(deconv_logits, axis=3)
+                    predictions = tf.argmax(deconv_logits, axis=3, name='predictions')
                     end_points['Predictions'] = predictions
 
         self.deconv_logits = deconv_logits

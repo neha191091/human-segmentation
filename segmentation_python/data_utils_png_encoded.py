@@ -84,7 +84,7 @@ class DataSet:
         for label in labels_list:
             mask = labels == label['id']
             target_rgb[mask] = label['rgb_values']
-        print('target_rgb shape: ', target_rgb.shape)
+        #print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
@@ -102,7 +102,7 @@ class DataSet:
         for label in labels_list:
             mask = preds == label['id']
             target_rgb[mask] = label['rgb_values']
-        print('target_rgb shape: ', target_rgb.shape)
+        #print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):

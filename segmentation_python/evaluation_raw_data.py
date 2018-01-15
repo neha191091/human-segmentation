@@ -4,7 +4,7 @@ from segmentation_python.data_utils import DataSet
 from segmentation_python.networks import SegmentationNetwork
 import time
 import utils
-import _RESULT_PATH
+from segmentation_python.initialize import _RESULT_PATH
 import os
 import math
 
@@ -39,6 +39,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
                                  test_details_file_path)
     metrics_file_path = evaluation_result_path + "test_metrics.txt"
     image_result_part_path = evaluation_result_path + "test_image_"
+    pred_result_part_path = evaluation_result_path + "human_0_rgb_"
     loss_path = evaluation_result_path + "loss.png"
     with tf.Session() as sess:
         sess.run(init_op)
@@ -56,8 +57,9 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
         start_time = time.time()
         try:
             #while not coord.should_stop():
-            dataset.initialize_epoch_for_raw_data(permutate=True)
-            for iter in range(10):
+            dataset.initialize_epoch_for_raw_data(permutate=False)
+            loopsize = math.floor(dataset.total_samples/batch_size)
+            for iter in range(loopsize):
                 # Run one step of the model.  The return values are
                 # the activations from the `train_op` (which is
                 # discarded) and the `loss` op.  To inspect the values
@@ -65,9 +67,9 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
                 depths_data, labels_data = dataset.get_batch_from_raw_data(batch_size, convert2tensor=False)
-                depths_data = np.repeat(depths_data, 144, axis=0)
-                labels_data = np.repeat(labels_data, 144, axis=0)
-                print('shape depth: ', depths_data.shape, ' shape labels: ', labels_data.shape)
+                #depths_data = np.repeat(depths_data, 144, axis=0)
+                #labels_data = np.repeat(labels_data, 144, axis=0)
+                # print('shape depth: ', depths_data.shape, ' shape labels: ', labels_data.shape)
                 loss, pred, corr_depth, corr_label = sess.run(
                     [cross_entropy_loss, predictions, depths, labels], feed_dict={depths: depths_data, labels: labels_data})
 
@@ -86,10 +88,12 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
                     loss_vector.append(loss_value)
-                    utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
-
+                    #utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+                    utils.save_predictions(pred[0], np.squeeze(corr_depth[0]),
+                                                path=pred_result_part_path + str(step) + '.png')
 
                 step += 1
+                print('step: ',step)
 
         except tf.errors.OutOfRangeError:
             print('Done training for %d epochs, %d steps.' % (1, step))
@@ -105,8 +109,8 @@ if __name__ == '__main__':
     dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
     batch_size = 1
     num_epochs = 1
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_22_11_09_checkpoint299.ckpt'
+    override_tfrecords = ['/home/neha/Documents/repo/segmentation/segmentation_python/data/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
+    chkpt = '/home/neha/Documents/repo/segmentation/segmentation_python/chkpt/2017_09_25_06_36_checkpoint-1.ckpt'
 
     eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
 

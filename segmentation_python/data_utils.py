@@ -46,8 +46,8 @@ _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
 #_DIR_TFRECORDS = _MAIN_PATH+'data_complete'
 #_DIR_RAWDATA = _MAIN_PATH+'raw_data_complete'
 
-_DIR_TFRECORDS = _MAIN_PATH+'data_single_model_by_4'
-_DIR_RAWDATA = _MAIN_PATH+'raw_data_single_model_by_4'
+_DIR_TFRECORDS = _MAIN_PATH+'/data/data_single_model_by_4'
+_DIR_RAWDATA = _MAIN_PATH+'/data/raw_data_part'
 class DataSet:
 
     @staticmethod
@@ -85,25 +85,42 @@ class DataSet:
         for label in labels_list:
             mask = labels == label['id']
             target_rgb[mask] = label['rgb_values']
-        print('target_rgb shape: ', target_rgb.shape)
+        # print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
-    def predictionlabel2rgb(preds, labels):
+    def predictionlabel2rgb(preds, depth):
 
         # target shape is expected to be (H, W, 3)
         # labels shape is excpected to be (H, W)
         # We would be assuming that the label will be a numpy array
         # Return rgb mappings with dtype = ubyte
 
-        preds = np.where(labels == 0, 0, preds)
+        preds = np.where(depth >= 10000, 0, preds)
 
         target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
 
         for label in labels_list:
             mask = preds == label['id']
             target_rgb[mask] = label['rgb_values']
-        print('target_rgb shape: ', target_rgb.shape)
+        # print('target_rgb shape: ', target_rgb.shape)
+        return np.asarray(target_rgb, dtype=np.ubyte)
+
+    @staticmethod
+    def predictionlabel2rgbsinglepart(preds, depth, part):
+
+        # target shape is expected to be (H, W, 3)
+        # labels shape is excpected to be (H, W)
+        # We would be assuming that the label will be a numpy array
+        # Return rgb mappings with dtype = ubyte, the needed part will be red (255,0,0)
+
+        preds = np.where(depth >= 10000, 0, preds)
+
+        target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
+
+        mask = preds == part
+        target_rgb[mask] = [255,0,0]
+        # print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
@@ -337,7 +354,8 @@ class DataSet:
 
         # We return a dictionary of randomly selected depths and labels ...
         # in the form -> {depths: (N,H,W,C), labels: (N,H,W)}
-        print('get_raw_data')
+        # print('get_raw_data')
+        dim = self.get_data_dim()
         if batch_size > self.total_samples:
             print('error encountered!!! Batch size should be lesser or equal to ', self.total_samples)
             return -1
@@ -354,7 +372,7 @@ class DataSet:
             labelpath = os.path.join(_DIR_RAWDATA, labelfilename)
 
             #depth
-            depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '*.png'
+            depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
             #print(depthpartfilename)
             depthpartpath = os.path.join(_DIR_RAWDATA, depthpartfilename)
             depthpath = ''
@@ -362,7 +380,7 @@ class DataSet:
                 depthpath = file
                 # print(depthpath)
             if(depthpath==''):
-                # print('error encountered!!! Could not find depth file')
+                print('error encountered!!! Could not find depth file')
                 return -1
 
 
@@ -372,23 +390,25 @@ class DataSet:
             depth = np.reshape(depth, (depth.shape[0], depth.shape[1],-1))
             #print('depth size af: ', depth.shape)
 
-            rgb_label = misc.imread(labelpath, mode='RGB')
-
-            # print('Count for each label')
-            # unique, counts = np.unique(label, return_counts=True)
-            # print('unique', unique, 'counts', counts)
-
-            label = self.rgb2label(rgb_label)
-
-            # test
-            # print(depthpath,' size: ', depth.shape, ' , max: ', np.max(depth))
-            # print(labelpath,' size: ', rgb_label.shape, ' , max: ', np.max(rgb_label))
-            # print('Actual label size: ', label.shape, ' , max: ', np.max(label))
-
             depths.append(depth)
-            labels.append(label)
+
+            if(os._exists(labelpath)):
+                rgb_label = misc.imread(labelpath, mode='RGB')
+                # print('Count for each label')
+                # unique, counts = np.unique(label, return_counts=True)
+                # print('unique', unique, 'counts', counts)
+
+                label = self.rgb2label(rgb_label)
+
+                # test
+                # print(depthpath,' size: ', depth.shape, ' , max: ', np.max(depth))
+                # print(labelpath,' size: ', rgb_label.shape, ' , max: ', np.max(rgb_label))
+                # print('Actual label size: ', label.shape, ' , max: ', np.max(label))
+                labels.append(label)
         if convert2tensor == True:
             return tf.stack(np.array(depths)), tf.stack(np.array(labels))
+        # print('depths_size: ', len(depths), ' ,labels_size: ', len(labels))
+        # print('depth path: ', depthpath, ' label path: ', labelpath)
         return np.array(depths),np.array(labels)
 
 
