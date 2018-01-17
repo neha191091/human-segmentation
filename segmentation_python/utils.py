@@ -5,22 +5,34 @@ import tensorflow as tf
 import dateutil.tz
 import datetime
 from data_utils import labels_list, DataSet
-from initialize import _CHKPT_PATH, _RESULT_PATH, _TINY
+from initialize import _PROJECT_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 from scipy import misc
 from scipy import ndimage
 
+'''
 
-# _CHKPT_PATH = _MAIN_PATH + 'chkpt/'
-# _RESULT_PATH = _MAIN_PATH + 'result/'
-# _TINY = 1e-8
+This script contains several utility functions that may be re-used in different workflows.
+
+'''
 
 def get_timestamp():
+    '''
+    Gets the current timestamp
+    :return: Current Time in a string format
+    '''
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M')
-    print (timestamp)
     return timestamp
 
 def save_checkpoint(sess, timestamp, checkpoint=0, var_list=None):
+    '''
+    Saves checkpoint in the chkpt folder
+    :param sess: tf.session to be saved
+    :param timestamp: timestamp associated with the session
+    :param checkpoint: checkpoint number for the session
+    :param var_list: variables to be saved in the checkpoint
+    :return: N/A
+    '''
     if not os.path.exists(_CHKPT_PATH):
         os.makedirs(_CHKPT_PATH)
         # save model
@@ -31,7 +43,12 @@ def save_checkpoint(sess, timestamp, checkpoint=0, var_list=None):
 
 
 def load_checkpoint(sess, filename):
-    # load model
+    '''
+    Loads a checkpoint to the given session
+    :param sess: tf.session to which checkpoint has to be loaded to
+    :param filename: checkpoint filename
+    :return: N/A
+    '''
     fname = filename
     try:
         saver = tf.train.Saver()
@@ -41,6 +58,16 @@ def load_checkpoint(sess, filename):
         print("Failed to load model from %s" % fname)
 
 def print_chkpoint_details(batch_size, num_epochs, override_tfrecords, lr, load_from_chkpt, chkpt_details_file_path):
+    '''
+    Prints details associated with training for debugging and analysis
+    :param batch_size: batch size
+    :param num_epochs: number of epochs
+    :param override_tfrecords: filename for the tf_record that is used, instead of running for all tf_records in the data
+    :param lr: leaning rate
+    :param load_from_chkpt: the checkpoint file from which the training has commenced
+    :param chkpt_details_file_path: file to which the details are stored to.
+    :return: N/A
+    '''
     chkpt_details_file = open(chkpt_details_file_path,'w')
     print('batch_size = '+ str(batch_size), file=chkpt_details_file)
     print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
@@ -52,6 +79,15 @@ def print_chkpoint_details(batch_size, num_epochs, override_tfrecords, lr, load_
     chkpt_details_file.close()
 
 def print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt, test_details_file_path):
+    '''
+    Prints details associated with testing for debugging and analysis
+    :param batch_size: batch size
+    :param num_epochs: number of epochs
+    :param override_tfrecords: filename for the tf_record that is used, instead of running for all tf_records in the data
+    :param load_from_chkpt: the checkpoint file from which the training has commenced
+    :param test_details_file_path: file to which the details are stored to.
+    :return:
+    '''
     chkpt_details_file = open(test_details_file_path,'w')
     print('batch_size = '+ str(batch_size), file=chkpt_details_file)
     print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
@@ -62,11 +98,27 @@ def print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chk
     chkpt_details_file.close()
 
 def print_metrics(loss, accuracy, step, metrics_file_path):
+    '''
+    Prints training/evaluation metrics
+    :param loss: loss
+    :param accuracy: accuracy
+    :param step: training step
+    :param metrics_file_path: file to which the metrics are saved
+    :return:
+    '''
     metrics_file = open(metrics_file_path,'a+')
     print('Step %f: loss = %f acc = %f' % (step, loss, accuracy), file=metrics_file)
     metrics_file.close()
 
 def plot_loss(points, loss_history, loss_path, data_type='train'):
+    '''
+    Plots the loss graph against training iteration
+    :param points: loss points
+    :param loss_history: loss history
+    :param loss_path: Path to the graph
+    :param data_type: train/test
+    :return:
+    '''
     plt.title(data_type+" loss")
     plt.plot(points, loss_history)
     plt.xlabel('Iteration')
@@ -156,7 +208,14 @@ def get_confusion_matrix(preds, labels, mask_bkgrnd = True):
     return TP, TN, FP, FN
 
 def visualize_predictions(pred,label,depth,path):
-
+    '''
+    Visualizes predictions against the ground truth and the input
+    :param pred: prediction
+    :param label: ground truth
+    :param depth: input
+    :param path: path to which the visualization is saved
+    :return:
+    '''
     # predictionlabel2rgb masks out the background
     rgbPred = DataSet.predictionlabel2rgb(pred, depth)
     #rgbPred = DataSet.label2rgb(pred)
@@ -174,7 +233,13 @@ def visualize_predictions(pred,label,depth,path):
     plt.gcf().clear()
 
 def save_predictions(pred,depth,path):
-
+    '''
+    Saves the predicted segmentation map to an image file
+    :param pred: prediction
+    :param depth: input
+    :param path: prediction image path
+    :return:
+    '''
     # predictionlabel2rgb masks out the background
     rgbPred = DataSet.predictionlabel2rgb(pred, depth)
     #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
@@ -185,9 +250,17 @@ def save_predictions(pred,depth,path):
     rgbPred = misc.imresize(rgbPred, 400, 'nearest')
     misc.imsave(path,rgbPred)
 
-def get_n_records_from_tf_record(tf_record, n=None):
+def get_n_records_from_tf_record(tf_record, n=None, height=480, width=640):
+    '''
+    NOTE: This is mostly a debugging tool to check if the t_records have been correctly created.
+    Please change the height and width to whatever you expect from the tf_record before using this #
+    function
 
-
+    Gets n records from the given tf_record file
+    :param tf_record: path to the tf_record file
+    :param n: number of records to get
+    :return: an array of n depth images, an array of n corresponding label images
+    '''
     record_iterator = tf.python_io.tf_record_iterator(path = tf_record)
 
     count = 0
@@ -222,8 +295,6 @@ def get_n_records_from_tf_record(tf_record, n=None):
 
             # label_shape = tf.stack([height, width])
             # depth_shape = tf.stack([height, width, channels])
-            height = 480
-            width = 640
             label = tf.reshape(label, [height, width])
             depth1 = tf.reshape(depth1, [height, width, 1])
 
@@ -242,9 +313,10 @@ def get_n_records_from_tf_record(tf_record, n=None):
     return depths_arr, labels_arr
 
 if __name__ == '__main__':
-
-    #test : - the min and max values of depth in tfrecord files
-    depths_arr, labels_arr = get_n_records_from_tf_record(tf_record = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data/TfRecordFile_train_0.tfrecords', n=10)
+    '''
+    test : - the min and max values of depth in tfrecord files
+    '''
+    depths_arr, labels_arr = get_n_records_from_tf_record(tf_record = _PROJECT_PATH+'data/data_complete_by_4/TfRecordFile_train_0.tfrecords', n=10, height=120, width=160)
     for i in range(len(depths_arr)):
         depth = depths_arr[i]
         #depth[depth == 34464] = 0

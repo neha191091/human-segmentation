@@ -1,13 +1,18 @@
 import glob
 import os
 
-from initialize import _MAIN_PATH
+from initialize import _PROJECT_PATH
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from scipy import misc
 
+'''
+This scripts contains functions to create training and test data and utilize it for training and testing workflows
+'''
 
+
+# list of all possible segmentation labels and the corresponding rgb labels for designating them
 labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
                {"id": 1,  "name": "torso",          "rgb_values": [0,255,0]},
                {"id": 2,  "name": "head",           "rgb_values": [0,0,255]},
@@ -20,6 +25,7 @@ labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
                {"id": 9,  "name": "lower_left_leg", "rgb_values": [0,255,255]},
                {"id": 10,  "name": "lower_right_leg","rgb_values": [0,100,100]}]
 
+# TODO: Use if you are going to get rid of the label 'void' in your map, else remove
 # labels_list = [{"id": -1, "name": "void",           "rgb_values": [0,0,0]},
 #                {"id": 1,  "name": "torso",          "rgb_values": [0,255,0]},
 #                {"id": 2,  "name": "head",           "rgb_values": [0,0,255]},
@@ -42,19 +48,32 @@ def _int64_feature(value):
 def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
+# Make sure that your depth and label files and named as per the conventions in README
 _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
-#_DIR_TFRECORDS = _MAIN_PATH+'data_complete'
-#_DIR_RAWDATA = _MAIN_PATH+'raw_data_complete'
 
-_DIR_TFRECORDS = _MAIN_PATH+'/data/data_single_model_by_4'
-_DIR_RAWDATA = _MAIN_PATH+'/data/raw_data_part'
+# Paths for full resolution data: 480x640, You may change the path however you like, but current folders
+# have the data arranged in this manner. See README for more details
+#_DIR_TFRECORDS = _PROJECT_PATH+'data_complete'
+#_DIR_RAWDATA = _PROJECT_PATH+'raw_data_complete'
+
+# Paths for low resolution data: 120x160, You may change the path however you like, but current folders
+# have the data arranged in this manner. See README for more detail
+_DIR_TFRECORDS = _PROJECT_PATH+'/data/data_single_model_by_4'
+_DIR_RAWDATA = _PROJECT_PATH+'/data/raw_data_part'
+
 class DataSet:
+    '''
+    Class that initializes and works with the Dataset
+    '''
 
     @staticmethod
     def rgb2label(target):
-
-        # target shape is expected to be (H, W, 3)
-        # label shape is excpected to be (H, W)
+        '''
+        Converts RGB ground truth targets to Labels using the label list. Replaces each color coded pixel with
+        the integer code it represents.
+        :param target: RGB target of shape (H, W, 3)
+        :return: label map of shape (H, W)
+        '''
 
         target = np.array(target, dtype=np.uint8)
         # print('original target shape', target.shape)
@@ -74,9 +93,11 @@ class DataSet:
 
     @staticmethod
     def label2rgb(labels):
-
-        # target shape is expected to be (H, W, 3)
-        # labels shape is excpected to be (H, W)
+        '''
+        Converts integer labelled maps for segmentation to color coded RGB maps
+        :param labels: label map of shape (H, W)
+        :return: RGB map of shape (H, W, 3)
+        '''
         # We would be assuming that the label will be a numpy array
         # Return rgb mappings with dtype = ubyte
 
@@ -90,12 +111,16 @@ class DataSet:
 
     @staticmethod
     def predictionlabel2rgb(preds, depth):
-
-        # target shape is expected to be (H, W, 3)
-        # labels shape is excpected to be (H, W)
+        '''
+        Converts Predicted labelled maps to color coded RGB maps
+        :param preds: Predicted label map of shape (H,W)
+        :param depth: Corresponding input depth map of shape (H,W)
+        :return: color coded RGB predicted segmentation map of shape (H,W,3)
+        '''
         # We would be assuming that the label will be a numpy array
         # Return rgb mappings with dtype = ubyte
 
+        # Replace the pixels where the depth is 10K or more with zeros, as we assume that our object does not lie there
         preds = np.where(depth >= 10000, 0, preds)
 
         target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
@@ -108,12 +133,17 @@ class DataSet:
 
     @staticmethod
     def predictionlabel2rgbsinglepart(preds, depth, part):
-
-        # target shape is expected to be (H, W, 3)
-        # labels shape is excpected to be (H, W)
+        '''
+        Converts Predicted labelled maps to color coded RGB maps but for only a single body part.
+        :param preds: Predicted label map of shape (H,W)
+        :param depth: Corresponding input depth map of shape (H,W)
+        :param part: Body Part label according labels_list
+        :return: color coded RGB predicted segmentation map of shape (H,W,3)
+        '''
         # We would be assuming that the label will be a numpy array
         # Return rgb mappings with dtype = ubyte, the needed part will be red (255,0,0)
 
+        # Replace the pixels where the depth is 10K or more with zeros, as we assume that our object does not lie there
         preds = np.where(depth >= 10000, 0, preds)
 
         target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
@@ -123,7 +153,18 @@ class DataSet:
         # print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
-    def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
+    def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 360, val_fraction = 0.1, test_fraction = 0.1):
+        '''
+        Initialize an object of class Dataset.
+        :param num_poses: number of poses in the raw data directory
+        :param num_angles: number of angles for each pose
+        :param dim: data dimension
+        :param convert_2_TfRecords: true if you wish to convert to TfRecords
+        :param randomize_TfRecords: true if you wish to re-order the raw data before saving to TfRecords
+        :param max_records_in_tfrec_file: maximum records you want in one TfRecord
+        :param val_fraction: fraction of the raw data you want in the validation set
+        :param test_fraction: fraction of the raw data you want in the test set
+        '''
         self.num_poses = num_poses
         self.num_angles = num_angles
         self.total_samples = self.num_poses*self.num_angles
@@ -142,6 +183,11 @@ class DataSet:
                 self.convert_2_TfRecords(randomize= randomize_TfRecords,  max_records_in_tfrec_file = max_records_in_tfrec_file, val_fraction = val_fraction, test_fraction = test_fraction)
 
     def get_data_dim(self, dim=None):
+        '''
+        Get the dimension for the depths and the ground truth segmentation maps (disregarding the channels).
+        :param dim: a list of dimensions : (H,W). This is optional and to force feed a dimension
+        :return: return a list of dimensions : (H,W)
+        '''
         # The depth and the label have the same dimension
         if dim:
             return dim
@@ -150,8 +196,24 @@ class DataSet:
         return (label.shape[0], label.shape[1])
 
     def convert_2_TfRecords(self, randomize = True, max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
-
+        '''
+        Convert Raw Data to TfRecords and store them
+        :param randomize: true if you want to shuffle the raw data before storing them
+        :param max_records_in_tfrec_file: maximum records you want in each TfRecords file
+        :param val_fraction: fraction of data to be saved as validation set
+        :param test_fraction: fraction of data to be saved as test set
+        :return:
+        '''
         def conversion_sub_func(mask_i, mask_j, num_pairs , type='train'):
+            '''
+            A sub function for converting the Data to TfRecords called multiple times for storing training,
+            validation and testing data seperately.
+            :param mask_i: A mask of Pose indices which would dictate the depth,label to be stored in this tfRecords file
+            :param mask_j: A mask of corresponding angle indices which would dictate the depth,label to be stored in this tfRecords file
+            :param num_pairs: Number of depth,label pairs to be stored
+            :param type: 'train'/'val'/'test'
+            :return:
+            '''
             count = -1
             for i, j in zip(mask_i, mask_j):
 
@@ -256,23 +318,29 @@ class DataSet:
                                            allow_smaller_final_batch=True,
                                            override_tfrecords = None):
 
-        """Reads input data num_epochs times.
-        Args:
-          batch_size: Number of examples per returned batch.
-          num_epochs: Number of times to read the input data, or 0/None to
-             train forever.
-          type: 'train'/'val'/'test'
-
-        Returns:
-          A tuple (images, labels), where:
-          * depths is a float tensor with shape [batch_size, self.dim[0], self.dim[1], 1]
-          * labels is an int32 tensor with shape [batch_size, self.dim[0], self.dim[1]] with the true label,
-            a number in the range [0, 10].
-          Note that an tf.train.QueueRunner is added to the graph, which
-          must be run using e.g. tf.train.start_queue_runners().
-        """
+        '''
+        get a batch of data from tfRecords via a tensorflow queue
+        :param batch_size: batch size
+        :param num_epochs: number of epochs
+        :param type: 'train'/'val'/'test'
+        :param num_threads: The number of threads enqueuing `tensor_list`.
+        :param capacity: An integer. The maximum number of elements in the queue.
+        :param min_after_dequeue: Minimum number elements in the queue after a
+               dequeue, used to ensure a level of mixing of elements.
+        :param allow_smaller_final_batch: (Optional) Boolean. If `True`, allow the final
+               batch to be smaller if there are insufficient items left in the queue.
+        :param override_tfrecords: override_tfrecords: filename for the tf_record that is used,
+               if None, then use all the tf_records
+        :return: A tuple containing a numpy list of depths and a numpy list of corresponding labels for the batch
+        of shape {depths: (N,H,W,C), labels: (N,H,W)}
+        '''
 
         def read_and_decode(filename_queue):
+            '''
+            read a single example from the tf_record file and decode it
+            :param filename_queue: the queue of tf_record filenames
+            :return: a tuple with (depth, label)
+            '''
             reader = tf.TFRecordReader()
             _, serialized_example = reader.read(filename_queue)
             features = tf.parse_single_example(
@@ -345,16 +413,25 @@ class DataSet:
         return depths, labels
 
     def initialize_epoch_for_raw_data(self, permutate = True):
+        '''
+        Initialize the epoch for getting batches from raw data.
+        :param permutate: True if you do not want batches to be drawn sequencially
+        :return: N/A
+        '''
         self.next_index_for_raw_data = 0
         if permutate:
             self.index_array = np.random.permutation(self.total_samples)
 
 
     def get_batch_from_raw_data(self, batch_size, convert2tensor =  False):
+        '''
+        Use the raw data directly to get batches
+        :param batch_size: batch size
+        :param convert2tensor: true if you want the data to be in the form f tensors
+        :return: A tuple containing either a tensor or a numpy list of depths and their corresponding labels
+        of shapes {depths: (N,H,W,C), labels: (N,H,W)}
+        '''
 
-        # We return a dictionary of randomly selected depths and labels ...
-        # in the form -> {depths: (N,H,W,C), labels: (N,H,W)}
-        # print('get_raw_data')
         dim = self.get_data_dim()
         if batch_size > self.total_samples:
             print('error encountered!!! Batch size should be lesser or equal to ', self.total_samples)

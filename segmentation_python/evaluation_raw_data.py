@@ -4,19 +4,26 @@ from segmentation_python.data_utils import DataSet
 from segmentation_python.networks import SegmentationNetwork
 import time
 import utils
-from segmentation_python.initialize import _RESULT_PATH
+from segmentation_python.initialize import _CHKPT_PATH, _RESULT_PATH
 import os
 import math
 
-def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_interval = 1, override_tfrecords = None, load_from_chkpt=None):
+'''
+Script to evaluate the network by using raw test data
+'''
+
+def eval(dataset, batch_size, num_epochs, save_prediction_interval = 1, load_from_chkpt=None):
+    '''
+    Evaluate the network using raw data
+    :param dataset: DataSet object
+    :param batch_size: batch size
+    :param num_epochs: number of epochs
+    :param save_prediction_interval: n where per n predictions are saved
+    :param load_from_chkpt: file path for the checkpoint to be loaded
+    :return:
+    '''
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
-    # batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
-    # depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size_tensor, num_epochs=num_epochs,
-    #                                                             type='train', override_tfrecords = override_tfrecords)
-
-
-    num_its = math.ceil(dataset.total_samples / batch_size)
 
     depths = tf.placeholder(dtype=tf.float32, shape=[None, data_dim[0], data_dim[1], 1])
     labels = tf.placeholder(dtype=tf.int32, shape=[None, data_dim[0], data_dim[1]])
@@ -35,7 +42,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
     if not os.path.exists(evaluation_result_path):
         os.makedirs(evaluation_result_path)
     test_details_file_path = evaluation_result_path + "test_details.txt"
-    utils.print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt,
+    utils.print_test_details(batch_size, num_epochs, None, load_from_chkpt,
                                  test_details_file_path)
     metrics_file_path = evaluation_result_path + "test_metrics.txt"
     image_result_part_path = evaluation_result_path + "test_image_"
@@ -83,7 +90,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
 
 
                 # Print an overview fairly often.
-                if step % chkpt_interval == 0:
+                if step % save_prediction_interval == 0:
                     acc = utils.accuracy_per_pixel(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
@@ -109,8 +116,7 @@ if __name__ == '__main__':
     dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
     batch_size = 1
     num_epochs = 1
-    override_tfrecords = ['/home/neha/Documents/repo/segmentation/segmentation_python/data/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    chkpt = '/home/neha/Documents/repo/segmentation/segmentation_python/chkpt/2017_09_25_06_36_checkpoint-1.ckpt'
+    chkpt = _CHKPT_PATH+'2017_09_25_06_36_checkpoint-1.ckpt'
 
-    eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
+    eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, load_from_chkpt = chkpt)
 

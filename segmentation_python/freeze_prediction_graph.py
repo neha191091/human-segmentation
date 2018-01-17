@@ -9,7 +9,19 @@ import os
 import math
 from tensorflow.python.tools import freeze_graph
 
+'''
+Tools to freeze the network graph with trained weights so that it can be loaded without 
+knowing the network architecture. Used mostly to import the graph in C++ API
+'''
+
 def save_input_graph(dataset, input_graph_dir="SaveFiles", load_from_chkpt=None):
+    '''
+    Saves the input graph
+    :param dataset: DataSet object
+    :param input_graph_dir: directory to save the input graph to
+    :param load_from_chkpt: checkpoint file where the needed weights are stored
+    :return: complete path for the input graph
+    '''
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     # batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
@@ -37,22 +49,34 @@ def save_input_graph(dataset, input_graph_dir="SaveFiles", load_from_chkpt=None)
         return input_graph_dir + '/' + graph_name
 
 def freeze_pred(input_graph_path, output_graph_path, checkpoint):
+    '''
+    Freeze the network with weights
+    :param input_graph_path: path to the input graph
+    :param output_graph_path: path to store the frozen output graph
+    :param checkpoint: path to checkpoint file with the needed weights
+    :return:
+    '''
 
-        # Freeze the graph
-        checkpoint_state_name = "checkpoint"
-        input_saver_def_path = ""
-        input_binary = False
-        output_node_names = "SegmentationNet/predictions"
-        restore_op_name = "save/restore_all"
-        filename_tensor_name = "save/Const:0"
-        clear_devices = False
-        freeze_graph.freeze_graph(input_graph_path, input_saver_def_path,
-                                  input_binary, checkpoint,
-                                  output_node_names, restore_op_name,
-                                  filename_tensor_name, output_graph_path,
-                                  clear_devices, "")
+    # Freeze the graph
+    checkpoint_state_name = "checkpoint"
+    input_saver_def_path = ""
+    input_binary = False
+    output_node_names = "SegmentationNet/predictions"
+    restore_op_name = "save/restore_all"
+    filename_tensor_name = "save/Const:0"
+    clear_devices = False
+    freeze_graph.freeze_graph(input_graph_path, input_saver_def_path,
+                              input_binary, checkpoint,
+                              output_node_names, restore_op_name,
+                              filename_tensor_name, output_graph_path,
+                              clear_devices, "")
 
 def load_graph(frozen_graph_filename):
+    '''
+    Load the frozen graph into a tensorflow graph def variable
+    :param frozen_graph_filename:
+    :return:
+    '''
     # We load the protobuf file from the disk and parse it to retrieve the
     # unserialized graph_def
     with tf.gfile.GFile(frozen_graph_filename, "rb") as f:
@@ -67,6 +91,12 @@ def load_graph(frozen_graph_filename):
     return graph
 
 def run_graph(graph_path, chkpt):
+    '''
+    Run a graph.
+    :param graph_path: Path to the saved(frozen) graph
+    :param chkpt: checkpoint from which the weights were taken(for logging purposes)
+    :return:
+    '''
     graph = load_graph(graph_path)
 
     # We can verify that we can access the list of operations in the graph

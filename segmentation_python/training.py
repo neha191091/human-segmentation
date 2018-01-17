@@ -5,11 +5,28 @@ import time
 import utils
 import os
 from tensorflow.contrib import slim
-from initialize import _CHKPT_PATH ,_RESULT_PATH
+from initialize import _PROJECT_PATH, _CHKPT_PATH ,_RESULT_PATH
 from data_utils import DataSet
 from networks import SegmentationNetwork
 
+'''
+This script contains modules that can be called to train from the tfRecord data.
+'''
+
 def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_last_prediction = True, override_tfrecords = None, load_from_chkpt=None):
+    '''
+    Train the network using TfRecords
+    :param dataset: Object of the class DataSet
+    :param batch_size: batch size for training
+    :param num_epochs: numbe of epochs you want to run the training for
+    :param chckpt_interval: number of epochs after which you want save a checkpoint
+    :param lr: initial learning rate
+    :param show_last_prediction: Do you want to see the last prediction after training
+    :param override_tfrecords: name of the tfRecord file you want to train from. If not supplied, all training data will be used
+    :param load_from_chkpt: Load the checkpoint from which you want to commence training
+    :return: N/A
+    '''
+
     data_dim = dataset.data_dim
     batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
     depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size, num_epochs=num_epochs,
@@ -114,13 +131,13 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
                 utils.visualize_predictions(pred[j],np.squeeze(corr_label[j]),np.squeeze(corr_depth[j]),path = image_result_part_path + str(step) + '_' + str(j) + '.png')
 
 if __name__ == '__main__':
-    #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
 
+    #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
     dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
     batch_size = 144
     num_epochs = 200
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    #chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_17_17_30_checkpoint100.ckpt'
+    override_tfrecords = [_PROJECT_PATH+'data/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
+    #chkpt = _CHKPT_PATH+'2017_09_17_17_30_checkpoint100.ckpt'
 
     train(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, lr=1e-3, override_tfrecords=override_tfrecords, load_from_chkpt = None)
 

@@ -13,6 +13,10 @@ import time
 
 from models.slim.datasets import dataset_utils
 
+'''
+This is just a script to test whether tensorflow slim has been properly installed and is working
+'''
+
 # Main slim library
 from tensorflow.contrib import slim
 

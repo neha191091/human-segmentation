@@ -5,12 +5,23 @@ from data_utils import DataSet
 from networks import SegmentationNetwork
 import time
 import utils
-from initialize import _RESULT_PATH
+from initialize import _CHKPT_PATH, _RESULT_PATH
 import os
 
 # TODO: Confusion matrix, IOU
 
-def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_interval = 1, override_tfrecords = None, load_from_chkpt=None):
+def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_prediction_interval = 1, override_tfrecords = None, load_from_chkpt=None):
+    '''
+    Evaluate the network from tfRecords.
+    :param dataset: DataSet object
+    :param batch_size: batch size
+    :param num_epochs: number of epochs
+    :param show_last_prediction: true if you want to show the last prediction
+    :param save_prediction_interval: n where per n predictions are saved
+    :param override_tfrecords: name of the tfRecord file you want to train from. If not supplied, all training data will be used
+    :param load_from_chkpt: file path for the checkpoint to be loaded
+    :return:
+    '''
     data_dim = dataset.data_dim
     default_batch_size = 144
     batch_size_tensor = tf.placeholder_with_default(default_batch_size, shape=[])
@@ -78,7 +89,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, chkpt_int
 
 
                 # Print an overview fairly often.
-                if step % chkpt_interval == 0:
+                if step % save_prediction_interval == 0:
                     acc = utils.accuracy_IOU(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
@@ -116,7 +127,7 @@ if __name__ == '__main__':
     batch_size = 1
     num_epochs = 1
     override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    chkpt = '/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/chkpt/2017_09_28_21_32_checkpoint-1.ckpt'
+    chkpt = _CHKPT_PATH + '2017_09_28_21_32_checkpoint-1.ckpt'
 
     eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
 
