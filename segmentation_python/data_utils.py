@@ -58,8 +58,8 @@ _FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
 
 # Paths for low resolution data: 120x160, You may change the path however you like, but current folders
 # have the data arranged in this manner. See README for more detail
-_DIR_TFRECORDS = _PROJECT_PATH+'/data/data_single_model_by_4'
-_DIR_RAWDATA = _PROJECT_PATH+'/data/raw_data_part'
+_DIR_TFRECORDS = _PROJECT_PATH+'data/data_single_model_by_4'
+_DIR_RAWDATA = _PROJECT_PATH+'data/raw_data_single_model_by_4'
 
 class DataSet:
     '''
@@ -177,6 +177,9 @@ class DataSet:
         self.max_records_in_tfrec_file = max_records_in_tfrec_file
         if not os.path.exists(_DIR_TFRECORDS):
             os.makedirs(_DIR_TFRECORDS)
+
+        # tf_records are created only if there is no data already in _DIR_TFRECORDS,
+        # therefore, remove all records if you want to create them again
         if not os.listdir(_DIR_TFRECORDS):
             if convert_2_TfRecords:
                 print('Converting Raw Data to TFRecods....')
@@ -469,7 +472,7 @@ class DataSet:
 
             depths.append(depth)
 
-            if(os._exists(labelpath)):
+            if os.path.exists(labelpath):
                 rgb_label = misc.imread(labelpath, mode='RGB')
                 # print('Count for each label')
                 # unique, counts = np.unique(label, return_counts=True)
@@ -482,6 +485,9 @@ class DataSet:
                 # print(labelpath,' size: ', rgb_label.shape, ' , max: ', np.max(rgb_label))
                 # print('Actual label size: ', label.shape, ' , max: ', np.max(label))
                 labels.append(label)
+            else:
+                print('error encountered!!! Could not find label file, ', labelpath)
+                return -1
         if convert2tensor == True:
             return tf.stack(np.array(depths)), tf.stack(np.array(labels))
         # print('depths_size: ', len(depths), ' ,labels_size: ', len(labels))

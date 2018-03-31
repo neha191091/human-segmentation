@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from segmentation_python.data_utils import DataSet
-from segmentation_python.networks import SegmentationNetwork
+from segmentation_python.net_main import SegmentationNetwork
 import time
 import utils
 from segmentation_python.initialize import _CHKPT_PATH, _RESULT_PATH
