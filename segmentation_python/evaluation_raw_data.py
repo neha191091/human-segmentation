@@ -1,10 +1,10 @@
 import numpy as np
 import tensorflow as tf
-from segmentation_python.data_utils import DataSet
+from segmentation_python.data_utils import Dataset_Raw_Provide
 from segmentation_python.net_main import SegmentationNetwork
 import time
-import utils
-from segmentation_python.initialize import _CHKPT_PATH, _RESULT_PATH
+import segmentation_python.utils as utils
+from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH
 import os
 import math
 
@@ -12,22 +12,45 @@ import math
 Script to evaluate the network by using raw test data
 '''
 
-def eval(dataset, batch_size, num_epochs, save_prediction_interval = 1, load_from_chkpt=None):
+# TODO: Confusion matrix, IOU
+def eval(dir_raw_record,
+          batch_size,
+          num_epochs,
+          save_prediction_interval=1,
+          show_last_prediction = True,
+          load_from_chkpt=None,
+          multi_deconv=True,
+          mob_f_ep=13,
+          mob_depth_multiplier=1.0):
     '''
-    Evaluate the network using raw data
-    :param dataset: DataSet object
+    Evaluate the network from tfRecords.
+    :param dir_raw_record: Directory from which the data is produced
     :param batch_size: batch size
     :param num_epochs: number of epochs
     :param save_prediction_interval: n where per n predictions are saved
+    :param show_last_prediction: true if you want to show the last prediction
     :param load_from_chkpt: file path for the checkpoint to be loaded
+    :param multi_deconv: Set true to allow multiple layers in deconv network
+    :param mob_f_ep: The mobilenet layer upto which the network must be built
+    :param mob_depth_multiplier: depth multiplier of mobilenet to reduce the number of parameters
     :return:
     '''
+    dataset = Dataset_Raw_Provide(dir_raw_record)
     data_dim = dataset.data_dim
+
     print('Data dimension: ', data_dim)
 
     depths = tf.placeholder(dtype=tf.float32, shape=[None, data_dim[0], data_dim[1], 1])
     labels = tf.placeholder(dtype=tf.int32, shape=[None, data_dim[0], data_dim[1]])
-    model = SegmentationNetwork(depths, data_dim, is_training=False, dropout_keep_prob=1.0)
+
+    model = SegmentationNetwork(depths,
+                                data_dim,
+                                is_training=True,
+                                dropout_keep_prob=1.0,
+                                multi_deconv=multi_deconv,
+                                mob_f_ep=mob_f_ep,
+                                mob_depth_multiplier=mob_depth_multiplier)
+
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -38,7 +61,8 @@ def eval(dataset, batch_size, num_epochs, save_prediction_interval = 1, load_fro
                        tf.local_variables_initializer())
 
     timestamp = utils.get_timestamp()
-    evaluation_result_path = _RESULT_PATH + '_evaluation_' + '%s' % timestamp + "/"
+    evaluation_result_path = _RESULT_PATH + '_evaluation_raw_' + '%s' % timestamp + "_batch_" + str(
+        batch_size) + "_ckpt_" + str(load_from_chkpt.split('/')[-1].split('.')[0]) + "/"
     if not os.path.exists(evaluation_result_path):
         os.makedirs(evaluation_result_path)
     test_details_file_path = evaluation_result_path + "test_details.txt"
@@ -113,10 +137,34 @@ def eval(dataset, batch_size, num_epochs, save_prediction_interval = 1, load_fro
 if __name__ == '__main__':
     # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
     #                   test_fraction=0.01)
-    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
-    batch_size = 1
-    num_epochs = 1
-    chkpt = _CHKPT_PATH+'2017_09_25_06_36_checkpoint-1.ckpt'
+    #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
-    eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, load_from_chkpt = chkpt)
+    #chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'
+
+    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    batch_size = 2
+    num_epochs = 1
+    save_prediction_interval = 1
+    override_tfrecords = ['test_0']
+    load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
+    multi_deconv = True
+    mob_f_ep = 9
+    mob_depth_multiplier = 0.75
+
+    if load_from_chkpt:
+        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+    else:
+        print('You must provide a checkpoint to evaluate data')
+        exit()
+
+    eval(dir_raw_record=dir_raw_record,
+         batch_size=batch_size,
+         num_epochs=num_epochs,
+         save_prediction_interval=save_prediction_interval,
+         load_from_chkpt=load_from_chkpt,
+         multi_deconv=multi_deconv,
+         mob_f_ep=mob_f_ep,
+         mob_depth_multiplier=mob_depth_multiplier)
+
+
 

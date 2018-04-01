@@ -4,16 +4,46 @@ import numpy as np
 import tensorflow as tf
 import dateutil.tz
 import datetime
-from data_utils import labels_list, DataSet
-from initialize import _PROJECT_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
+from segmentation_python.data_utils import labels_list, DataSet
+from segmentation_python.initialize import _CONFIG, _PROJECT_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 from scipy import misc
 from scipy import ndimage
+import configparser
 
 '''
 
 This script contains several utility functions that may be re-used in different workflows.
 
 '''
+def get_img_dim_from_data_dir(data_dir):
+    config_file = os.path.join(data_dir, 'config.ini')
+    if not os.path.exists(config_file):
+        print("Config File ", config_file, " does not exist")
+        return
+
+    _CONFIG.read(config_file)
+
+    height = int(_CONFIG.get(section='image_dim', option='height'))
+    width = int(_CONFIG.get(section='image_dim', option='width'))
+
+    data_dim = [height, width]
+    return data_dim
+
+def get_model_details_from_chkpt_path(chkpt_path):
+    chkpt_details_prefix = chkpt_path.split('checkpoint')[0]
+    chkpt_details_path = chkpt_details_prefix + 'ckpt_details.txt'
+    if not os.path.exists(chkpt_details_path):
+        print("Checkpoint details File ", chkpt_details_path, " does not exist")
+        return
+
+    _CONFIG.read(chkpt_details_path)
+
+    multi_deconv = bool(int(_CONFIG.get(section='model_details', option='multi_deconv')))
+    mob_f_ep = int(_CONFIG.get(section='model_details', option='mob_f_ep'))
+    mob_depth_multiplier = float(_CONFIG.get(section='model_details', option='mob_depth_multiplier'))
+
+    model_details = [multi_deconv, mob_f_ep, mob_depth_multiplier]
+    return model_details
 
 def get_timestamp():
     '''
@@ -57,33 +87,62 @@ def load_checkpoint(sess, filename):
     except:
         print("Failed to load model from %s" % fname)
 
-def print_chkpoint_details(batch_size, num_epochs, override_tfrecords, lr, load_from_chkpt, chkpt_details_file_path):
+def print_chkpoint_details(batch_size,
+                           num_epochs,
+                           override_tfrecords,
+                           lr,
+                           load_from_chkpt,
+                           chkpt_details_file_path,
+                           multi_deconv,
+                           mob_f_ep,
+                           mob_depth_multiplier):
     '''
     Prints details associated with training for debugging and analysis
     :param batch_size: batch size
     :param num_epochs: number of epochs
-    :param override_tfrecords: filename for the tf_record that is used, instead of running for all tf_records in the data
+    :param override_tfrecords: record-ids for the tf_record that is used, instead of running for all tf_records in the data
     :param lr: leaning rate
     :param load_from_chkpt: the checkpoint file from which the training has commenced
     :param chkpt_details_file_path: file to which the details are stored to.
+    :param multi_deconv: are there multiple layers of deconv
+    :param mob_f_ep: mobilenet_encoder_endpoint
+    :param mob_depth_multiplier: mobilenet_depth_multiplier
     :return: N/A
     '''
-    chkpt_details_file = open(chkpt_details_file_path,'w')
-    print('batch_size = '+ str(batch_size), file=chkpt_details_file)
-    print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
-    if override_tfrecords:
-        print('override_tfrecords = '+ str(override_tfrecords), file=chkpt_details_file)
-    if load_from_chkpt:
-        print('load_from_chkpt = '+ load_from_chkpt, file=chkpt_details_file)
-    print('learning rate = '+ str(lr), file=chkpt_details_file)
-    chkpt_details_file.close()
+    config = configparser.ConfigParser()
+
+    config['training_details'] = {}
+    config['training_details']['batch_size'] =  str(batch_size)
+    config['training_details']['num_epochs'] =  str(num_epochs)
+    config['training_details']['override_tfrecords'] =  str(override_tfrecords)
+    config['training_details']['lr'] =  str(lr)
+    config['training_details']['load_from_chkpt'] =  str(load_from_chkpt)
+
+    config['model_details'] = {}
+    config['model_details']['multi_deconv'] = str(int(multi_deconv))
+    config['model_details']['mob_f_ep'] = str(mob_f_ep)
+    config['model_details']['mob_depth_multiplier'] = str(mob_depth_multiplier)
+
+    with open(chkpt_details_file_path, 'w') as configfile:
+        config.write(configfile)
+
+
+    #chkpt_details_file = open(chkpt_details_file_path,'w')
+    #print('batch_size = '+ str(batch_size), file=chkpt_details_file)
+    #print('num_epochs = '+ str(num_epochs), file=chkpt_details_file)
+    #if override_tfrecords:
+    #    print('override_tfrecords = '+ str(override_tfrecords), file=chkpt_details_file)
+    #if load_from_chkpt:
+    #    print('load_from_chkpt = '+ load_from_chkpt, file=chkpt_details_file)
+    #print('learning rate = '+ str(lr), file=chkpt_details_file)
+    #chkpt_details_file.close()
 
 def print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt, test_details_file_path):
     '''
     Prints details associated with testing for debugging and analysis
     :param batch_size: batch size
     :param num_epochs: number of epochs
-    :param override_tfrecords: filename for the tf_record that is used, instead of running for all tf_records in the data
+    :param override_tfrecords: record-ids for the tf_record that is used, instead of running for all tf_records in the data
     :param load_from_chkpt: the checkpoint file from which the training has commenced
     :param test_details_file_path: file to which the details are stored to.
     :return:
@@ -249,6 +308,7 @@ def save_predictions(pred,depth,path):
     #print(rgbPred.shape)
     rgbPred = misc.imresize(rgbPred, 400, 'nearest')
     misc.imsave(path,rgbPred)
+
 
 def get_n_records_from_tf_record(tf_record, n=None, height=480, width=640):
     '''

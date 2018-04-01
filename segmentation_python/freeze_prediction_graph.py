@@ -3,7 +3,7 @@ import tensorflow as tf
 from segmentation_python.data_utils import DataSet
 from segmentation_python.net_main import SegmentationNetwork
 import time
-import utils
+import segmentation_python.utils as utils
 from segmentation_python.initialize import _RESULT_PATH
 import os
 import math

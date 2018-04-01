@@ -1,34 +1,51 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from data_utils import DataSet
-from networks import SegmentationNetwork
+from segmentation_python.data_utils import Dataset_TF_Provide
+from segmentation_python.net_main import SegmentationNetwork
 import time
-import utils
-from initialize import _CHKPT_PATH, _RESULT_PATH
+import segmentation_python.utils as utils
+from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH
 import os
 
 # TODO: Confusion matrix, IOU
-
-def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_prediction_interval = 1, override_tfrecords = None, load_from_chkpt=None):
+def eval(dir_tf_record,
+          batch_size,
+          num_epochs,
+          save_prediction_interval=1,
+          show_last_prediction = True,
+          override_tfrecords = None,
+          load_from_chkpt=None,
+          multi_deconv=True,
+          mob_f_ep=13,
+          mob_depth_multiplier=1.0):
     '''
     Evaluate the network from tfRecords.
-    :param dataset: DataSet object
+    :param dir_tf_record: Directory from which the data is produced
     :param batch_size: batch size
     :param num_epochs: number of epochs
-    :param show_last_prediction: true if you want to show the last prediction
     :param save_prediction_interval: n where per n predictions are saved
+    :param show_last_prediction: true if you want to show the last prediction
     :param override_tfrecords: name of the tfRecord file you want to train from. If not supplied, all training data will be used
     :param load_from_chkpt: file path for the checkpoint to be loaded
+    :param multi_deconv: Set true to allow multiple layers in deconv network
+    :param mob_f_ep: The mobilenet layer upto which the network must be built
+    :param mob_depth_multiplier: depth multiplier of mobilenet to reduce the number of parameters
     :return:
     '''
-    data_dim = dataset.data_dim
-    default_batch_size = 144
+    data_dim = utils.get_img_dim_from_data_dir(dir_tf_record)
+    default_batch_size = batch_size
     batch_size_tensor = tf.placeholder_with_default(default_batch_size, shape=[])
-    depths, labels = dataset.get_batch_from_tfrecords_via_queue(batch_size=batch_size_tensor, num_epochs=num_epochs,
+    depths, labels = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(dir_tf_record=dir_tf_record,batch_size=batch_size_tensor, num_epochs=num_epochs,
                                                                 type='test', override_tfrecords = override_tfrecords)
 
-    model = SegmentationNetwork(depths, data_dim, is_training=False, dropout_keep_prob=1.0)
+    model = SegmentationNetwork(depths,
+                                data_dim,
+                                is_training=True,
+                                dropout_keep_prob=1.0,
+                                multi_deconv=multi_deconv,
+                                mob_f_ep=mob_f_ep,
+                                mob_depth_multiplier=mob_depth_multiplier)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -40,7 +57,8 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
                        tf.local_variables_initializer())
 
     timestamp = utils.get_timestamp()
-    evaluation_result_path = _RESULT_PATH + '_evaluation_' + '%s' % timestamp + "/"
+    evaluation_result_path = _RESULT_PATH + '_evaluation_' + '%s' % timestamp + "_batch_" + str(
+        batch_size) + "_ckpt_" + str(load_from_chkpt.split('/')[-1].split('.')[0]) + "/"
     if not os.path.exists(evaluation_result_path):
         os.makedirs(evaluation_result_path)
     # test_details_file_path = evaluation_result_path + "test_details.txt"
@@ -76,6 +94,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
                 # of your ops or variables, you may include them in
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
+                print(i)
                 loss, pred, corr_depth, corr_label = sess.run(
                     [cross_entropy_loss, predictions, depths, labels], feed_dict={batch_size_tensor: batch_size})
 
@@ -84,7 +103,7 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
                 # pred = sess.run(model.get_predictions())
                 # last_label = sess.run(labels)
 
-                # print('pred shape: ', pred.shape)
+                print('pred shape: ', pred.shape)
                 # print('last label shape: ', last_label.shape)
 
 
@@ -100,9 +119,9 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
                 step += 1
 
         except tf.errors.OutOfRangeError:
-            print('Done training for %d epochs, %d steps.' % (1, step))
+            print('Done evaluation for %d epochs, %d steps.' % (1, step))
         finally:
-            # When done, ask the threads to stop.
+        # When done, ask the threads to stop.
             acc = utils.accuracy_IOU(pred, corr_label)
             utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
             step_vector.append(step)
@@ -110,8 +129,8 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
 
             coord.request_stop()
 
-            end_time = time.time()
-            print('Time taken for training: ', end_time - start_time)
+        end_time = time.time()
+        print('Time taken for evaluation: ', end_time - start_time)
 
         # Wait for threads to finish.
         coord.join(threads)
@@ -122,12 +141,34 @@ def eval(dataset, batch_size, num_epochs, show_last_prediction = True, save_pred
         utils.plot_loss(step_vector, loss_vector, loss_path, 'test')
 
 if __name__ == '__main__':
-    dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
-                      test_fraction=0.01)
-    batch_size = 1
+    #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
+    #                  test_fraction=0.01)
+
+    #chkpt = _CHKPT_PATH + 'chkpt2cpy_2/'+ '2018_03_31_23_58_checkpoint-1.ckpt'#''2017_09_28_21_32_checkpoint-1.ckpt'
+
+
+    dir_tf_record = _DATA_PATH + 'data_single_model_by_4'
+    batch_size = 2
     num_epochs = 1
-    override_tfrecords = ['/home/neha/Documents/TUM_Books/projects/IDP/segmentation/segmentation_python/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    chkpt = _CHKPT_PATH + '2017_09_28_21_32_checkpoint-1.ckpt'
+    save_prediction_interval = 1
+    override_tfrecords = ['test_0']
+    load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
+    multi_deconv = True
+    mob_f_ep = 9
+    mob_depth_multiplier = 0.75
 
-    eval(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, override_tfrecords=override_tfrecords, load_from_chkpt = chkpt)
+    if load_from_chkpt:
+        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+    else:
+        print('You must provide a checkpoint to evaluate data')
+        exit()
 
+    eval(dir_tf_record=dir_tf_record,
+          batch_size=batch_size,
+          num_epochs=num_epochs,
+          save_prediction_interval=save_prediction_interval,
+          override_tfrecords=override_tfrecords,
+          load_from_chkpt=load_from_chkpt,
+          multi_deconv=multi_deconv,
+          mob_f_ep=mob_f_ep,
+          mob_depth_multiplier=mob_depth_multiplier)

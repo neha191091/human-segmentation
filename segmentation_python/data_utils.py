@@ -1,11 +1,12 @@
 import glob
 import os
 
-from initialize import _PROJECT_PATH
+from segmentation_python.initialize import _CONFIG, _DATA_PATH
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from scipy import misc
+from shutil import copy
 
 '''
 This scripts contains functions to create training and test data and utilize it for training and testing workflows
@@ -49,17 +50,16 @@ def _float_feature(value):
     return tf.train.Feature(int64_list=tf.train.FloatList(value=[value]))
 
 # Make sure that your depth and label files and named as per the conventions in README
-_FIRST_LABEL_FILENAME = 'human_0_rgb_0.png'
 
 # Paths for full resolution data: 480x640, You may change the path however you like, but current folders
 # have the data arranged in this manner. See README for more details
-#_DIR_TFRECORDS = _PROJECT_PATH+'data_complete'
-#_DIR_RAWDATA = _PROJECT_PATH+'raw_data_complete'
+#_DIR_TFRECORDS = _DATA_PATH+'data_complete'
+#_DIR_RAWDATA = _DATA_PATH+'raw_data_complete'
 
 # Paths for low resolution data: 120x160, You may change the path however you like, but current folders
 # have the data arranged in this manner. See README for more detail
-_DIR_TFRECORDS = _PROJECT_PATH+'data/data_single_model_by_4'
-_DIR_RAWDATA = _PROJECT_PATH+'data/raw_data_single_model_by_4'
+_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
+_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
 
 class DataSet:
     '''
@@ -153,50 +153,60 @@ class DataSet:
         # print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
 
-    def __init__(self, num_poses, num_angles, dim=None, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 360, val_fraction = 0.1, test_fraction = 0.1):
+class Dataset_TF_Create:
+
+    '''
+    Class to Create TF records from raw_data
+    '''
+
+    def __init__(self, dir_raw_data, dir_tf_record, convert_2_TfRecords = True, randomize_TfRecords = False,  max_records_in_tfrec_file = 360, val_fraction = 0.1, test_fraction = 0.1):
         '''
         Initialize an object of class Dataset.
-        :param num_poses: number of poses in the raw data directory
-        :param num_angles: number of angles for each pose
-        :param dim: data dimension
+        :param dir_raw_data: directory containing the raw data from which the records are created
+        :param dir_tf_record: directory that will stor the corresponding tf_records
         :param convert_2_TfRecords: true if you wish to convert to TfRecords
         :param randomize_TfRecords: true if you wish to re-order the raw data before saving to TfRecords
         :param max_records_in_tfrec_file: maximum records you want in one TfRecord
         :param val_fraction: fraction of the raw data you want in the validation set
         :param test_fraction: fraction of the raw data you want in the test set
         '''
-        self.num_poses = num_poses
-        self.num_angles = num_angles
+
+        # Read from config file
+        config_file = os.path.join(dir_raw_data, 'config.ini')
+        if not os.path.exists(config_file):
+            print("Config File ", config_file, " does not exist")
+            return
+
+        _CONFIG.read(config_file)
+
+        height = int(_CONFIG.get(section='image_dim', option='height'))
+        width = int(_CONFIG.get(section='image_dim', option='width'))
+
+        self.data_dim = [height, width]
+
+        self.num_poses = int(_CONFIG.get(section='data_variety', option='poses'))
+        self.num_angles = int(_CONFIG.get(section='data_variety', option='angles'))
+
         self.total_samples = self.num_poses*self.num_angles
+
+        self.dir_raw_data = dir_raw_data
+        self.dir_tf_record = dir_tf_record
 
         # For accessing raw data
         self.next_index_for_raw_data = 0
 
         self.index_array = np.arange(self.total_samples)
-        self.data_dim = self.get_data_dim(dim=dim)
         self.max_records_in_tfrec_file = max_records_in_tfrec_file
-        if not os.path.exists(_DIR_TFRECORDS):
-            os.makedirs(_DIR_TFRECORDS)
+        if not os.path.exists(self.dir_tf_record):
+            os.makedirs(self.dir_tf_record)
 
-        # tf_records are created only if there is no data already in _DIR_TFRECORDS,
+        # tf_records are created only if there is no data already in self.dir_tf_record,
         # therefore, remove all records if you want to create them again
-        if not os.listdir(_DIR_TFRECORDS):
+        if not os.listdir(self.dir_tf_record):
             if convert_2_TfRecords:
                 print('Converting Raw Data to TFRecods....')
                 self.convert_2_TfRecords(randomize= randomize_TfRecords,  max_records_in_tfrec_file = max_records_in_tfrec_file, val_fraction = val_fraction, test_fraction = test_fraction)
-
-    def get_data_dim(self, dim=None):
-        '''
-        Get the dimension for the depths and the ground truth segmentation maps (disregarding the channels).
-        :param dim: a list of dimensions : (H,W). This is optional and to force feed a dimension
-        :return: return a list of dimensions : (H,W)
-        '''
-        # The depth and the label have the same dimension
-        if dim:
-            return dim
-        first_label_file = _DIR_RAWDATA + "/" + _FIRST_LABEL_FILENAME
-        label = misc.imread(first_label_file, mode='RGB')
-        return (label.shape[0], label.shape[1])
+            copy(config_file,dir_tf_record)
 
     def convert_2_TfRecords(self, randomize = True, max_records_in_tfrec_file = 4, val_fraction = 0.1, test_fraction = 0.1):
         '''
@@ -223,13 +233,13 @@ class DataSet:
                 count += 1
 
                 if (count % max_records_in_tfrec_file == 0):
-                    tfRecordsFile = os.path.join(_DIR_TFRECORDS,
+                    tfRecordsFile = os.path.join(self.dir_tf_record,
                                                  'TfRecordFile_' + type + '_' + str(int(count / max_records_in_tfrec_file)) + '.tfrecords')
                     print('Writing', tfRecordsFile)
                     writer = tf.python_io.TFRecordWriter(tfRecordsFile)
                 # depth
                 depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
-                depthpartpath = os.path.join(_DIR_RAWDATA, depthpartfilename)
+                depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
                 depthpath = ''
                 print('glob start: ', depthpartpath)
                 for file in glob.glob(depthpartpath):
@@ -248,11 +258,11 @@ class DataSet:
 
                 # label
                 labelfilename = 'human_' + str(int(i)) + '_rgb_' + str(int(j)) + '.png'
-                labelpath = os.path.join(_DIR_RAWDATA, labelfilename)
+                labelpath = os.path.join(self.dir_raw_data, labelfilename)
                 print(depthpath, ' ', labelpath)
 
                 rgb_label = misc.imread(labelpath, mode='RGB')
-                label = self.rgb2label(rgb_label)
+                label = DataSet.rgb2label(rgb_label)
                 print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
 
 
@@ -311,7 +321,14 @@ class DataSet:
         print('converting test....')
         conversion_sub_func(mask_i, mask_j, num_test, type='test')
 
-    def get_batch_from_tfrecords_via_queue(self, batch_size=1,
+class Dataset_TF_Provide:
+
+    """
+    Class that provides data from TF Records
+    """
+    @staticmethod
+    def get_batch_from_tfrecords_via_queue(dir_tf_record,
+                                           batch_size=1,
                                            num_epochs=1,
                                            type='train',
                                            num_threads=2,
@@ -323,6 +340,7 @@ class DataSet:
 
         '''
         get a batch of data from tfRecords via a tensorflow queue
+        :param dir_tf_record: directory from which data is to be grabbed
         :param batch_size: batch size
         :param num_epochs: number of epochs
         :param type: 'train'/'val'/'test'
@@ -332,16 +350,18 @@ class DataSet:
                dequeue, used to ensure a level of mixing of elements.
         :param allow_smaller_final_batch: (Optional) Boolean. If `True`, allow the final
                batch to be smaller if there are insufficient items left in the queue.
-        :param override_tfrecords: override_tfrecords: filename for the tf_record that is used,
-               if None, then use all the tf_records
+        :param override_tfrecords: a list of record ids - <type>_<record_no> to override the default,
+               if None, then use all the tf_records in the provided directory
         :return: A tuple containing a numpy list of depths and a numpy list of corresponding labels for the batch
         of shape {depths: (N,H,W,C), labels: (N,H,W)}
         '''
 
-        def read_and_decode(filename_queue):
+        def read_and_decode(filename_queue, height, width):
             '''
             read a single example from the tf_record file and decode it
             :param filename_queue: the queue of tf_record filenames
+            :param height: image height
+            :param width: image width
             :return: a tuple with (depth, label)
             '''
             reader = tf.TFRecordReader()
@@ -366,21 +386,33 @@ class DataSet:
 
             # label_shape = tf.stack([height, width])
             # depth_shape = tf.stack([height, width, channels])
-            height = self.data_dim[0]
-            width = self.data_dim[1]
             tf_label = tf.reshape(tf_label, [height,width])
             tf_depth = tf.reshape(tf_depth, [height,width,1])
 
             return tf_depth, tf_label
 
         if not num_epochs: num_epochs = None
-        filename_pattern = os.path.join(_DIR_TFRECORDS,
-                                'TfRecordFile_' + type + '*' + '.tfrecords')
 
+        config_file = os.path.join(dir_tf_record,'config.ini')
+        if not os.path.exists(config_file):
+            print("Config File ",config_file, " does not exist")
+            return
+
+        _CONFIG.read(config_file)
+        height = int(_CONFIG.get(section='image_dim', option='height'))
+        width = int(_CONFIG.get(section='image_dim', option='width'))
+
+        filename_pattern = os.path.join(dir_tf_record,
+                                'TfRecordFile_' + type + '*' + '.tfrecords')
         filenames = glob.glob(filename_pattern)
 
         if(override_tfrecords):
-            filenames = override_tfrecords
+            filenames = []
+            for record_id in override_tfrecords:
+                filename = os.path.join(dir_tf_record,
+                                'TfRecordFile_' + record_id + '.tfrecords')
+                if os.path.exists(filename):
+                    filenames.append(filename)
 
         print('file names: ', filenames)
 
@@ -391,7 +423,7 @@ class DataSet:
 
             # Even when reading in multiple threads, share the filename
             # queue.
-            tf_depth, tf_label = read_and_decode(filename_queue)
+            tf_depth, tf_label = read_and_decode(filename_queue, height, width)
 
             # reset out of bound depth values from 34464 to 10000
             # TODO: Remove this code when tfrecords are corrected
@@ -415,6 +447,46 @@ class DataSet:
 
         return depths, labels
 
+class Dataset_Raw_Provide:
+
+    """
+    Class to provide raw data
+    """
+
+    def __init__(self, dir_raw_data, val_fraction = 0.1, test_fraction = 0.1):
+        '''
+        Initialize an object of class Dataset.
+        :param dir_raw_data: directory from which the data is provided
+        :param val_fraction: fraction of the raw data you want in the validation set
+        :param test_fraction: fraction of the raw data you want in the test set
+        '''
+
+        # Read from config file
+        config_file = os.path.join(dir_raw_data, 'config.ini')
+        if not os.path.exists(config_file):
+            print("Config File ",config_file, " does not exist")
+            return
+
+        _CONFIG.read(config_file)
+
+        height = int(_CONFIG.get(section='image_dim', option='height'))
+        width = int(_CONFIG.get(section='image_dim', option='width'))
+
+        self.data_dim = [height, width]
+
+        self.num_poses = int(_CONFIG.get(section='data_variety', option='poses'))
+        self.num_angles = int(_CONFIG.get(section='data_variety', option='angles'))
+
+
+        self.total_samples = self.num_poses*self.num_angles
+
+        self.dir_raw_data = dir_raw_data
+
+        # For accessing raw data
+        self.next_index_for_raw_data = 0
+
+        self.index_array = np.arange(self.total_samples)
+
     def initialize_epoch_for_raw_data(self, permutate = True):
         '''
         Initialize the epoch for getting batches from raw data.
@@ -435,7 +507,6 @@ class DataSet:
         of shapes {depths: (N,H,W,C), labels: (N,H,W)}
         '''
 
-        dim = self.get_data_dim()
         if batch_size > self.total_samples:
             print('error encountered!!! Batch size should be lesser or equal to ', self.total_samples)
             return -1
@@ -449,12 +520,12 @@ class DataSet:
             #label
             labelfilename = 'human_' + str(int(i)) + '_rgb_' +  str(int(j)) +'.png'
             #print(labelfilename)
-            labelpath = os.path.join(_DIR_RAWDATA, labelfilename)
+            labelpath = os.path.join(self.dir_raw_data, labelfilename)
 
             #depth
             depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
             #print(depthpartfilename)
-            depthpartpath = os.path.join(_DIR_RAWDATA, depthpartfilename)
+            depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
             depthpath = ''
             for file in glob.glob(depthpartpath):
                 depthpath = file
@@ -478,7 +549,7 @@ class DataSet:
                 # unique, counts = np.unique(label, return_counts=True)
                 # print('unique', unique, 'counts', counts)
 
-                label = self.rgb2label(rgb_label)
+                label = DataSet.rgb2label(rgb_label)
 
                 # test
                 # print(depthpath,' size: ', depth.shape, ' , max: ', np.max(depth))
@@ -499,7 +570,7 @@ if __name__ == '__main__':
 
     # test data utils
 
-    dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data

@@ -3,25 +3,38 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import time
-import utils
+import segmentation_python.utils as utils
 import os
 from tensorflow.contrib import slim
-from initialize import _CHKPT_PATH ,_RESULT_PATH
-from data_utils import DataSet
-from networks import SegmentationNetwork
+from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
+from segmentation_python.data_utils import Dataset_Raw_Provide
+from segmentation_python.net_main import SegmentationNetwork
 
-def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_last_prediction = True, load_from_chkpt=None):
+def train(dir_raw_record,
+          batch_size,
+          num_epochs,
+          chckpt_interval = 100,
+          lr=1e-4,
+          show_last_prediction = True,
+          load_from_chkpt=None,
+          multi_deconv=True,
+          mob_f_ep=13,
+          mob_depth_multiplier=1.0):
     '''
-    Train from raw data
-    :param dataset: Object for the DataSet class
-    :param batch_size: batch size
-    :param num_epochs: number of epochs
+    Train the network using TfRecords
+    :param dir_raw_record: Directory from which the data is produced
+    :param batch_size: batch size for training
+    :param num_epochs: numbe of epochs you want to run the training for
     :param chckpt_interval: number of epochs after which you want save a checkpoint
     :param lr: initial learning rate
     :param show_last_prediction: Do you want to see the last prediction after training
     :param load_from_chkpt: Load the checkpoint from which you want to commence training
+    :param multi_deconv: Set true to allow multiple layers in deconv network
+    :param mob_f_ep: The mobilenet layer upto which the network must be built
+    :param mob_depth_multiplier: depth multiplier of mobilenet to reduce the number of parameters
     :return: N/A
     '''
+    dataset = Dataset_Raw_Provide(dir_raw_record)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
 
@@ -32,7 +45,12 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
 
     print('depths: ', depths, ' labels: ', labels)
 
-    model = SegmentationNetwork(depths, data_dim, is_training=True)
+    model = SegmentationNetwork(depths,
+                                data_dim,
+                                is_training=True,
+                                multi_deconv=multi_deconv,
+                                mob_f_ep=mob_f_ep,
+                                mob_depth_multiplier=mob_depth_multiplier)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -48,15 +66,31 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
     timestamp = utils.get_timestamp()
 
     chkpt_details_file_path = _CHKPT_PATH + '%s' % timestamp + "_ckpt_details.txt"
-    utils.print_chkpoint_details(batch_size,num_epochs, None, lr,load_from_chkpt,chkpt_details_file_path)
+    utils.print_chkpoint_details(batch_size=batch_size,
+                                 num_epochs=num_epochs,
+                                 override_tfrecords=None,
+                                 lr=lr,
+                                 load_from_chkpt=load_from_chkpt,
+                                 chkpt_details_file_path=chkpt_details_file_path,
+                                 multi_deconv=multi_deconv,
+                                 mob_f_ep=mob_f_ep,
+                                 mob_depth_multiplier=mob_depth_multiplier)
 
-    training_result_path = _RESULT_PATH + '%s' % timestamp + "/"
+    training_result_path = _RESULT_PATH + '_training_raw_' + '%s' % timestamp + "_lr_" + str(lr) + "_batch_" + str(
+        batch_size) + "_ckpt_" + str(load_from_chkpt.split('/')[-1].split('.')[0]) + "/"
     if not os.path.exists(training_result_path):
         os.makedirs(training_result_path)
 
     metrics_file_path = training_result_path + "train_metrics.txt"
-    utils.print_chkpoint_details(batch_size, num_epochs, None, lr, load_from_chkpt,
-                                 metrics_file_path)
+    utils.print_chkpoint_details(batch_size=batch_size,
+                                 num_epochs=num_epochs,
+                                 override_tfrecords=None,
+                                 lr=lr,
+                                 load_from_chkpt=load_from_chkpt,
+                                 chkpt_details_file_path=metrics_file_path,
+                                 multi_deconv=multi_deconv,
+                                 mob_f_ep=mob_f_ep,
+                                 mob_depth_multiplier=mob_depth_multiplier)
     image_result_part_path =training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
 
@@ -86,7 +120,8 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
                 _, loss, pred, corr_depth, corr_label = sess.run(
-                    [train_op, cross_entropy_loss, predictions, depths, labels], feed_dict={depths: depths_data, labels: labels_data})
+                    [train_op, cross_entropy_loss, predictions, depths, labels],
+                    feed_dict={depths: depths_data, labels: labels_data})
 
                 loss_value = np.mean(loss)
 
@@ -117,16 +152,32 @@ def train(dataset, batch_size, num_epochs, chckpt_interval = 100, lr=1e-4, show_
         if show_last_prediction:
             for j in range(batch_size):
 
-                utils.visualize_predictions(pred[j],np.squeeze(corr_label[j]),np.squeeze(corr_depth[j]),path = image_result_part_path + str(step-1) + '_' + str(j) + '.png')
+                utils.visualize_predictions(pred[j],np.squeeze(corr_label[j]),np.squeeze(corr_depth[j]),
+                                            path = image_result_part_path + str(step-1) + '_' + str(j) + '.png')
 
 if __name__ == '__main__':
 
     # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
     #                   test_fraction=0.01)
-    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
-    batch_size = 144
-    num_epochs = 1
-    chkpt = _CHKPT_PATH+'2017_09_17_17_30_checkpoint100.ckpt'
 
-    train(dataset=dataset,batch_size=batch_size,num_epochs=num_epochs, lr=1e-3, load_from_chkpt = None)
+    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    batch_size = 2
+    num_epochs = 1
+    lr = 1e-3
+    load_from_chkpt = _CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
+    multi_deconv = True
+    mob_f_ep = 9
+    mob_depth_multiplier = 0.75
+
+    if load_from_chkpt:
+        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+
+    train(dir_raw_record=dir_raw_record,
+          batch_size=batch_size,
+          num_epochs=num_epochs,
+          lr=lr,
+          load_from_chkpt=load_from_chkpt,
+          multi_deconv=multi_deconv,
+          mob_f_ep=mob_f_ep,
+          mob_depth_multiplier=mob_depth_multiplier)
 

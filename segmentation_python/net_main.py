@@ -2,9 +2,9 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 #import tfslimlocalcopy as slim
-import net_mobilenet_v1 as mob
+import segmentation_python.net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
-from data_utils import DataSet, labels_list
+from segmentation_python.data_utils import DataSet, labels_list
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -235,7 +235,7 @@ if __name__ == '__main__':
         loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
         print('loss before: ', np.sum(loss))
         starttime = time.time()
-        for iter in range(1):
+        for iter in range(500):
             print(iter)
             sess.run(train_op, feed_dict={x: xbatch, y: ybatch})
 
