@@ -52,9 +52,9 @@ def train(dir_tf_record,
         return
 
     conv_defs = _CONV_DEFS[conv_def_num]
-
+    batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
     depths, labels = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(dir_tf_record=dir_tf_record,
-                                                                           batch_size=batch_size,
+                                                                           batch_size=batch_size_tensor,
                                                                            num_epochs=num_epochs,
                                                                            type='train',
                                                                            override_tfrecords = override_tfrecords)
