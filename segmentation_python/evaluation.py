@@ -5,19 +5,21 @@ from segmentation_python.data_utils import Dataset_TF_Provide
 from segmentation_python.net_main import SegmentationNetwork
 import time
 import segmentation_python.utils as utils
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH
+from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 import os
+from segmentation_python.conv_defs import _CONV_DEFS
 
 # TODO: Confusion matrix, IOU
 def eval(dir_tf_record,
           batch_size,
           num_epochs,
           save_prediction_interval=1,
+          data_dims_from_ckpt = None,
           show_last_prediction = True,
           override_tfrecords = None,
           load_from_chkpt=None,
           multi_deconv=True,
-          mob_f_ep=13,
+          conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0):
     '''
     Evaluate the network from tfRecords.
@@ -34,6 +36,14 @@ def eval(dir_tf_record,
     :return:
     '''
     data_dim = utils.get_img_dim_from_data_dir(dir_tf_record)
+
+    print('Data dimension: ', data_dim)
+    print('Data dims from chkpt ', data_dims_from_ckpt)
+
+    if load_from_chkpt and (not data_dims_from_ckpt == data_dim):
+        print('The data dimensions from chkpt and data do not match')
+        return
+
     default_batch_size = batch_size
     batch_size_tensor = tf.placeholder_with_default(default_batch_size, shape=[])
     depths, labels = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(dir_tf_record=dir_tf_record,batch_size=batch_size_tensor, num_epochs=num_epochs,
@@ -41,11 +51,12 @@ def eval(dir_tf_record,
 
     model = SegmentationNetwork(depths,
                                 data_dim,
-                                is_training=True,
+                                is_training=False,
                                 dropout_keep_prob=1.0,
                                 multi_deconv=multi_deconv,
-                                mob_f_ep=mob_f_ep,
+                                conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier)
+
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -77,6 +88,11 @@ def eval(dir_tf_record,
         step_vector = []
         loss_vector = []
         acc_vector = []
+        TP_sum = np.zeros((10,))
+        TN_sum = np.zeros((10,))
+        FP_sum = np.zeros((10,))
+        FN_sum = np.zeros((10,))
+
 
         if load_from_chkpt:
             utils.load_checkpoint(sess, load_from_chkpt)
@@ -86,15 +102,15 @@ def eval(dir_tf_record,
 
         start_time = time.time()
         try:
-            #while not coord.should_stop():
-            for i in range(10):
+            while not coord.should_stop():
+            #for i in range(100):
                 # Run one step of the model.  The return values are
                 # the activations from the `train_op` (which is
                 # discarded) and the `loss` op.  To inspect the values
                 # of your ops or variables, you may include them in
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
-                print(i)
+                #print(i)
                 loss, pred, corr_depth, corr_label = sess.run(
                     [cross_entropy_loss, predictions, depths, labels], feed_dict={batch_size_tensor: batch_size})
 
@@ -106,9 +122,15 @@ def eval(dir_tf_record,
                 print('pred shape: ', pred.shape)
                 # print('last label shape: ', last_label.shape)
 
+                TP, TN, FP, FN = utils.get_confusion_matrix(pred, corr_label)
+                TP_sum += TP
+                TN_sum += TN
+                FP_sum += FP
+                FN_sum += FN
 
                 # Print an overview fairly often.
                 if step % save_prediction_interval == 0:
+                    # mean IOU per batch
                     acc = utils.accuracy_IOU(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
@@ -122,10 +144,15 @@ def eval(dir_tf_record,
             print('Done evaluation for %d epochs, %d steps.' % (1, step))
         finally:
         # When done, ask the threads to stop.
-            acc = utils.accuracy_IOU(pred, corr_label)
-            utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
-            step_vector.append(step)
-            loss_vector.append(loss_value)
+
+            # Get IOU over complete data
+            IOU = np.mean(TP_sum / (TP_sum + FP_sum + FN_sum + _TINY))
+            metrics_file = open(metrics_file_path, 'a+')
+            print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU), file=metrics_file)
+            metrics_file.close()
+
+            #step_vector.append(step)
+            #loss_vector.append(loss_value)
 
             coord.request_stop()
 
@@ -147,18 +174,21 @@ if __name__ == '__main__':
     #chkpt = _CHKPT_PATH + 'chkpt2cpy_2/'+ '2018_03_31_23_58_checkpoint-1.ckpt'#''2017_09_28_21_32_checkpoint-1.ckpt'
 
 
-    dir_tf_record = _DATA_PATH + 'data_single_model_by_4'
+    dir_tf_record = _DATA_PATH + 'data_complete_by_4'
     batch_size = 2
     num_epochs = 1
-    save_prediction_interval = 1
+    save_prediction_interval = 10
     override_tfrecords = ['test_0']
     load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
     multi_deconv = True
     mob_f_ep = 9
     mob_depth_multiplier = 0.75
+    conv_defs = _CONV_DEFS[1]
+    data_dims_from_ckpt = None
 
     if load_from_chkpt:
-        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        conv_defs = _CONV_DEFS[conv_def_num]
     else:
         print('You must provide a checkpoint to evaluate data')
         exit()
@@ -167,8 +197,9 @@ if __name__ == '__main__':
           batch_size=batch_size,
           num_epochs=num_epochs,
           save_prediction_interval=save_prediction_interval,
+          data_dims_from_ckpt = data_dims_from_ckpt,
           override_tfrecords=override_tfrecords,
           load_from_chkpt=load_from_chkpt,
           multi_deconv=multi_deconv,
-          mob_f_ep=mob_f_ep,
+          conv_defs=conv_defs,
           mob_depth_multiplier=mob_depth_multiplier)

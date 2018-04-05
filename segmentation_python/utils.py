@@ -15,6 +15,7 @@ import configparser
 This script contains several utility functions that may be re-used in different workflows.
 
 '''
+
 def get_img_dim_from_data_dir(data_dir):
     config_file = os.path.join(data_dir, 'config.ini')
     if not os.path.exists(config_file):
@@ -39,10 +40,14 @@ def get_model_details_from_chkpt_path(chkpt_path):
     _CONFIG.read(chkpt_details_path)
 
     multi_deconv = bool(int(_CONFIG.get(section='model_details', option='multi_deconv')))
-    mob_f_ep = int(_CONFIG.get(section='model_details', option='mob_f_ep'))
+    conv_def_num = int(_CONFIG.get(section='model_details', option='conv_def_num'))
     mob_depth_multiplier = float(_CONFIG.get(section='model_details', option='mob_depth_multiplier'))
+    data_dims = _CONFIG.get(section='model_details', option='data_dims')
+    data_dims = data_dims.split(',')
+    data_dims = list(map(int, data_dims))
+    print(data_dims)
 
-    model_details = [multi_deconv, mob_f_ep, mob_depth_multiplier]
+    model_details = [multi_deconv, conv_def_num, mob_depth_multiplier, data_dims]
     return model_details
 
 def get_timestamp():
@@ -94,8 +99,10 @@ def print_chkpoint_details(batch_size,
                            load_from_chkpt,
                            chkpt_details_file_path,
                            multi_deconv,
-                           mob_f_ep,
-                           mob_depth_multiplier):
+                           conv_def_num,
+                           mob_depth_multiplier,
+                           data_dims
+                          ):
     '''
     Prints details associated with training for debugging and analysis
     :param batch_size: batch size
@@ -105,7 +112,7 @@ def print_chkpoint_details(batch_size,
     :param load_from_chkpt: the checkpoint file from which the training has commenced
     :param chkpt_details_file_path: file to which the details are stored to.
     :param multi_deconv: are there multiple layers of deconv
-    :param mob_f_ep: mobilenet_encoder_endpoint
+    :param conv_def_num: mobilenet_encoder_endpoint
     :param mob_depth_multiplier: mobilenet_depth_multiplier
     :return: N/A
     '''
@@ -120,8 +127,15 @@ def print_chkpoint_details(batch_size,
 
     config['model_details'] = {}
     config['model_details']['multi_deconv'] = str(int(multi_deconv))
-    config['model_details']['mob_f_ep'] = str(mob_f_ep)
+    config['model_details']['conv_def_num'] = str(conv_def_num)
     config['model_details']['mob_depth_multiplier'] = str(mob_depth_multiplier)
+    if not data_dims:
+        data_dims_string = str(data_dims)
+    else:
+        data_dims_string = str(data_dims[0])
+        for i in range(1,len(data_dims)):
+            data_dims_string += ','+str(data_dims[i])
+    config['model_details']['data_dims'] = data_dims_string
 
     with open(chkpt_details_file_path, 'w') as configfile:
         config.write(configfile)
@@ -211,6 +225,7 @@ def accuracy_IOU(preds, labels, mask_bkgrnd = True):
     '''
 
     TP,TN,FP,FN = get_confusion_matrix(preds,labels,mask_bkgrnd)
+    #print('TP shape', TP.shape)
 
     IOU = np.mean(TP/(TP + FP + FN + _TINY))
 
@@ -222,7 +237,7 @@ def get_confusion_matrix(preds, labels, mask_bkgrnd = True):
     Calculates True Positives, True Negatives, False Positives, False Negatives for each class
     :param preds: predicted label in the form (N, H, W)
     :param labels: actual label in the form (N, H, W)
-    :return: TP, TN, FP, FN, all in the form of (C,N)
+    :return: TP, TN, FP, FN, all in the form of (C)
     '''
     np_preds = np.array(preds)
     np_labels = np.array(labels)
@@ -291,7 +306,7 @@ def visualize_predictions(pred,label,depth,path):
     # Clear Plots
     plt.gcf().clear()
 
-def save_predictions(pred,depth,path):
+def save_predictions(pred,depth,path,interpolation = 'nearest'):
     '''
     Saves the predicted segmentation map to an image file
     :param pred: prediction
@@ -299,14 +314,17 @@ def save_predictions(pred,depth,path):
     :param path: prediction image path
     :return:
     '''
+    #rgbPred = DataSet.label2rgb(pred)
+
     # predictionlabel2rgb masks out the background
     rgbPred = DataSet.predictionlabel2rgb(pred, depth)
     #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
+
     #rgbPred = ndimage.median_filter(rgbPred,3)
     #rgbPred = ndimage.gaussian_filter(rgbPred,3)
     #rgbPred = DataSet.label2rgb(pred)
     #print(rgbPred.shape)
-    rgbPred = misc.imresize(rgbPred, 400, 'nearest')
+    rgbPred = misc.imresize(rgbPred, 400, interpolation)
     misc.imsave(path,rgbPred)
 
 

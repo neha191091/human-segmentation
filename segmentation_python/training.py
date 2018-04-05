@@ -8,6 +8,7 @@ from tensorflow.contrib import slim
 from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
 from segmentation_python.data_utils import DataSet, Dataset_TF_Provide
 from segmentation_python.net_main import SegmentationNetwork
+from segmentation_python.conv_defs import _CONV_DEFS
 
 '''
 This script contains modules that can be called to train from the tfRecord data.
@@ -16,13 +17,14 @@ This script contains modules that can be called to train from the tfRecord data.
 def train(dir_tf_record,
           batch_size,
           num_epochs,
+          data_dims_from_ckpt = None,
           chckpt_interval = 100,
           lr=1e-4,
           show_last_prediction = True,
           override_tfrecords = None,
           load_from_chkpt=None,
           multi_deconv=True,
-          mob_f_ep=13,
+          conv_def_num = 0,
           mob_depth_multiplier=1.0):
     '''
     Train the network using TfRecords
@@ -41,7 +43,16 @@ def train(dir_tf_record,
     '''
 
     data_dim = utils.get_img_dim_from_data_dir(dir_tf_record)
-    #batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
+
+    print('Data dimension: ', data_dim)
+    print('Data dims from chkpt ', data_dims_from_ckpt)
+
+    if load_from_chkpt and (not data_dims_from_ckpt == data_dim):
+        print('The data dimensions from chkpt and data do not match')
+        return
+
+    conv_defs = _CONV_DEFS[conv_def_num]
+
     depths, labels = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(dir_tf_record=dir_tf_record,
                                                                            batch_size=batch_size,
                                                                            num_epochs=num_epochs,
@@ -53,7 +64,7 @@ def train(dir_tf_record,
                                 data_dim,
                                 is_training=True,
                                 multi_deconv=multi_deconv,
-                                mob_f_ep=mob_f_ep,
+                                conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
@@ -79,11 +90,17 @@ def train(dir_tf_record,
                                  load_from_chkpt= load_from_chkpt,
                                  chkpt_details_file_path= chkpt_details_file_path,
                                  multi_deconv=multi_deconv,
-                                 mob_f_ep=mob_f_ep,
-                                 mob_depth_multiplier=mob_depth_multiplier)
+                                 conv_def_num=conv_def_num,
+                                 mob_depth_multiplier=mob_depth_multiplier,
+                                 data_dims=data_dim)
+
+    if load_from_chkpt:
+        chkpt_text = str(load_from_chkpt.split('/')[-1].split('.')[0])
+    else:
+        chkpt_text = str(None)
 
     training_result_path = _RESULT_PATH + '_training_tf_' + '%s' % timestamp + "_lr_" + str(lr) + "_batch_" + str(
-        batch_size) + "_ckpt_" + str(load_from_chkpt.split('/')[-1].split('.')[0]) + "/"
+        batch_size) + "_ckpt_" + chkpt_text + "/"
     if not os.path.exists(training_result_path):
         os.makedirs(training_result_path)
 
@@ -95,8 +112,9 @@ def train(dir_tf_record,
                                  load_from_chkpt= load_from_chkpt,
                                  chkpt_details_file_path= metrics_file_path,
                                  multi_deconv=multi_deconv,
-                                 mob_f_ep=mob_f_ep,
-                                 mob_depth_multiplier=mob_depth_multiplier)
+                                 conv_def_num=conv_def_num,
+                                 mob_depth_multiplier=mob_depth_multiplier,
+                                 data_dims=data_dim)
 
     image_result_part_path = training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
@@ -123,6 +141,7 @@ def train(dir_tf_record,
                 # of your ops or variables, you may include them in
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
+                print('Step ',step)
                 _, loss, pred, corr_depth, corr_label = sess.run(
                     [train_op, cross_entropy_loss, predictions, depths, labels])
 
@@ -176,26 +195,28 @@ if __name__ == '__main__':
     #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
     #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
-    dir_tf_record = _DATA_PATH+'data_single_model_by_4'
-    batch_size = 2
+    dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
+    batch_size = 1
     num_epochs = 1
     lr = 1e-3
     override_tfrecords = ['train_0']
-    load_from_chkpt = _CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
+    load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
     multi_deconv = True
-    mob_f_ep = 9
     mob_depth_multiplier = 0.75
+    conv_def_num = 3
+    data_dims_from_ckpt = None
 
     if load_from_chkpt:
-        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(load_from_chkpt)
 
     train(dir_tf_record=dir_tf_record,
           batch_size=batch_size,
           num_epochs=num_epochs,
+          data_dims_from_ckpt = data_dims_from_ckpt,
           lr=lr,
           override_tfrecords=override_tfrecords,
           load_from_chkpt = load_from_chkpt,
           multi_deconv=multi_deconv,
-          mob_f_ep=mob_f_ep,
+          conv_def_num=conv_def_num,
           mob_depth_multiplier=mob_depth_multiplier)
 

@@ -1,10 +1,12 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from segmentation_python.initialize import _DATA_PATH
 #import tfslimlocalcopy as slim
 import segmentation_python.net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
-from segmentation_python.data_utils import DataSet, labels_list
+from segmentation_python.data_utils import DataSet, Dataset_Raw_Provide, labels_list
+from segmentation_python.conv_defs import _CONV_DEFS
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -23,18 +25,15 @@ class MobileNet_V1:
                  inputs,
                  deconv_size,
                  multi_deconv=True,
-                 f_endpoint=13,
                  num_classes=11,
                  dropout_keep_prob=0.999,
                  is_training=True,
                  min_depth=8,
                  depth_multiplier=1.0,
-                 conv_defs=None,
+                 conv_defs=_CONV_DEFS[0],
                  scope='MobileNet_V1',
                  reuse=None):
-        if f_endpoint < 0 and f_endpoint > 13:
-            print("Can only choose a value between 0 and 13 for MobileNet_V1 endpoint, choosing the default ", 13)
-            f_endpoint = 13
+        f_endpoint = len(conv_defs) - 1
         final_endpoint = MobileNet_V1.final_endpoint_array[f_endpoint]
 
         with tf.variable_scope(scope, 'MobileNet_V1', [inputs, num_classes],
@@ -53,7 +52,7 @@ class MobileNet_V1:
                     end_points['Input'] =inputs
                     with tf.variable_scope('ImageLogits'):
                         # Add prediction layers
-                        deconv_logits, extra_endpoints = MobileNet_V1._get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,end_points, is_training, multi_deconv=multi_deconv)
+                        deconv_logits, extra_endpoints = MobileNet_V1._get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,end_points, is_training, conv_defs, multi_deconv=multi_deconv)
 
                     end_points.update(extra_endpoints)
                     end_points['ImageLogits'] = deconv_logits
@@ -101,7 +100,7 @@ class MobileNet_V1:
         return masked_loss
 
     @staticmethod
-    def _get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,conv_endpoints, is_training, multi_deconv=True):
+    def _get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,conv_endpoints, is_training, conv_defs, multi_deconv=True):
         """
         Add prediction layers on top of MobileNet_V1
         :param net: Pass the base net
@@ -131,7 +130,6 @@ class MobileNet_V1:
 
         else:
             print('Multi-deconv, f_endpoint is ', f_endpoint)
-            conv_defs = mob._CONV_DEFS
             for i in range(f_endpoint,-1,-1):
                 conv_def = conv_defs[i]
                 if i == 0:
@@ -141,9 +139,9 @@ class MobileNet_V1:
                     corr_ep_text = MobileNet_V1.final_endpoint_array[i-1]
                     num_out_filt = int(conv_def.depth / 2)
                 corr_shape = conv_endpoints[corr_ep_text].shape
-                if conv_def.stride == 2:
+                if not conv_def.stride == 1:
                     if corr_shape[1]%2 == 0 and corr_shape[2]%2 == 0:
-                        net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=2,normalizer_fn=slim.batch_norm)
+                        net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
                         #end_points['Debef'+corr_ep_text]=net
                     else:
                         print('De' + corr_ep_text, ' shape: ', corr_shape, ' num filters: ', int(conv_def.depth/2))
@@ -184,10 +182,10 @@ class MobileNet_V1:
         return kernel_size_out
 
 class SegmentationNetwork:
-    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1', is_training = True, dropout_keep_prob=0.999, multi_deconv=True,  mob_f_ep = 13, mob_depth_multiplier=1):
+    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1', is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=True, mob_depth_multiplier=1):
 
         if(base_net_name == 'MobileNet_V1'):
-            net_class = MobileNet_V1(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training, dropout_keep_prob=dropout_keep_prob, multi_deconv=multi_deconv, f_endpoint=mob_f_ep, depth_multiplier=mob_depth_multiplier)
+            net_class = MobileNet_V1(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training, dropout_keep_prob=dropout_keep_prob, conv_defs=conv_defs, multi_deconv=multi_deconv,  depth_multiplier=mob_depth_multiplier)
         elif(base_net_name == 'ResNet50'):
             net_class = Resnet50(inputs, scope=scope)
         else:
@@ -205,15 +203,36 @@ if __name__ == '__main__':
 
     # WARNING: Do not run this file directly ... use the following code for only testing the functionality #
 
-    dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=100)
-    xbatch, ybatch = dataset.get_batch_from_raw_data(1)
+    #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
+    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+
+    # TODO: Dont use this path until fully tested
+    # dir_raw_record = _DATA_PATH + 'raw_data_single_model_in_by_4_out_by_1'
+
+    batch_size = 2
+    num_epochs = 1
+    lr = 1e-3
+    multi_deconv = True
+    mob_depth_multiplier = 0.75
+    conv_defs = _CONV_DEFS[0]
+    data_dims_from_ckpt = None
+
+    dataset = Dataset_Raw_Provide(dir_raw_record)
+
+
+    xbatch, ybatch = dataset.get_batch_from_raw_data(batch_size)
     print('xbatch shape: ', xbatch.shape)
     print('ybatch shape: ', ybatch.shape)
+
     x = tf.placeholder(tf.float32, xbatch.shape, name='placeholder_x')
     y = tf.placeholder(tf.int32, ybatch.shape, name='placeholder_y')
-    model = SegmentationNetwork(x, ybatch[0].shape, multi_deconv=True, mob_f_ep=9, mob_depth_multiplier=0.75)
+
+    model = SegmentationNetwork(x, dataset.data_dim, conv_defs=conv_defs, multi_deconv=multi_deconv, mob_depth_multiplier=mob_depth_multiplier)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     print('prediction shape', model.get_predictions().shape)
+
+    num_params = np.sum([np.product([xi.value for xi in x.get_shape()]) for x in tf.all_variables()])
+    print('Number of parameters: ', num_params)
 
     #TODO: Remove later
     network_endpoints = model.net_class.end_points
@@ -235,7 +254,7 @@ if __name__ == '__main__':
         loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
         print('loss before: ', np.sum(loss))
         starttime = time.time()
-        for iter in range(500):
+        for iter in range(10):
             print(iter)
             sess.run(train_op, feed_dict={x: xbatch, y: ybatch})
 

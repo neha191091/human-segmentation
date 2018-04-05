@@ -122,7 +122,7 @@ DepthSepConv = namedtuple('DepthSepConv', ['kernel', 'stride', 'depth'])
 
 # _CONV_DEFS specifies the MobileNet body
 _CONV_DEFS = [
-    Conv(kernel=[3, 3], stride=2, depth=32),
+    Conv(kernel=[3, 3], stride=2, depth=32), #Conv(kernel=[3, 3], stride=2, depth=32),
     DepthSepConv(kernel=[3, 3], stride=1, depth=64),
     DepthSepConv(kernel=[3, 3], stride=2, depth=128),
     DepthSepConv(kernel=[3, 3], stride=1, depth=128),
@@ -137,7 +137,6 @@ _CONV_DEFS = [
     DepthSepConv(kernel=[3, 3], stride=2, depth=1024),
     DepthSepConv(kernel=[3, 3], stride=1, depth=1024)
 ]
-
 
 def mobilenet_v1_base(inputs,
                       final_endpoint='Conv2d_13_pointwise',

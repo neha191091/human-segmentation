@@ -9,17 +9,19 @@ from tensorflow.contrib import slim
 from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
 from segmentation_python.data_utils import Dataset_Raw_Provide
 from segmentation_python.net_main import SegmentationNetwork
+from segmentation_python.conv_defs import _CONV_DEFS
 
 def train(dir_raw_record,
           batch_size,
           num_epochs,
+          data_dims_from_ckpt = None,
           chckpt_interval = 100,
           lr=1e-4,
           show_last_prediction = True,
           load_from_chkpt=None,
           multi_deconv=True,
-          mob_f_ep=13,
-          mob_depth_multiplier=1.0):
+          mob_depth_multiplier=1.0,
+          conv_def_num = 0):
     '''
     Train the network using TfRecords
     :param dir_raw_record: Directory from which the data is produced
@@ -37,6 +39,13 @@ def train(dir_raw_record,
     dataset = Dataset_Raw_Provide(dir_raw_record)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
+    print('Data dims from chkpt ', data_dims_from_ckpt)
+
+    if load_from_chkpt and (not data_dims_from_ckpt == data_dim):
+        print('The data dimensions from chkpt and data do not match')
+        return
+
+    conv_defs = _CONV_DEFS[conv_def_num]
 
     num_its = math.ceil(dataset.total_samples / batch_size)
 
@@ -49,8 +58,8 @@ def train(dir_raw_record,
                                 data_dim,
                                 is_training=True,
                                 multi_deconv=multi_deconv,
-                                mob_f_ep=mob_f_ep,
-                                mob_depth_multiplier=mob_depth_multiplier)
+                                mob_depth_multiplier=mob_depth_multiplier,
+                                conv_defs=conv_defs)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -73,11 +82,17 @@ def train(dir_raw_record,
                                  load_from_chkpt=load_from_chkpt,
                                  chkpt_details_file_path=chkpt_details_file_path,
                                  multi_deconv=multi_deconv,
-                                 mob_f_ep=mob_f_ep,
-                                 mob_depth_multiplier=mob_depth_multiplier)
+                                 conv_def_num=conv_def_num,
+                                 mob_depth_multiplier=mob_depth_multiplier,
+                                 data_dims=data_dim)
+
+    if load_from_chkpt:
+        chkpt_text = str(load_from_chkpt.split('/')[-1].split('.')[0])
+    else:
+        chkpt_text = str(None)
 
     training_result_path = _RESULT_PATH + '_training_raw_' + '%s' % timestamp + "_lr_" + str(lr) + "_batch_" + str(
-        batch_size) + "_ckpt_" + str(load_from_chkpt.split('/')[-1].split('.')[0]) + "/"
+        batch_size) + "_ckpt_" + chkpt_text + "/"
     if not os.path.exists(training_result_path):
         os.makedirs(training_result_path)
 
@@ -89,8 +104,9 @@ def train(dir_raw_record,
                                  load_from_chkpt=load_from_chkpt,
                                  chkpt_details_file_path=metrics_file_path,
                                  multi_deconv=multi_deconv,
-                                 mob_f_ep=mob_f_ep,
-                                 mob_depth_multiplier=mob_depth_multiplier)
+                                 conv_def_num=conv_def_num,
+                                 mob_depth_multiplier=mob_depth_multiplier,
+                                 data_dims=data_dim)
     image_result_part_path =training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
 
@@ -166,18 +182,22 @@ if __name__ == '__main__':
     lr = 1e-3
     load_from_chkpt = _CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
     multi_deconv = True
-    mob_f_ep = 9
     mob_depth_multiplier = 0.75
+    conv_def_num = 1
+    data_dims_from_ckpt = None
 
     if load_from_chkpt:
-        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+
+    #print(conv_defs.ltype)
 
     train(dir_raw_record=dir_raw_record,
           batch_size=batch_size,
           num_epochs=num_epochs,
+          data_dims_from_ckpt = data_dims_from_ckpt,
           lr=lr,
           load_from_chkpt=load_from_chkpt,
           multi_deconv=multi_deconv,
-          mob_f_ep=mob_f_ep,
-          mob_depth_multiplier=mob_depth_multiplier)
+          mob_depth_multiplier=mob_depth_multiplier,
+          conv_def_num=conv_def_num)
 

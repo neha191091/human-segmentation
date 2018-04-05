@@ -4,9 +4,10 @@ from segmentation_python.data_utils import Dataset_Raw_Provide
 from segmentation_python.net_main import SegmentationNetwork
 import time
 import segmentation_python.utils as utils
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH
+from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 import os
 import math
+from segmentation_python.conv_defs import _CONV_DEFS
 
 '''
 Script to evaluate the network by using raw test data
@@ -16,11 +17,12 @@ Script to evaluate the network by using raw test data
 def eval(dir_raw_record,
           batch_size,
           num_epochs,
+          data_dims_from_ckpt = None,
           save_prediction_interval=1,
           show_last_prediction = True,
           load_from_chkpt=None,
           multi_deconv=True,
-          mob_f_ep=13,
+          conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0):
     '''
     Evaluate the network from tfRecords.
@@ -37,8 +39,12 @@ def eval(dir_raw_record,
     '''
     dataset = Dataset_Raw_Provide(dir_raw_record)
     data_dim = dataset.data_dim
-
     print('Data dimension: ', data_dim)
+    print('Data dims from chkpt ', data_dims_from_ckpt)
+
+    if load_from_chkpt and (not data_dims_from_ckpt == data_dim):
+        print('The data dimensions from chkpt and data do not match')
+        return
 
     depths = tf.placeholder(dtype=tf.float32, shape=[None, data_dim[0], data_dim[1], 1])
     labels = tf.placeholder(dtype=tf.int32, shape=[None, data_dim[0], data_dim[1]])
@@ -48,7 +54,7 @@ def eval(dir_raw_record,
                                 is_training=True,
                                 dropout_keep_prob=1.0,
                                 multi_deconv=multi_deconv,
-                                mob_f_ep=mob_f_ep,
+                                conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier)
 
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
@@ -78,6 +84,10 @@ def eval(dir_raw_record,
         step_vector = []
         loss_vector = []
         acc_vector = []
+        TP_sum = np.zeros((10,))
+        TN_sum = np.zeros((10,))
+        FP_sum = np.zeros((10,))
+        FN_sum = np.zeros((10,))
 
         if load_from_chkpt:
             utils.load_checkpoint(sess, load_from_chkpt)
@@ -115,13 +125,18 @@ def eval(dir_raw_record,
 
                 # Print an overview fairly often.
                 if step % save_prediction_interval == 0:
+                    TP, TN, FP, FN = utils.get_confusion_matrix(pred, corr_label)
+                    TP_sum += TP
+                    TN_sum += TN
+                    FP_sum += FP
+                    FN_sum += FN
                     acc = utils.accuracy_per_pixel(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     step_vector.append(step)
                     loss_vector.append(loss_value)
                     #utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
                     utils.save_predictions(pred[0], np.squeeze(corr_depth[0]),
-                                                path=pred_result_part_path + str(step) + '.png')
+                                                path=pred_result_part_path + str(step) + '.png', interpolation = 'bilinear')
 
                 step += 1
                 print('step: ',step)
@@ -131,6 +146,12 @@ def eval(dir_raw_record,
         finally:
             end_time = time.time()
             print('Time taken for training: ', end_time - start_time)
+
+            # Get IOU over complete data
+            IOU = np.mean(TP_sum / (TP_sum + FP_sum + FN_sum + _TINY))
+            metrics_file = open(metrics_file_path, 'a+')
+            print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU), file=metrics_file)
+            metrics_file.close()
 
         utils.plot_loss(step_vector, loss_vector, loss_path, 'test')
 
@@ -142,28 +163,31 @@ if __name__ == '__main__':
     #chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'
 
     dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 1
-    override_tfrecords = ['test_0']
     load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
+    #load_from_chkpt = _CHKPT_PATH + '2018_04_05_08_53_checkpoint-1.ckpt'
     multi_deconv = True
-    mob_f_ep = 9
     mob_depth_multiplier = 0.75
+    conv_defs = _CONV_DEFS[1]
+    data_dims_from_ckpt = None
 
     if load_from_chkpt:
-        multi_deconv, mob_f_ep, mob_depth_multiplier = utils.get_model_details_from_chkpt_path(load_from_chkpt)
-    else:
-        print('You must provide a checkpoint to evaluate data')
-        exit()
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(
+            load_from_chkpt)
+        conv_defs = _CONV_DEFS[conv_def_num]
+
 
     eval(dir_raw_record=dir_raw_record,
          batch_size=batch_size,
          num_epochs=num_epochs,
+         data_dims_from_ckpt = data_dims_from_ckpt,
          save_prediction_interval=save_prediction_interval,
          load_from_chkpt=load_from_chkpt,
          multi_deconv=multi_deconv,
-         mob_f_ep=mob_f_ep,
+         conv_defs=conv_defs,
          mob_depth_multiplier=mob_depth_multiplier)
 
 
