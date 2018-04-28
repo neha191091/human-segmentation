@@ -1,0 +1,9 @@
+age
+gender
+height
+muscle
+weight
+asianVal
+africanVal
+caucasianVal
+breastsize

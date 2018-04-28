@@ -23,7 +23,7 @@ def train(dir_tf_record,
           show_last_prediction = True,
           override_tfrecords = None,
           load_from_chkpt=None,
-          multi_deconv=True,
+          multi_deconv=1,
           conv_def_num = 0,
           mob_depth_multiplier=1.0):
     '''
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     lr = 1e-3
     override_tfrecords = ['train_0']
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
-    multi_deconv = True
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_def_num = 3
     data_dims_from_ckpt = None

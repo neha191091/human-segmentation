@@ -19,7 +19,7 @@ def train(dir_raw_record,
           lr=1e-4,
           show_last_prediction = True,
           load_from_chkpt=None,
-          multi_deconv=True,
+          multi_deconv=1,
           mob_depth_multiplier=1.0,
           conv_def_num = 0):
     '''
@@ -48,6 +48,8 @@ def train(dir_raw_record,
     conv_defs = _CONV_DEFS[conv_def_num]
 
     num_its = math.ceil(dataset.total_samples / batch_size)
+    print('Total raw samples', dataset.total_samples)
+    print('batch size', batch_size)
 
     depths = tf.placeholder(dtype=tf.float32, shape=[batch_size, data_dim[0], data_dim[1], 1])
     labels = tf.placeholder(dtype=tf.int32, shape=[batch_size, data_dim[0], data_dim[1]])
@@ -176,12 +178,12 @@ if __name__ == '__main__':
     # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
     #                   test_fraction=0.01)
 
-    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    dir_raw_record = _DATA_PATH + 'raw_data_render_example_by_4'
     batch_size = 2
     num_epochs = 1
     lr = 1e-3
     load_from_chkpt = _CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
-    multi_deconv = True
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_def_num = 1
     data_dims_from_ckpt = None

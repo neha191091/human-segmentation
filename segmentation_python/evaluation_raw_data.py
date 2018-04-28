@@ -21,7 +21,7 @@ def eval(dir_raw_record,
           save_prediction_interval=1,
           show_last_prediction = True,
           load_from_chkpt=None,
-          multi_deconv=True,
+          multi_deconv=1,
           conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0):
     '''
@@ -169,7 +169,7 @@ if __name__ == '__main__':
     save_prediction_interval = 1
     load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
     #load_from_chkpt = _CHKPT_PATH + '2018_04_05_08_53_checkpoint-1.ckpt'
-    multi_deconv = True
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None

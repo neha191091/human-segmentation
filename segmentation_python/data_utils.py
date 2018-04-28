@@ -58,8 +58,11 @@ def _float_feature(value):
 
 # Paths for low resolution data: 120x160, You may change the path however you like, but current folders
 # have the data arranged in this manner. See README for more detail
-_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
-_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
+#_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
+#_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
+
+_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
+_DIR_RAWDATA = _DATA_PATH+'raw_data_render_example_by_4'
 
 class DataSet:
     '''
@@ -287,39 +290,51 @@ class Dataset_TF_Create:
                     writer.close()
 
         num_samples = self.total_samples
-        if randomize:
-            index_array = np.random.permutation(num_samples)
-        else:
-            index_array = np.arange(num_samples)
-        num_vals = int(np.floor(num_samples*val_fraction))
-        if(num_vals == 0):
+
+        #if randomize:
+        #    index_array = np.random.permutation(num_samples)
+        #else:
+        #    index_array = np.arange(num_samples)
+        index_array = np.arange(num_samples)
+
+        num_vals = int(np.floor(self.num_poses * val_fraction))
+        if (num_vals == 0 and self.num_poses > 2):
             num_vals = 1
-        num_test = int(np.floor(num_samples*test_fraction))
-        if(num_test == 0):
+        num_test = int(np.floor(self.num_poses * test_fraction))
+        if (num_test == 0 and self.num_poses > 1):
             num_test = 1
-        num_train = int(num_samples-num_test-num_vals)
-        print('num train: ',num_train, ' , num val: ', num_vals, ' , num test: ', num_test)
-        mask_train = index_array[0: num_train]
-        mask_val = index_array[num_train: num_train+num_vals]
-        mask_test = index_array[num_train+num_vals:num_train+num_vals+num_test]
+        #num_train = int(num_samples-num_test-num_vals)
+        #print('num train: ',num_train, ' , num val: ', num_vals, ' , num test: ', num_test)
+
+        train_samples = (self.num_poses - num_vals - num_test) * self.num_angles
+        test_samples = (num_test) * self.num_angles
+        val_samples = (num_vals) * self.num_angles
+
+        mask_train = index_array[0: train_samples]
+        mask_test = index_array[train_samples: train_samples+test_samples]
+        mask_val = index_array[train_samples+test_samples:train_samples+test_samples+val_samples]
+        if randomize:
+            mask_train = np.random.permutation(mask_train)
+            mask_test = np.random.permutation(mask_test)
+            mask_val = np.random.permutation(mask_val)
 
         # Generate val tfrecords
         mask_i = np.floor(mask_val / self.num_angles)
         mask_j = mask_val - mask_i * self.num_angles
         print('converting val....')
-        conversion_sub_func(mask_i, mask_j, num_vals, type='val')
+        conversion_sub_func(mask_i, mask_j, val_samples, type='val')
 
         # Generate train tfrecords
         mask_i = np.floor(mask_train / self.num_angles)
         mask_j = mask_train - mask_i * self.num_angles
         print('converting training....')
-        conversion_sub_func(mask_i, mask_j, num_train, type='train')
+        conversion_sub_func(mask_i, mask_j, train_samples, type='train')
 
         # Generate test tfrecords
         mask_i = np.floor(mask_test / self.num_angles)
         mask_j = mask_test - mask_i * self.num_angles
         print('converting test....')
-        conversion_sub_func(mask_i, mask_j, num_test, type='test')
+        conversion_sub_func(mask_i, mask_j, test_samples, type='test')
 
 class Dataset_TF_Provide:
 
@@ -453,7 +468,7 @@ class Dataset_Raw_Provide:
     Class to provide raw data
     """
 
-    def __init__(self, dir_raw_data, val_fraction = 0.1, test_fraction = 0.1):
+    def __init__(self, dir_raw_data, type='train', val_fraction = 0.1, test_fraction = 0.1):
         '''
         Initialize an object of class Dataset.
         :param dir_raw_data: directory from which the data is provided
@@ -478,14 +493,36 @@ class Dataset_Raw_Provide:
         self.num_angles = int(_CONFIG.get(section='data_variety', option='angles'))
 
 
-        self.total_samples = self.num_poses*self.num_angles
+        #self.total_samples = self.num_poses*self.num_angles
+        num_vals = int(np.floor(self.num_poses * val_fraction))
+        if (num_vals == 0 and self.num_poses > 2):
+            num_vals = 1
+        num_test = int(np.floor(self.num_poses * test_fraction))
+        if (num_test == 0 and self.num_poses > 1):
+            num_test = 1
+
+        train_samples = (self.num_poses - num_vals - num_test) * self.num_angles
+        test_samples = (num_test) * self.num_angles
+        val_samples = (num_vals) * self.num_angles
+
+        if type == 'train':
+            self.total_samples = train_samples
+            self.index_array = np.arange(train_samples)
+        elif type == 'test':
+            self.total_samples = test_samples
+            self.index_array = np.arange(train_samples, train_samples + test_samples)
+        else:
+            self.total_samples = val_samples
+            self.index_array = np.arange(train_samples + test_samples, train_samples + test_samples + val_samples)
+
 
         self.dir_raw_data = dir_raw_data
 
         # For accessing raw data
         self.next_index_for_raw_data = 0
 
-        self.index_array = np.arange(self.total_samples)
+        #self.index_array = np.arange(self.total_samples)
+
 
     def initialize_epoch_for_raw_data(self, permutate = True):
         '''
@@ -495,7 +532,7 @@ class Dataset_Raw_Provide:
         '''
         self.next_index_for_raw_data = 0
         if permutate:
-            self.index_array = np.random.permutation(self.total_samples)
+            self.index_array = np.random.permutation(self.index_array)
 
 
     def get_batch_from_raw_data(self, batch_size, convert2tensor =  False):
@@ -633,7 +670,7 @@ if __name__ == '__main__':
                        tf.local_variables_initializer())
     with tf.Session() as sess:
         sess.run(init_op)
-        record_iterator = tf.python_io.tf_record_iterator(path=_DIR_TFRECORDS+'/TfRecordFile_val_0.tfrecords')
+        record_iterator = tf.python_io.tf_record_iterator(path=_DIR_TFRECORDS+'/TfRecordFile_test_0.tfrecords')
 
         count = 0
         depths_arr = []

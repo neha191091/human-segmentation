@@ -1,0 +1,13 @@
+propertyName = value
+depth_of_field=
+resolution_x=640
+resolution_y=480
+field_of_view=
+field_of_view_x=
+field_of_view_y=
+lens_unit=MILLIMETERS
+focal_length=570
+sensor_height=67
+sensor_width=66
+exposure_time=
+aperture=

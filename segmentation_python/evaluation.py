@@ -18,7 +18,7 @@ def eval(dir_tf_record,
           show_last_prediction = True,
           override_tfrecords = None,
           load_from_chkpt=None,
-          multi_deconv=True,
+          multi_deconv=1,
           conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0):
     '''
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     save_prediction_interval = 10
     override_tfrecords = ['test_0']
     load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
-    multi_deconv = True
+    multi_deconv = 1
     mob_f_ep = 9
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]

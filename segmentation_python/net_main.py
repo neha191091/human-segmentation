@@ -24,7 +24,7 @@ class MobileNet_V1:
     def __init__(self,
                  inputs,
                  deconv_size,
-                 multi_deconv=True,
+                 multi_deconv=1,
                  num_classes=11,
                  dropout_keep_prob=0.999,
                  is_training=True,
@@ -100,7 +100,7 @@ class MobileNet_V1:
         return masked_loss
 
     @staticmethod
-    def _get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,conv_endpoints, is_training, conv_defs, multi_deconv=True):
+    def _get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,conv_endpoints, is_training, conv_defs, multi_deconv=1):
         """
         Add prediction layers on top of MobileNet_V1
         :param net: Pass the base net
@@ -182,7 +182,7 @@ class MobileNet_V1:
         return kernel_size_out
 
 class SegmentationNetwork:
-    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1', is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=True, mob_depth_multiplier=1):
+    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1', is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=1, mob_depth_multiplier=1):
 
         if(base_net_name == 'MobileNet_V1'):
             net_class = MobileNet_V1(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training, dropout_keep_prob=dropout_keep_prob, conv_defs=conv_defs, multi_deconv=multi_deconv,  depth_multiplier=mob_depth_multiplier)
@@ -212,9 +212,9 @@ if __name__ == '__main__':
     batch_size = 2
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = True
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
-    conv_defs = _CONV_DEFS[0]
+    conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None
 
     dataset = Dataset_Raw_Provide(dir_raw_record)

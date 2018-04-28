@@ -39,7 +39,7 @@ def get_model_details_from_chkpt_path(chkpt_path):
 
     _CONFIG.read(chkpt_details_path)
 
-    multi_deconv = bool(int(_CONFIG.get(section='model_details', option='multi_deconv')))
+    multi_deconv = int(_CONFIG.get(section='model_details', option='multi_deconv'))
     conv_def_num = int(_CONFIG.get(section='model_details', option='conv_def_num'))
     mob_depth_multiplier = float(_CONFIG.get(section='model_details', option='mob_depth_multiplier'))
     data_dims = _CONFIG.get(section='model_details', option='data_dims')
