@@ -1,13 +1,13 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from segmentation_python.data_utils import Dataset_TF_Provide
-from segmentation_python.net_main import SegmentationNetwork
+from data_utils import Dataset_TF_Provide
+from net_main import SegmentationNetwork
 import time
-import segmentation_python.utils as utils
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
+import utils as utils
+from initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 import os
-from segmentation_python.conv_defs import _CONV_DEFS
+from conv_defs import _CONV_DEFS
 
 # TODO: Confusion matrix, IOU
 def eval(dir_tf_record,
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     num_epochs = 1
     save_prediction_interval = 10
     override_tfrecords = ['test_0']
-    load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
+    load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
     multi_deconv = 1
     mob_f_ep = 9
     mob_depth_multiplier = 0.75

@@ -142,7 +142,7 @@ double convertexr2png(std::string dataPath, bool resizeImg = false)
 
 int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
-    std::string dataPath = "/home/neha/Documents/repo/segmentation/segmentation_python/data/raw_data_part/";
+    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data/";
     
     bool resize = true; 
     //
@@ -184,11 +184,18 @@ int main(int argc, char** argv) {
                 cv::minMaxLoc( colorImg, &minVal, &maxVal);
 
                 if (i == 0)
-                {std::cout << "depthImage.dims = " << colorImg.dims << " depthImage.size = " << colorImg.size() << " depthImage.channels = " << colorImg.channels() << std::endl;
+                {std::cout << "depthImage.dims = " << colorImg.dims << " depthImage.size = " << colorImg.size().height << "," << colorImg.size().width << " depthImage.channels = " << colorImg.channels() << std::endl;
 
                 std::cout << "min val depth: " << minVal << "\n";
                 std::cout << "max val depth: " << maxVal << "\n";}
-
+		
+		cv::Size s = colorImg.size();
+		
+		if (s.height <= 120 && s.width <= 160)
+		{
+			std::cout<<"Already resized to correct dimensions";
+			continue;
+		}
                 cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_AREA);
                 
                 cv::Mat depthImage_short(colorImg.size(), CV_16U);
@@ -231,8 +238,15 @@ int main(int argc, char** argv) {
             }
             else
             {
-              colorImg = cv::imread(colorpaths[i].c_str(), cv::IMREAD_COLOR);
-              cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_NEAREST);
+              	colorImg = cv::imread(colorpaths[i].c_str(), cv::IMREAD_COLOR);
+		cv::Size s = colorImg.size();
+		
+		if (s.height <= 120 && s.width <= 160)
+		{
+			std::cout<<"Already resized to correct dimensions";
+			continue;
+		}
+              	cv::resize(colorImg, colorImg, colorImg.size() / 4, 0, 0, cv::INTER_NEAREST);
             }
             cv::imwrite(colorpaths[i].c_str(), colorImg);
         }

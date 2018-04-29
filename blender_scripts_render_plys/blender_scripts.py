@@ -8,11 +8,11 @@ import tempfile
 """
 This is a blender script
 """
-BASE_DIR = "/home/neha/Documents/data/blender_data/"
+BASE_DIR = "/home/neha/segmentation/data/blender_data/"
 INPUT_DATA_DIR = BASE_DIR + "input_data/"
 OUTPUT_DATA_DIR = os.path.join(BASE_DIR, "render_data/")
 
-PROJECT_DIR = "/home/neha/Documents/repo/segmentation/blender_scripts_render_plys/"
+PROJECT_DIR = "/home/neha/segmentation/blender_scripts_render_plys/"
 CAMERA_POSITION_FILE = os.path.join(PROJECT_DIR,"input_files/camera_positions.txt")
 CAMERA_FOCAL_FILE = os.path.join(PROJECT_DIR,"input_files/camera_focal_length.txt")
 RGB_SUFFIX = "_rgb_"
@@ -497,7 +497,7 @@ if __name__ == "__main__":
                         print('filename: ',fileName,' , offset_degree_start: ',offset_degree_start, ' , index:', index)
 
                         outFileBase = 'human_'+str(itr_file)
-                        x_offset_empty = itr_empty_pos*randint(-0.5,0.5)
+                        x_offset_empty = itr_empty_pos*randint(-1,1)*0.5
                         rotate_empty_and_render(fileName, outFileBase, index*NUMBER_OF_VIEWS, offset_degree_start, x_offset_empty)
 
                         # Save positions to file
