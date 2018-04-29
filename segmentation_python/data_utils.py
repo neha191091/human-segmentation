@@ -1,7 +1,7 @@
 import glob
 import os
 
-from segmentation_python.initialize import _CONFIG, _DATA_PATH
+from initialize import _CONFIG, _DATA_PATH
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf

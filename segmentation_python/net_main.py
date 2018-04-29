@@ -1,12 +1,12 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from segmentation_python.initialize import _DATA_PATH
+from initialize import _DATA_PATH
 #import tfslimlocalcopy as slim
-import segmentation_python.net_mobilenet_v1 as mob
+import net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
-from segmentation_python.data_utils import DataSet, Dataset_Raw_Provide, labels_list
-from segmentation_python.conv_defs import _CONV_DEFS
+from data_utils import DataSet, Dataset_Raw_Provide, labels_list
+from conv_defs import _CONV_DEFS
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):

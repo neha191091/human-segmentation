@@ -4,8 +4,8 @@ import numpy as np
 import tensorflow as tf
 import dateutil.tz
 import datetime
-from segmentation_python.data_utils import labels_list, DataSet
-from segmentation_python.initialize import _CONFIG, _PROJECT_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
+from data_utils import labels_list, DataSet
+from initialize import _CONFIG, _PROJECT_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 from scipy import misc
 from scipy import ndimage
 import configparser

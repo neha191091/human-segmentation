@@ -1,13 +1,13 @@
 import numpy as np
 import tensorflow as tf
-from segmentation_python.data_utils import Dataset_Raw_Provide
-from segmentation_python.net_main import SegmentationNetwork
+from data_utils import Dataset_Raw_Provide
+from net_main import SegmentationNetwork
 import time
-import segmentation_python.utils as utils
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
+import utils as utils
+from initialize import _DATA_PATH, _CHKPT_PATH, _RESULT_PATH, _TINY
 import os
 import math
-from segmentation_python.conv_defs import _CONV_DEFS
+from conv_defs import _CONV_DEFS
 
 '''
 Script to evaluate the network by using raw test data

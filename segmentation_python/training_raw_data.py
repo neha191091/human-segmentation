@@ -3,13 +3,13 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import time
-import segmentation_python.utils as utils
+import utils as utils
 import os
 from tensorflow.contrib import slim
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
-from segmentation_python.data_utils import Dataset_Raw_Provide
-from segmentation_python.net_main import SegmentationNetwork
-from segmentation_python.conv_defs import _CONV_DEFS
+from initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
+from data_utils import Dataset_Raw_Provide
+from net_main import SegmentationNetwork
+from conv_defs import _CONV_DEFS
 
 def train(dir_raw_record,
           batch_size,
@@ -178,11 +178,12 @@ if __name__ == '__main__':
     # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
     #                   test_fraction=0.01)
 
-    dir_raw_record = _DATA_PATH + 'raw_data_render_example_by_4'
-    batch_size = 2
-    num_epochs = 1
+    #dir_raw_record = _DATA_PATH + 'raw_data_render_example_by_4'
+    dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
+    batch_size = 100
+    num_epochs = 100
     lr = 1e-3
-    load_from_chkpt = _CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
+    load_from_chkpt = None#_CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_def_num = 1

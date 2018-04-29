@@ -2,13 +2,13 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import time
-import segmentation_python.utils as utils
+import utils as utils
 import os
 from tensorflow.contrib import slim
-from segmentation_python.initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
-from segmentation_python.data_utils import DataSet, Dataset_TF_Provide
-from segmentation_python.net_main import SegmentationNetwork
-from segmentation_python.conv_defs import _CONV_DEFS
+from initialize import _DATA_PATH, _CHKPT_PATH ,_RESULT_PATH
+from data_utils import DataSet, Dataset_TF_Provide
+from net_main import SegmentationNetwork
+from conv_defs import _CONV_DEFS
 
 '''
 This script contains modules that can be called to train from the tfRecord data.

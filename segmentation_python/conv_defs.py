@@ -1,4 +1,4 @@
-from segmentation_python.net_mobilenet_v1 import Conv, DepthSepConv
+from net_mobilenet_v1 import Conv, DepthSepConv
 
 _CONV_DEFS = [[
                 # Original Mobilenet_V1
