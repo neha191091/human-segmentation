@@ -505,6 +505,10 @@ class Dataset_Raw_Provide:
         test_samples = (num_test) * self.num_angles
         val_samples = (num_vals) * self.num_angles
 
+        print('No of train samples: ', train_samples)
+        print('No of test samples: ', test_samples)
+        print('No of val samples: ', val_samples)
+        print('total train+val+test: ', train_samples+test_samples+val_samples)
         if type == 'train':
             self.total_samples = train_samples
             self.index_array = np.arange(train_samples)
@@ -515,8 +519,9 @@ class Dataset_Raw_Provide:
             self.total_samples = val_samples
             self.index_array = np.arange(train_samples + test_samples, train_samples + test_samples + val_samples)
 
-
         self.dir_raw_data = dir_raw_data
+        print('type = ', type)
+        print('index start: ', self.index_array[0], ' index end: ', self.index_array[-1])
 
         # For accessing raw data
         self.next_index_for_raw_data = 0
@@ -548,6 +553,8 @@ class Dataset_Raw_Provide:
             print('error encountered!!! Batch size should be lesser or equal to ', self.total_samples)
             return -1
         mask_1d = self.index_array[self.next_index_for_raw_data: self.next_index_for_raw_data + batch_size]
+        if len(mask_1d) != batch_size:
+    	    print('index_for_raw_data was', self.next_index_for_raw_data)
         self.next_index_for_raw_data = (self.next_index_for_raw_data + batch_size) % self.total_samples
         mask_i = np.floor(mask_1d/self.num_angles)
         mask_j = mask_1d - mask_i*self.num_angles

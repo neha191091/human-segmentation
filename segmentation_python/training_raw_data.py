@@ -15,7 +15,7 @@ def train(dir_raw_record,
           batch_size,
           num_epochs,
           data_dims_from_ckpt = None,
-          chckpt_interval = 100,
+          chckpt_interval = 200,
           lr=1e-4,
           show_last_prediction = True,
           load_from_chkpt=None,
@@ -47,7 +47,7 @@ def train(dir_raw_record,
 
     conv_defs = _CONV_DEFS[conv_def_num]
 
-    num_its = math.ceil(dataset.total_samples / batch_size)
+    num_its = math.floor(dataset.total_samples / batch_size)
     print('Total raw samples', dataset.total_samples)
     print('batch size', batch_size)
 
@@ -124,9 +124,8 @@ def train(dir_raw_record,
 
         start_time = time.time()
         for epoch in range(num_epochs):
-
+            print('Epoch: ', epoch)
             dataset.initialize_epoch_for_raw_data(permutate=True)
-
             for it in range(num_its):
 
                 depths_data, labels_data = dataset.get_batch_from_raw_data(batch_size, convert2tensor=False)
@@ -184,6 +183,7 @@ if __name__ == '__main__':
     num_epochs = 100
     lr = 1e-3
     load_from_chkpt = None#_CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
+    #load_from_chkpt = _CHKPT_PATH + '2018_04_29_06_56_checkpoint200.ckpt'
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_def_num = 1
@@ -203,4 +203,3 @@ if __name__ == '__main__':
           multi_deconv=multi_deconv,
           mob_depth_multiplier=mob_depth_multiplier,
           conv_def_num=conv_def_num)
-
