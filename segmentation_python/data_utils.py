@@ -61,8 +61,10 @@ def _float_feature(value):
 #_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
 #_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
 
-_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
-_DIR_RAWDATA = _DATA_PATH+'raw_data_render_example_by_4'
+#_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
+#_DIR_RAWDATA = _DATA_PATH+'raw_data_render_example_by_4'
+_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_tf'
+_DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data'
 
 class DataSet:
     '''
@@ -231,6 +233,7 @@ class Dataset_TF_Create:
             :return:
             '''
             count = -1
+            jcnt = 0
             for i, j in zip(mask_i, mask_j):
 
                 count += 1
@@ -244,10 +247,10 @@ class Dataset_TF_Create:
                 depthpartfilename = 'human_' + str(int(i)) + '_depth_' + str(int(j)) + '_*.png'
                 depthpartpath = os.path.join(self.dir_raw_data, depthpartfilename)
                 depthpath = ''
-                print('glob start: ', depthpartpath)
+                #print('glob start: ', depthpartpath)
                 for file in glob.glob(depthpartpath):
                     depthpath = file
-                    print(depthpath)
+                    #print(depthpath)
                     if type=='test':
                         print(depthpath)
                 if (depthpath == ''):
@@ -262,11 +265,14 @@ class Dataset_TF_Create:
                 # label
                 labelfilename = 'human_' + str(int(i)) + '_rgb_' + str(int(j)) + '.png'
                 labelpath = os.path.join(self.dir_raw_data, labelfilename)
-                print(depthpath, ' ', labelpath)
+                #print(depthpath, ' ', labelpath)
+                if int(j) == 0:
+                    print(depthpath, ' ', labelpath, ' cnt: ', jcnt)
+                    jcnt = 0
 
                 rgb_label = misc.imread(labelpath, mode='RGB')
                 label = DataSet.rgb2label(rgb_label)
-                print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
+                #print('label shape for step: ', count, ' : ', label.shape, ' & type: ', label.dtype)
 
 
                 if type == 'val' and count == 0:
@@ -288,6 +294,8 @@ class Dataset_TF_Create:
 
                 if (count % max_records_in_tfrec_file == max_records_in_tfrec_file - 1 or count >= num_pairs - 1):
                     writer.close()
+
+                jcnt += 1
 
         num_samples = self.total_samples
 
@@ -324,17 +332,17 @@ class Dataset_TF_Create:
         print('converting val....')
         conversion_sub_func(mask_i, mask_j, val_samples, type='val')
 
-        # Generate train tfrecords
-        mask_i = np.floor(mask_train / self.num_angles)
-        mask_j = mask_train - mask_i * self.num_angles
-        print('converting training....')
-        conversion_sub_func(mask_i, mask_j, train_samples, type='train')
-
         # Generate test tfrecords
         mask_i = np.floor(mask_test / self.num_angles)
         mask_j = mask_test - mask_i * self.num_angles
         print('converting test....')
         conversion_sub_func(mask_i, mask_j, test_samples, type='test')
+
+        # Generate train tfrecords
+        mask_i = np.floor(mask_train / self.num_angles)
+        mask_j = mask_train - mask_i * self.num_angles
+        print('converting training....')
+        conversion_sub_func(mask_i, mask_j, train_samples, type='train')
 
 class Dataset_TF_Provide:
 

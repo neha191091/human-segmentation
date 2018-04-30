@@ -180,7 +180,7 @@ if __name__ == '__main__':
     #dir_raw_record = _DATA_PATH + 'raw_data_render_example_by_4'
     dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
     batch_size = 100
-    num_epochs = 100
+    num_epochs = 1
     lr = 1e-3
     load_from_chkpt = None#_CHKPT_PATH + '2018_04_01_15_38_checkpoint-1.ckpt'
     #load_from_chkpt = _CHKPT_PATH + '2018_04_29_06_56_checkpoint200.ckpt'

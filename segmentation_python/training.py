@@ -18,7 +18,7 @@ def train(dir_tf_record,
           batch_size,
           num_epochs,
           data_dims_from_ckpt = None,
-          chckpt_interval = 100,
+          chckpt_interval = 2000,
           lr=1e-4,
           show_last_prediction = True,
           override_tfrecords = None,
@@ -141,7 +141,7 @@ def train(dir_tf_record,
                 # of your ops or variables, you may include them in
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
-                print('Step ',step)
+                #print('Step ',step)
                 _, loss, pred, corr_depth, corr_label = sess.run(
                     [train_op, cross_entropy_loss, predictions, depths, labels])
 
@@ -162,6 +162,7 @@ def train(dir_tf_record,
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     utils.save_checkpoint(sess, timestamp, step)
                     utils.plot_loss(step_vector, loss_vector, loss_path)
+                    print('Step ',step)
 
                 step += 1
 
@@ -195,11 +196,12 @@ if __name__ == '__main__':
     #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
     #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
-    dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
-    batch_size = 1
-    num_epochs = 1
+    #dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
+    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_tf'
+    batch_size = 100
+    num_epochs = 100
     lr = 1e-3
-    override_tfrecords = ['train_0']
+    override_tfrecords = None #['train_0']
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
     multi_deconv = 1
     mob_depth_multiplier = 0.75
@@ -219,4 +221,3 @@ if __name__ == '__main__':
           multi_deconv=multi_deconv,
           conv_def_num=conv_def_num,
           mob_depth_multiplier=mob_depth_multiplier)
-
