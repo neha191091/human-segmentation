@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 from initialize import _DATA_PATH
 #import tfslimlocalcopy as slim
 import net_mobilenet_v1 as mob
+from tensorflow.python.keras._impl.keras import layers as keras_layers
 from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
 from conv_defs import _CONV_DEFS
+import segmentation_python.net_layer_upsampling as upsample
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -141,13 +143,17 @@ class MobileNet_V1:
                 corr_shape = conv_endpoints[corr_ep_text].shape
                 if not conv_def.stride == 1:
                     if corr_shape[1]%2 == 0 and corr_shape[2]%2 == 0:
-                        net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
-                        #end_points['Debef'+corr_ep_text]=net
+                        if multi_deconv == 1:
+                            net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
+                            #end_points['Debef'+corr_ep_text]=net
+                        elif multi_deconv == 2:
+                            net = upsample.upsampling2D(net,size=(conv_def.stride,conv_def.stride))
+                            pass
                     else:
                         print('De' + corr_ep_text, ' shape: ', corr_shape, ' num filters: ', int(conv_def.depth/2))
                         kern_1 = int(corr_shape[1]) - int(net.shape[1]) + 1
                         kern_2 = int(corr_shape[2]) - int(net.shape[2]) + 1
-                        net = slim.conv2d_transpose(net, num_out_filt, [kern_1,kern_2], stride=1, padding='VALID', normalizer_fn=slim.batch_norm)
+                        net = upsample.conv2d_transpose(net, num_out_filt, [kern_1,kern_2], stride=1, padding='VALID', normalizer_fn=slim.batch_norm)
                         #end_points['Debef' + corr_ep_text] = net
                     if i is 1:
                         net = slim.dropout(net, keep_prob=dropout_keep_prob, is_training=is_training, scope='Dropout_1b')
@@ -212,7 +218,7 @@ if __name__ == '__main__':
     batch_size = 2
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 1
+    multi_deconv = 2
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None
