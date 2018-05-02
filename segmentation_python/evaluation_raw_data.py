@@ -37,7 +37,7 @@ def eval(dir_raw_record,
     :param mob_depth_multiplier: depth multiplier of mobilenet to reduce the number of parameters
     :return:
     '''
-    dataset = Dataset_Raw_Provide(dir_raw_record)
+    dataset = Dataset_Raw_Provide(dir_raw_record,type='test')
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     print('Data dims from chkpt ', data_dims_from_ckpt)
@@ -99,7 +99,7 @@ def eval(dir_raw_record,
         try:
             #while not coord.should_stop():
             dataset.initialize_epoch_for_raw_data(permutate=False)
-            loopsize = math.floor(dataset.total_samples/batch_size)
+            loopsize = 20 #math.floor(dataset.total_samples/batch_size)
             for iter in range(loopsize):
                 # Run one step of the model.  The return values are
                 # the activations from the `train_op` (which is
@@ -162,13 +162,15 @@ if __name__ == '__main__':
 
     #chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'
 
-    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    #dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 1
-    load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
+    #load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
     #load_from_chkpt = _CHKPT_PATH + '2018_04_05_08_53_checkpoint-1.ckpt'
+    load_from_chkpt = _CHKPT_PATH + '2018_04_30_13_06_checkpoint-1.ckpt'#'2018_04_30_12_14_checkpoint8200.ckpt'
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
@@ -189,6 +191,3 @@ if __name__ == '__main__':
          multi_deconv=multi_deconv,
          conv_defs=conv_defs,
          mob_depth_multiplier=mob_depth_multiplier)
-
-
-
