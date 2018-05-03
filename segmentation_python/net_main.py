@@ -143,22 +143,26 @@ class MobileNet_V1:
                 if not conv_def.stride == 1:
                     if corr_shape[1]%2 == 0 and corr_shape[2]%2 == 0:
                         if multi_deconv == 1:
+                            # conv2d_transposed with large strides
                             net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
-                            #end_points['Debef'+corr_ep_text]=net
                         elif multi_deconv == 2:
+                            # resize+conv2d
                             net = tf.image.resize_images(net,[net.shape[1]*2,net.shape[2]*2],method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
-                            '''net = slim.separable_conv2d(net, None, conv_def.kernel,
+                            net = slim.conv2d(net, num_out_filt, conv_def.kernel,
+                                              stride=1,
+                                              normalizer_fn=slim.batch_norm)
+                        elif multi_deconv == 3:
+                            # resize+sep_conv+pointwise_conv
+                            net = tf.image.resize_images(net, [net.shape[1] * 2, net.shape[2] * 2],
+                                                         method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+                            net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                         depth_multiplier=1,
                                                         stride=1,
                                                         rate=1,
                                                         normalizer_fn=slim.batch_norm)
                             net = slim.conv2d(net, num_out_filt, [1, 1],
                                               stride=1,
-                                              normalizer_fn=slim.batch_norm)'''
-                            net = slim.conv2d(net, num_out_filt, conv_def.kernel,
-                                              stride=1,
                                               normalizer_fn=slim.batch_norm)
-                            pass
                     else:
                         print('De' + corr_ep_text, ' shape: ', corr_shape, ' num filters: ', int(conv_def.depth/2))
                         kern_1 = int(corr_shape[1]) - int(net.shape[1]) + 1
@@ -228,7 +232,7 @@ if __name__ == '__main__':
     batch_size = 2
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 2
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None
