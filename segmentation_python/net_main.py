@@ -2,9 +2,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from initialize import _DATA_PATH
-#import tfslimlocalcopy as slim
 import net_mobilenet_v1 as mob
-from tensorflow.python.keras._impl.keras import layers as keras_layers
 from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
 from conv_defs import _CONV_DEFS
