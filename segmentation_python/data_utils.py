@@ -586,7 +586,6 @@ class Dataset_Raw_Provide:
                 print('error encountered!!! Could not find depth file')
                 return -1
 
-
             depth = misc.imread(depthpath, mode='F')
             #depth = np.array([depth])
             #print('depth size bef: ', depth.shape)

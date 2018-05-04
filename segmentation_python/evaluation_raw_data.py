@@ -163,7 +163,8 @@ if __name__ == '__main__':
     #chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'
 
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
-    dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
+    #dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
+    dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_test'
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
     batch_size = 2
     num_epochs = 1

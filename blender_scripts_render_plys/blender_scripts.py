@@ -10,7 +10,7 @@ This is a blender script
 """
 BASE_DIR = "/home/neha/segmentation/data/blender_data/"
 INPUT_DATA_DIR = BASE_DIR + "input_data/"
-OUTPUT_DATA_DIR = os.path.join(BASE_DIR, "render_data/")
+OUTPUT_DATA_DIR = os.path.join(BASE_DIR, "render_data_test/")
 
 PROJECT_DIR = "/home/neha/segmentation/blender_scripts_render_plys/"
 CAMERA_POSITION_FILE = os.path.join(PROJECT_DIR,"input_files/camera_positions.txt")
@@ -477,7 +477,8 @@ if __name__ == "__main__":
     cam_pos = get_camera_positions(CAMERA_POSITION_FILE)
     offset_degree_start = 0
     num_process_files = 1
-    itr_file_stop = (itr_file_start+num_process_files) if (itr_file_start+num_process_files)<len(fileNames) else len(fileNames)
+    itr_file_stop = (itr_file_start+num_process_files) if (itr_file_start+num_process_file)<len(fileNames) else len(fileNames)
+    print(itr_file_stop)
     for itr_file in range(itr_file_start, itr_file_stop):
         fileName = fileNames[itr_file]
         for itr_pos in range(itr_pos_start, len(cam_pos)):
