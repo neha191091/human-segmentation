@@ -18,7 +18,7 @@ def train(dir_tf_record,
           batch_size,
           num_epochs,
           data_dims_from_ckpt = None,
-          chckpt_interval = 2000,
+          chckpt_interval = 10000,
           lr=1e-4,
           show_last_prediction = True,
           override_tfrecords = None,
@@ -198,14 +198,14 @@ if __name__ == '__main__':
 
     #dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
     dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_tf'
-    batch_size = 100
+    batch_size = 50
     num_epochs = 100
     lr = 1e-3
     override_tfrecords = None #['train_0']
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
-    multi_deconv = 1
+    multi_deconv = 2
     mob_depth_multiplier = 0.75
-    conv_def_num = 3
+    conv_def_num = 1
     data_dims_from_ckpt = None
 
     if load_from_chkpt:

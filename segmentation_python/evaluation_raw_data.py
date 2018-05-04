@@ -170,7 +170,10 @@ if __name__ == '__main__':
     save_prediction_interval = 1
     #load_from_chkpt = _CHKPT_PATH + 'REMOTE_2018_03_31_23_58_checkpoint-1.ckpt'
     #load_from_chkpt = _CHKPT_PATH + '2018_04_05_08_53_checkpoint-1.ckpt'
-    load_from_chkpt = _CHKPT_PATH + '2018_04_30_13_06_checkpoint-1.ckpt'#'2018_04_30_12_14_checkpoint8200.ckpt'
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_03_09_24_checkpoint-1.ckpt' #batch_of_100_multi-deconv=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_03_11_52_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_03_16_26_checkpoint-1.ckpt' #batch_of_10_multi-deconv=1
+    load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]

@@ -571,7 +571,7 @@ class Dataset_Raw_Provide:
         for i,j in zip(mask_i, mask_j):
             #label
             labelfilename = 'human_' + str(int(i)) + '_rgb_' +  str(int(j)) +'.png'
-            #print(labelfilename)
+            print(labelfilename)
             labelpath = os.path.join(self.dir_raw_data, labelfilename)
 
             #depth
@@ -581,7 +581,7 @@ class Dataset_Raw_Provide:
             depthpath = ''
             for file in glob.glob(depthpartpath):
                 depthpath = file
-                # print(depthpath)
+                print(depthpath)
             if(depthpath==''):
                 print('error encountered!!! Could not find depth file')
                 return -1

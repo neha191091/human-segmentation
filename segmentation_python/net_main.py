@@ -145,13 +145,13 @@ class MobileNet_V1:
                             net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
                         elif multi_deconv == 2:
                             # resize+conv2d
-                            net = tf.image.resize_images(net,[net.shape[1]*2,net.shape[2]*2],method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+                            net = tf.image.resize_images(net,[int(net.shape[1]*2),int(net.shape[2]*2)],method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
                             net = slim.conv2d(net, num_out_filt, conv_def.kernel,
                                               stride=1,
                                               normalizer_fn=slim.batch_norm)
                         elif multi_deconv == 3:
                             # resize+sep_conv+pointwise_conv
-                            net = tf.image.resize_images(net, [net.shape[1] * 2, net.shape[2] * 2],
+                            net = tf.image.resize_images(net, [int(net.shape[1]*2),int(net.shape[2]*2)],
                                                          method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
                             net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                         depth_multiplier=1,
@@ -227,10 +227,10 @@ if __name__ == '__main__':
     # TODO: Dont use this path until fully tested
     # dir_raw_record = _DATA_PATH + 'raw_data_single_model_in_by_4_out_by_1'
 
-    batch_size = 2
+    batch_size = 1
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 1
+    multi_deconv = 3
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None
@@ -272,7 +272,7 @@ if __name__ == '__main__':
         loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
         print('loss before: ', np.sum(loss))
         starttime = time.time()
-        for iter in range(10):
+        for iter in range(20):
             print(iter)
             sess.run(train_op, feed_dict={x: xbatch, y: ybatch})
 
