@@ -30,7 +30,12 @@ namespace fs = ::boost::filesystem;
 void get_all(std::string dataPath, const std::string& ext, std::vector<fs::path>& ret)
 {
     const fs::path root = dataPath.c_str();
-    if(!fs::exists(root) || !fs::is_directory(root)) return;
+
+    if(!fs::exists(root) || !fs::is_directory(root)) 
+    {
+        std::cout<<root<<" not found!!"<<std::endl;
+	return;
+    }
 
     fs::recursive_directory_iterator it(root);
     fs::recursive_directory_iterator endit;
@@ -142,7 +147,7 @@ double convertexr2png(std::string dataPath, bool resizeImg = false)
 
 int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
-    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_test/";
+    std::string dataPath = "/home/neha/Documents/data/blender_data/render_data/";
     
     bool resize = true; 
     //
@@ -152,11 +157,13 @@ int main(int argc, char** argv) {
     std::vector<fs::path> paths;
     
     get_all(dataPath,ext,paths);
+    std::cout<<"Number of exr paths: "<<paths.size()<<std::endl;
     
     ext = ".png";
     std::vector<fs::path> colorpaths;
     
     get_all(dataPath,ext,colorpaths);
+    std::cout<<"Number of color paths: "<<colorpaths.size()<<std::endl;
     
     double min = 10000; //TODO: Change this to 5000 or a value in accordance with Keisuke's code
     for(int i=0; i < paths.size(); i++)
