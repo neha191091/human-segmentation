@@ -477,7 +477,7 @@ if __name__ == "__main__":
     cam_pos = get_camera_positions(CAMERA_POSITION_FILE)
     offset_degree_start = 0
     num_process_files = 600
-    itr_file_stop = (itr_file_start+num_process_files) if (itr_file_start+num_process_file)<len(fileNames) else len(fileNames)
+    itr_file_stop = (itr_file_start+num_process_files) if (itr_file_start+num_process_files)<len(fileNames) else len(fileNames)
     print(itr_file_stop)
     for itr_file in range(itr_file_start, itr_file_stop):
         fileName = fileNames[itr_file]

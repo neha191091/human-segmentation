@@ -306,6 +306,27 @@ def visualize_predictions(pred,label,depth,path):
     # Clear Plots
     plt.gcf().clear()
 
+def visualize_predictions_no_labels(pred,depth,path):
+    '''
+    Visualizes predictions against the  the input
+    :param pred: prediction
+    :param depth: input
+    :param path: path to which the visualization is saved
+    :return:
+    '''
+    # predictionlabel2rgb masks out the background
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
+    #rgbPred = DataSet.label2rgb(pred)
+    plt.subplot(1, 2, 1)
+    plt.imshow(rgbPred)
+    plt.axis('off')
+    plt.subplot(1, 2, 2)
+    plt.imshow(depth)
+    plt.axis('off')
+    plt.savefig(path)
+    # Clear Plots
+    plt.gcf().clear()
+
 def save_predictions(pred,depth,path,interpolation = 'nearest'):
     '''
     Saves the predicted segmentation map to an image file
@@ -326,6 +347,7 @@ def save_predictions(pred,depth,path,interpolation = 'nearest'):
     #print(rgbPred.shape)
     rgbPred = misc.imresize(rgbPred, 400, interpolation)
     misc.imsave(path,rgbPred)
+    #misc.imshow(rgbPred)
 
 
 def get_n_records_from_tf_record(tf_record, n=None, height=480, width=640):

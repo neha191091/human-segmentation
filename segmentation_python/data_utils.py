@@ -7,6 +7,8 @@ import numpy as np
 import tensorflow as tf
 from scipy import misc
 from shutil import copy
+import scipy.ndimage
+import cv2
 
 '''
 This scripts contains functions to create training and test data and utilize it for training and testing workflows
@@ -480,6 +482,7 @@ class Dataset_Raw_Provide:
         '''
         Initialize an object of class Dataset.
         :param dir_raw_data: directory from which the data is provided
+        :param type: type of data you want 'train'/'test'/'val'
         :param val_fraction: fraction of the raw data you want in the validation set
         :param test_fraction: fraction of the raw data you want in the test set
         '''
@@ -503,15 +506,21 @@ class Dataset_Raw_Provide:
 
         #self.total_samples = self.num_poses*self.num_angles
         num_vals = int(np.floor(self.num_poses * val_fraction))
-        if (num_vals == 0 and self.num_poses > 2):
+        if (num_vals == 0 and val_fraction and self.num_poses > 2):
             num_vals = 1
         num_test = int(np.floor(self.num_poses * test_fraction))
-        if (num_test == 0 and self.num_poses > 1):
+        if (num_test == 0 and test_fraction and self.num_poses > 1):
             num_test = 1
 
         train_samples = (self.num_poses - num_vals - num_test) * self.num_angles
+        if train_samples<0:
+            train_samples=0
         test_samples = (num_test) * self.num_angles
+        if test_samples<0:
+            train_samples=0
         val_samples = (num_vals) * self.num_angles
+        if val_samples<0:
+            train_samples=0
 
         print('No of train samples: ', train_samples)
         print('No of test samples: ', test_samples)
@@ -562,7 +571,7 @@ class Dataset_Raw_Provide:
             return -1
         mask_1d = self.index_array[self.next_index_for_raw_data: self.next_index_for_raw_data + batch_size]
         if len(mask_1d) != batch_size:
-    	    print('index_for_raw_data was', self.next_index_for_raw_data)
+            print('index_for_raw_data was', self.next_index_for_raw_data)
         self.next_index_for_raw_data = (self.next_index_for_raw_data + batch_size) % self.total_samples
         mask_i = np.floor(mask_1d/self.num_angles)
         mask_j = mask_1d - mask_i*self.num_angles
@@ -616,12 +625,98 @@ class Dataset_Raw_Provide:
         # print('depth path: ', depthpath, ' label path: ', labelpath)
         return np.array(depths),np.array(labels)
 
+class Dataset_Input_for_Prediction_Provide:
+
+    """
+    class for providing all the raw depth images from a folder to make predictions
+    """
+    def __init__(self, dir_pred_input, depth_str = 'depth', min_depth = 0, max_depth = 10000):
+
+        # Get all depth filenames and sort them
+        fileNames = os.listdir(dir_pred_input)
+        fileNames = list(filter(lambda x: (x.find(depth_str) != -1), fileNames))
+        fileNames.sort()
+        print(len(fileNames))
+
+        self.dir_pred_input = dir_pred_input
+        self.fileNames = fileNames
+        self.next_index = 0
+
+        depthpath = os.path.join(dir_pred_input, fileNames[0])
+        depth_0 = misc.imread(depthpath, mode='F')
+        self.data_dim = depth_0.shape
+        self.resize_factor = self.data_dim
+        self.min_depth = min_depth
+        self.max_depth = max_depth
+
+    def set_resize_factor(self, resize_factor):
+        self.resize_factor = resize_factor
+
+    def get_batch_from_pred_input_data(self, batch_size=10, convert2tensor =  False):
+        '''
+        Use the raw data directly to get batches
+        :param batch_size: batch size
+        :param convert2tensor: true if you want the data to be in the form f tensors
+        :return: A tuple containing either a tensor or a numpy list of depths and their corresponding labels
+        of shapes {depths: (N,H,W,C), labels: (N,H,W)}
+        '''
+        print(self.resize_factor)
+        if type(batch_size) is not int:
+            batch_size = len(self.fileNames)
+
+        if batch_size > len(self.fileNames):
+            print('error encountered!!! Batch size should be lesser or equal to ', len(self.fileNames))
+            return -1
+
+        #mask_1d = self.index_array[self.next_index_for_raw_data: self.next_index_for_raw_data + batch_size]
+        self.next_index = (self.next_index + batch_size) if (self.next_index + batch_size) < len(self.fileNames) else 0
+
+        depths = []
+        for i in range(batch_size):
+
+            print(i)
+            depthpartpath = self.fileNames[self.next_index + i]
+            depthpath = os.path.join(self.dir_pred_input, depthpartpath)
+            depth = misc.imread(depthpath, mode='F')
+            #depth = np.array([depth])
+
+            depth = np.where(depth >= self.max_depth, 10000, depth)
+            depth = np.where(depth <= self.min_depth, 10000, depth)
+            #depth = cv2.resize(depth, (int(depth.shape[1]*self.resize_factor), int(depth.shape[0]*self.resize_factor)), interpolation=cv2.INTER_AREA)
+            depth = cv2.resize(depth,
+                               (self.resize_factor[1], self.resize_factor[0]),
+                               interpolation=cv2.INTER_AREA)
+            print('depth size bef: ', depth.shape)
+            depth = np.reshape(depth, (depth.shape[0], depth.shape[1],-1))
+            print('depth size af: ', depth.shape)
+
+            depths.append(depth)
+
+        if convert2tensor == True:
+            return tf.stack(np.array(depths))
+        # print('depths_size: ', len(depths), ' ,labels_size: ', len(labels))
+        # print('depth path: ', depthpath, ' label path: ', labelpath)
+        return np.array(depths)
+
 
 if __name__ == '__main__':
 
     # test data utils
 
-    dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    #dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+
+    dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
+    dataset.set_resize_factor((120,160))
+    dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
+    depth = np.squeeze(dataset_batch)
+    print(depth.shape)
+    print('min: ', np.min(depth), 'max', np.max(depth))
+    #depth = np.where(depth >= 2000, 10000, depth)
+    #depth = np.where(depth <= 0, 10000, depth)
+    #depth = misc.imresize(depth, 25, 'cubic')
+    print(depth.shape)
+    plt.imshow(depth)
+    plt.show()
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data
@@ -680,6 +775,8 @@ if __name__ == '__main__':
     #     coord.join(threads)
 
     '''The following code uses a record iterator to check if the .tfrecord files have been generated correctly'''
+
+    '''
     init_op = tf.group(tf.global_variables_initializer(),
                        tf.local_variables_initializer())
     with tf.Session() as sess:
@@ -735,7 +832,8 @@ if __name__ == '__main__':
             count+=1
 
         print("count: ", count)
-
+    
+    '''
 
     ''' The following code is for when the training is ran using the raw data insteaf of the tfrecord files'''
 

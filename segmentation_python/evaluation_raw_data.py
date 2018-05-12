@@ -37,7 +37,8 @@ def eval(dir_raw_record,
     :param mob_depth_multiplier: depth multiplier of mobilenet to reduce the number of parameters
     :return:
     '''
-    dataset = Dataset_Raw_Provide(dir_raw_record,type='test')
+    #dataset = Dataset_Raw_Provide(dir_raw_record,type='test')
+    dataset = Dataset_Raw_Provide(dir_raw_record,type='test',val_fraction = 0, test_fraction = 1)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     print('Data dims from chkpt ', data_dims_from_ckpt)
@@ -51,7 +52,7 @@ def eval(dir_raw_record,
 
     model = SegmentationNetwork(depths,
                                 data_dim,
-                                is_training=True,
+                                is_training=False,
                                 dropout_keep_prob=1.0,
                                 multi_deconv=multi_deconv,
                                 conv_defs=conv_defs,
@@ -99,7 +100,7 @@ def eval(dir_raw_record,
         try:
             #while not coord.should_stop():
             dataset.initialize_epoch_for_raw_data(permutate=False)
-            loopsize = 20 #math.floor(dataset.total_samples/batch_size)
+            loopsize = math.floor(dataset.total_samples/batch_size)
             for iter in range(loopsize):
                 # Run one step of the model.  The return values are
                 # the activations from the `train_op` (which is
@@ -164,8 +165,12 @@ if __name__ == '__main__':
 
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
     #dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data'
-    dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_test'
+    #dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_test'
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
+
+    dir_raw_record = '/home/neha/Documents/data/blender_data/render_data_3000_1_pose_by_4'
+    dir_raw_record = '/home/neha/Documents/data/blender_data/render_data'
+
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 1
@@ -174,7 +179,10 @@ if __name__ == '__main__':
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_09_24_checkpoint-1.ckpt' #batch_of_100_multi-deconv=1
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_11_52_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_16_26_checkpoint-1.ckpt' #batch_of_10_multi-deconv=1
-    load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2
+
+    load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1
+
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
