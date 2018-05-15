@@ -705,9 +705,11 @@ class Dataset_Input_for_Prediction_Provide:
 
 if __name__ == '__main__':
 
-    # test data utils
+    # create tf data
 
     #dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+
+    # test prediction util
 
     dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
     dataset.set_resize_factor((120,160))
@@ -836,7 +838,7 @@ if __name__ == '__main__':
             count+=1
 
         print("count: ", count)
-    
+
     '''
 
     ''' The following code is for when the training is ran using the raw data insteaf of the tfrecord files'''

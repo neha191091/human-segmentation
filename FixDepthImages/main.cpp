@@ -147,8 +147,10 @@ double convertexr2png(std::string dataPath, bool resizeImg = false)
 
 int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
-    std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_scaled_down_mod/";
-    
+
+    //std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_scaled_down_mod/";
+    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data/";
+
     bool resize = true; 
     //
     //bool convert = convertexr2png(depthFilename.str(),0,0);

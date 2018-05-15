@@ -203,7 +203,7 @@ if __name__ == '__main__':
     lr = 1e-3
     override_tfrecords = None #['train_0']
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
-    multi_deconv = 2
+    multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_def_num = 1
     data_dims_from_ckpt = None
