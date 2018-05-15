@@ -680,12 +680,16 @@ class Dataset_Input_for_Prediction_Provide:
             depth = misc.imread(depthpath, mode='F')
             #depth = np.array([depth])
 
-            depth = np.where(depth >= self.max_depth, 10000, depth)
-            depth = np.where(depth <= self.min_depth, 10000, depth)
-            #depth = cv2.resize(depth, (int(depth.shape[1]*self.resize_factor), int(depth.shape[0]*self.resize_factor)), interpolation=cv2.INTER_AREA)
+            #depth = np.where(depth >= self.max_depth, 10000, depth)
+            #depth = np.where(depth <= self.min_depth, 10000, depth)
             depth = cv2.resize(depth,
                                (self.resize_factor[1], self.resize_factor[0]),
                                interpolation=cv2.INTER_AREA)
+            #
+            depth = np.where(depth <= 0, 10000, depth)
+            depth = depth + 6700
+            depth = np.where(depth >= 10000, 10000, depth)
+
             print('depth size bef: ', depth.shape)
             depth = np.reshape(depth, (depth.shape[0], depth.shape[1],-1))
             print('depth size af: ', depth.shape)

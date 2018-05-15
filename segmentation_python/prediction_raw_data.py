@@ -140,8 +140,8 @@ if __name__ == '__main__':
 
     #dir_pred_input_record = '/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18'
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
-    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
-    dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
+    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
+    #dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
 
     batch_size = 1
     num_epochs = 1

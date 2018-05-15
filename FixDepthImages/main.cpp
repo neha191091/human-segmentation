@@ -147,7 +147,7 @@ double convertexr2png(std::string dataPath, bool resizeImg = false)
 
 int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
-    std::string dataPath = "/home/neha/Documents/data/blender_data/render_data/";
+    std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_scaled_down_mod/";
     
     bool resize = true; 
     //
