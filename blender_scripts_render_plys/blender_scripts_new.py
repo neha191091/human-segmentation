@@ -8,11 +8,11 @@ import tempfile
 """
 This is a blender script
 """
-BASE_DIR = "/home/neha/Documents/data/blender_data/"
+BASE_DIR = "/home/neha/segmentation/data/blender_data/"
 INPUT_DATA_DIR = BASE_DIR + "input_data/"
-OUTPUT_DATA_DIR = os.path.join(BASE_DIR, "render_data_scaled_down_mod_2/")
+OUTPUT_DATA_DIR = os.path.join(BASE_DIR, "render_data_corrected/")
 
-PROJECT_DIR = "/home/neha/Documents/repo/segmentation/blender_scripts_render_plys/"
+PROJECT_DIR = "/home/neha/segmentation/blender_scripts_render_plys/"
 CAMERA_POSITION_FILE = os.path.join(PROJECT_DIR, "input_files/camera_positions_scaled_down_mod.txt")
 CAMERA_FOCAL_FILE = os.path.join(PROJECT_DIR, "input_files/camera_focal_length_scaled_down_mod.txt")
 VERTEX_GROUP_FILE = os.path.join(PROJECT_DIR, "input_files/vertex_groups.txt")
@@ -572,7 +572,7 @@ if __name__ == "__main__":
     cam_pos = create_camera_positions(COORD_MIN, COORD_MAX, 2)
     empty_pos = create_empty_positions(EMPTY_MIN_X, EMPTY_MAX_X, EMPTY_MIN_Y, EMPTY_MAX_Y, EMPTY_MIN_Z, EMPTY_MAX_Z)
     offset_degree_start = 0
-    num_process_files = 600
+    num_process_files = 300
     itr_file_stop = (itr_file_start + num_process_files) if (itr_file_start + num_process_files) < len(
         fileNames) else len(fileNames)
     print(itr_file_stop)

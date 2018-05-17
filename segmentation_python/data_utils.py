@@ -8,7 +8,7 @@ import tensorflow as tf
 from scipy import misc
 from shutil import copy
 import scipy.ndimage
-import cv2
+#import cv2
 
 '''
 This scripts contains functions to create training and test data and utilize it for training and testing workflows
@@ -64,9 +64,8 @@ def _float_feature(value):
 #_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
 
 #_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
-#_DIR_RAWDATA = _DATA_PATH+'raw_data_render_example_by_4'
-_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_tf'
-_DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data'
+_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300_tf'
+_DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300'
 
 class DataSet:
     '''
@@ -707,22 +706,22 @@ if __name__ == '__main__':
 
     # create tf data
 
-    #dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
 
     # test prediction util
 
-    dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
-    dataset.set_resize_factor((120,160))
-    dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
-    depth = np.squeeze(dataset_batch)
-    print(depth.shape)
-    print('min: ', np.min(depth), 'max', np.max(depth))
+    #dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
+    #dataset.set_resize_factor((120,160))
+    #dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
+    #depth = np.squeeze(dataset_batch)
+    #print(depth.shape)
+    #print('min: ', np.min(depth), 'max', np.max(depth))
     #depth = np.where(depth >= 2000, 10000, depth)
     #depth = np.where(depth <= 0, 10000, depth)
     #depth = misc.imresize(depth, 25, 'cubic')
-    print(depth.shape)
-    plt.imshow(depth)
-    plt.show()
+    #print(depth.shape)
+    #plt.imshow(depth)
+    #plt.show()
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data
