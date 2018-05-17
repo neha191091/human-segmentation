@@ -8,7 +8,6 @@ import tensorflow as tf
 from scipy import misc
 from shutil import copy
 import scipy.ndimage
-#import cv2
 
 '''
 This scripts contains functions to create training and test data and utilize it for training and testing workflows
@@ -41,6 +40,10 @@ labels_list = [{"id": 0, "name": "void",           "rgb_values": [0,0,0]},
 #                {"id": 9,  "name": "lower_left_leg", "rgb_values": [0,255,255]},
 #                {"id": 0,  "name": "lower_right_leg","rgb_values": [0,100,100]}]
 
+MIN_DEPTH_POSTPROCESS = 0.0
+MAX_DEPTH_POSTPROCESS = 1.0
+BGRD_POSTPROCESS = 2.0
+BGRD_PREPROCESS = 10000.0
 
 def _bytes_feature(value):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
@@ -63,8 +66,8 @@ def _float_feature(value):
 #_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
 #_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
 
-#_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
-_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300_tf'
+_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
+#_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300_tf'
 _DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300'
 
 class DataSet:
@@ -116,7 +119,7 @@ class DataSet:
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
-    def predictionlabel2rgb(preds, depth):
+    def predictionlabel2rgb(preds, depth, std_depth= True):
         '''
         Converts Predicted labelled maps to color coded RGB maps
         :param preds: Predicted label map of shape (H,W)
@@ -127,7 +130,11 @@ class DataSet:
         # Return rgb mappings with dtype = ubyte
 
         # Replace the pixels where the depth is 10K or more with zeros, as we assume that our object does not lie there
-        preds = np.where(depth >= 10000, 0, preds)
+        if std_depth:
+            preds = np.where(depth >= BGRD_POSTPROCESS, 0, preds)
+        else:
+            preds = np.where(depth >= BGRD_PREPROCESS, 0, preds)
+
 
         target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
 
@@ -138,7 +145,7 @@ class DataSet:
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
-    def predictionlabel2rgbsinglepart(preds, depth, part):
+    def predictionlabel2rgbsinglepart(preds, depth, part, std_depth=True):
         '''
         Converts Predicted labelled maps to color coded RGB maps but for only a single body part.
         :param preds: Predicted label map of shape (H,W)
@@ -150,7 +157,10 @@ class DataSet:
         # Return rgb mappings with dtype = ubyte, the needed part will be red (255,0,0)
 
         # Replace the pixels where the depth is 10K or more with zeros, as we assume that our object does not lie there
-        preds = np.where(depth >= 10000, 0, preds)
+        if std_depth:
+            preds = np.where(depth >= BGRD_POSTPROCESS, 0, preds)
+        else:
+            preds = np.where(depth >= BGRD_PREPROCESS, 0, preds)
 
         target_rgb = np.zeros((preds.shape[0], preds.shape[1], 3))
 
@@ -158,6 +168,7 @@ class DataSet:
         target_rgb[mask] = [255,0,0]
         # print('target_rgb shape: ', target_rgb.shape)
         return np.asarray(target_rgb, dtype=np.ubyte)
+
 
 class Dataset_TF_Create:
 
@@ -380,7 +391,7 @@ class Dataset_TF_Provide:
         of shape {depths: (N,H,W,C), labels: (N,H,W)}
         '''
 
-        def read_and_decode(filename_queue, height, width):
+        def read_and_decode(filename_queue, height, width, std_depth=True):
             '''
             read a single example from the tf_record file and decode it
             :param filename_queue: the queue of tf_record filenames
@@ -412,6 +423,14 @@ class Dataset_TF_Provide:
             # depth_shape = tf.stack([height, width, channels])
             tf_label = tf.reshape(tf_label, [height,width])
             tf_depth = tf.reshape(tf_depth, [height,width,1])
+
+            if std_depth:
+                tf_depth_min = tf.reduce_min(tf_depth)
+                tf_depth_max = tf.reduce_max(tf.where(tf_depth >= BGRD_PREPROCESS, tf.zeros_like(tf_depth), tf_depth))
+                tf_depth_diff = tf.where(tf.equal(tf_depth_min, tf_depth_max), tf.ones_like(tf_depth_min), tf_depth_max-tf_depth_min)
+                tf_depth = tf.where(tf_depth >= BGRD_PREPROCESS, tf.zeros_like(tf_depth) + BGRD_POSTPROCESS,
+                                    ((tf_depth - tf_depth_min)*(MAX_DEPTH_POSTPROCESS - MIN_DEPTH_POSTPROCESS))/tf_depth_diff)
+                #tf_depth = tf.where(tf_depth >= BGRD_PREPROCESS, tf.zeros_like(tf_depth) + BGRD_POSTPROCESS,tf_depth)
 
             return tf_depth, tf_label
 
@@ -452,7 +471,7 @@ class Dataset_TF_Provide:
             # reset out of bound depth values from 34464 to 10000
             # TODO: Remove this code when tfrecords are corrected
             # tf_depth[tf_depth == 34464] = 10000
-            # tf_depth = tf.where(tf_depth == 34464.0,tf.zeros_like(tf_depth)+10000,tf_depth)
+            #tf_depth = tf.where(tf_depth == 34464.0,tf.zeros_like(tf_depth)+10000,tf_depth)
 
             # standardization
             # TODO: Move this somewhere else
@@ -629,7 +648,7 @@ class Dataset_Input_for_Prediction_Provide:
     """
     class for providing all the raw depth images from a folder to make predictions
     """
-    def __init__(self, dir_pred_input, depth_str = 'depth', min_depth = 0, max_depth = 10000):
+    def __init__(self, dir_pred_input, depth_str = 'depth', min_depth = 0, max_depth = 10000, std_depth=True):
 
         # Get all depth filenames and sort them
         fileNames = os.listdir(dir_pred_input)
@@ -647,6 +666,7 @@ class Dataset_Input_for_Prediction_Provide:
         self.resize_factor = self.data_dim
         self.min_depth = min_depth
         self.max_depth = max_depth
+        self.std_depth = std_depth
 
     def set_resize_factor(self, resize_factor):
         self.resize_factor = resize_factor
@@ -681,13 +701,22 @@ class Dataset_Input_for_Prediction_Provide:
 
             #depth = np.where(depth >= self.max_depth, 10000, depth)
             #depth = np.where(depth <= self.min_depth, 10000, depth)
-            depth = cv2.resize(depth,
-                               (self.resize_factor[1], self.resize_factor[0]),
-                               interpolation=cv2.INTER_AREA)
+            if not self.resize_factor == self.data_dim:
+                import cv2
+                depth = cv2.resize(depth,
+                                   (self.resize_factor[1], self.resize_factor[0]),
+                                   interpolation=cv2.INTER_AREA)
             #
-            depth = np.where(depth <= 0, 10000, depth)
-            depth = depth + 6700
-            depth = np.where(depth >= 10000, 10000, depth)
+            depth = np.where(depth <= self.min_depth, BGRD_PREPROCESS, depth)
+            #depth = depth + 6700
+            depth = np.where(depth >= self.max_depth, BGRD_PREPROCESS, depth)
+            if self.std_depth:
+                depth_min = np.min(depth)
+                depth_max = np.max(np.where(depth >= BGRD_PREPROCESS, 0.0, depth))
+                depth_range = depth_max - depth_min if (depth_max - depth_min) > 0 else 1
+                depth = np.where(depth >=BGRD_PREPROCESS, BGRD_POSTPROCESS,
+                                 ((depth - depth_min)*(MAX_DEPTH_POSTPROCESS - MIN_DEPTH_POSTPROCESS))/depth_range)
+
 
             print('depth size bef: ', depth.shape)
             depth = np.reshape(depth, (depth.shape[0], depth.shape[1],-1))
@@ -706,22 +735,43 @@ if __name__ == '__main__':
 
     # create tf data
 
-    dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    #dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+
+    # test tf_provide
+
+    depth, label = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(_DIR_TFRECORDS)
+    print('batch_recieved')
+    coord = tf.train.Coordinator()
+    init_op = tf.group(tf.global_variables_initializer(),
+                       tf.local_variables_initializer())
+    with tf.Session() as sess:
+        sess.run(init_op)
+        threads = tf.train.start_queue_runners(sess=sess, coord=coord)
+        depth_val, label_val = sess.run([tf.squeeze(depth), tf.squeeze(label)])
+        print('depth val', depth_val)
+        plt.subplot(1, 2, 1)
+        plt.imshow(depth_val)
+        plt.axis('off')
+        plt.subplot(1, 2, 2)
+        plt.imshow(label_val)
+        plt.axis('off')
+        plt.show()
+
 
     # test prediction util
 
-    #dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
-    #dataset.set_resize_factor((120,160))
-    #dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
-    #depth = np.squeeze(dataset_batch)
-    #print(depth.shape)
+    dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
+    dataset.set_resize_factor((120,160))
+    dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
+    depth = np.squeeze(dataset_batch)
+    print(depth.shape)
     #print('min: ', np.min(depth), 'max', np.max(depth))
     #depth = np.where(depth >= 2000, 10000, depth)
     #depth = np.where(depth <= 0, 10000, depth)
     #depth = misc.imresize(depth, 25, 'cubic')
     #print(depth.shape)
-    #plt.imshow(depth)
-    #plt.show()
+    plt.imshow(depth)
+    plt.show()
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data

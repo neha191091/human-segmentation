@@ -153,7 +153,8 @@ if __name__ == '__main__':
     # load_from_chkpt = _CHKPT_PATH + '2018_05_03_16_26_checkpoint-1.ckpt' #batch_of_10_multi-deconv=1
     # load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2
 
-    load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
+    #load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
+    load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
 
     multi_deconv = 1
     mob_depth_multiplier = 0.75
