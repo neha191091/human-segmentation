@@ -119,7 +119,7 @@ class DataSet:
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
-    def predictionlabel2rgb(preds, depth, std_depth= True):
+    def predictionlabel2rgb(preds, depth, std_depth= False):
         '''
         Converts Predicted labelled maps to color coded RGB maps
         :param preds: Predicted label map of shape (H,W)
@@ -145,7 +145,7 @@ class DataSet:
         return np.asarray(target_rgb, dtype=np.ubyte)
 
     @staticmethod
-    def predictionlabel2rgbsinglepart(preds, depth, part, std_depth=True):
+    def predictionlabel2rgbsinglepart(preds, depth, part, std_depth=False):
         '''
         Converts Predicted labelled maps to color coded RGB maps but for only a single body part.
         :param preds: Predicted label map of shape (H,W)
@@ -391,7 +391,7 @@ class Dataset_TF_Provide:
         of shape {depths: (N,H,W,C), labels: (N,H,W)}
         '''
 
-        def read_and_decode(filename_queue, height, width, std_depth=True):
+        def read_and_decode(filename_queue, height, width, std_depth=False):
             '''
             read a single example from the tf_record file and decode it
             :param filename_queue: the queue of tf_record filenames
@@ -648,7 +648,7 @@ class Dataset_Input_for_Prediction_Provide:
     """
     class for providing all the raw depth images from a folder to make predictions
     """
-    def __init__(self, dir_pred_input, depth_str = 'depth', min_depth = 0, max_depth = 10000, std_depth=True):
+    def __init__(self, dir_pred_input, depth_str = 'depth', min_depth = 0, max_depth = 10000, std_depth=False):
 
         # Get all depth filenames and sort them
         fileNames = os.listdir(dir_pred_input)

@@ -24,7 +24,7 @@ VALID_FILE_EXTENSION = ".ply"
 REQUIRED_OBJECTS = ['Camera', 'Lamp']
 NUMBER_OF_VIEWS = 4  # 360
 OFFSET_DEGREE_FROM_START = 1
-OBJECT_SCALE = 0.14
+OBJECT_SCALE = 0.1
 RANDOM_SHIFT_MULTIPLIER = 0.1
 # 1 random choice, 1 fixed choice
 FOCAL_MIN = 400
@@ -39,9 +39,11 @@ EMPTY_MAX_Y = 0.05
 # 2 random choices, 1 fixed choice
 EMPTY_MIN_Z = -0.1
 EMPTY_MAX_Z = 0.05
+# 1 random choice, 1 fixed choice
 CAMERA_ROTATION_AXIS = 'Z'
-COORD_MIN = 0.9
-COORD_MAX = 1.5
+COORD_FIX = 0.7
+COORD_MIN = 0.5
+COORD_MAX = 1.0
 
 color_mapping = {}
 camera_properties = {}
@@ -299,7 +301,10 @@ def create_camera_positions(min_coord, max_coord, num_pos):
     data = []
     for itr in range(num_pos):
         pos_data = {}
-        pos = np.random.random_sample() * (max_coord - min_coord) + min_coord
+        if itr == 0:
+            pos = COORD_FIX
+        else:
+            pos = np.random.random_sample() * (max_coord - min_coord) + min_coord
         pos_data['tx'] = pos
         pos_data['ty'] = pos
         pos_data['tz'] = pos
@@ -576,6 +581,9 @@ if __name__ == "__main__":
     itr_file_stop = (itr_file_start + num_process_files) if (itr_file_start + num_process_files) < len(
         fileNames) else len(fileNames)
     print(itr_file_stop)
+    
+    index_file_path = os.path.join(OUTPUT_DATA_DIR, 'index.txt')
+    
     for itr_file in range(itr_file_start, itr_file_stop):
         fileName = fileNames[itr_file]
         for itr_pos in range(itr_pos_start, len(cam_pos)):
@@ -599,7 +607,11 @@ if __name__ == "__main__":
                         outFileBase = 'human_' + str(itr_file)
                         rotate_empty_and_render(fileName, outFileBase, index * NUMBER_OF_VIEWS, offset_degree_start,
                                                 pos_empty)
-
+                        index_file = open(index_file_path, 'a+')
+                        print(' infile: ', fileName, ' ,outfile: ', 'human_' + str(itr_file) , ' ,offset: ', offset_degree_start, ' , index:',
+                              index, ', focal: ', focal, ' ,cam: ', position['tx'],  ', empty: ', pos_empty, file = index_file)
+                        index_file.close()
+                        
                         # Save positions to file
                         with tempfile.NamedTemporaryFile(mode='w', dir=os.path.dirname(recordName),
                                                          delete=False) as fout:
@@ -613,3 +625,4 @@ if __name__ == "__main__":
         offset_degree_start = offset_degree_start + OFFSET_DEGREE_FROM_START
     endtime = time.time()
     print('Time taken: ', endtime - starttime)
+

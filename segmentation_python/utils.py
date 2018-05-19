@@ -281,7 +281,7 @@ def get_confusion_matrix(preds, labels, mask_bkgrnd = True):
 
     return TP, TN, FP, FN
 
-def visualize_predictions(pred,label,depth,path):
+def visualize_predictions(pred,label,depth,path,std_depth=False):
     '''
     Visualizes predictions against the ground truth and the input
     :param pred: prediction
@@ -291,7 +291,7 @@ def visualize_predictions(pred,label,depth,path):
     :return:
     '''
     # predictionlabel2rgb masks out the background
-    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
     #rgbPred = DataSet.label2rgb(pred)
     plt.subplot(1, 3, 1)
     plt.imshow(rgbPred)
@@ -306,7 +306,7 @@ def visualize_predictions(pred,label,depth,path):
     # Clear Plots
     plt.gcf().clear()
 
-def visualize_predictions_no_labels(pred,depth,path):
+def visualize_predictions_no_labels(pred,depth,path, std_depth=False):
     '''
     Visualizes predictions against the  the input
     :param pred: prediction
@@ -315,7 +315,7 @@ def visualize_predictions_no_labels(pred,depth,path):
     :return:
     '''
     # predictionlabel2rgb masks out the background
-    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
     #rgbPred = DataSet.label2rgb(pred)
     plt.subplot(1, 2, 1)
     plt.imshow(rgbPred)
@@ -327,7 +327,7 @@ def visualize_predictions_no_labels(pred,depth,path):
     # Clear Plots
     plt.gcf().clear()
 
-def save_predictions(pred,depth,path,interpolation = 'nearest'):
+def save_predictions(pred,depth,path,interpolation = 'nearest', std_depth= False):
     '''
     Saves the predicted segmentation map to an image file
     :param pred: prediction
@@ -338,7 +338,7 @@ def save_predictions(pred,depth,path,interpolation = 'nearest'):
     #rgbPred = DataSet.label2rgb(pred)
 
     # predictionlabel2rgb masks out the background
-    rgbPred = DataSet.predictionlabel2rgb(pred, depth)
+    rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
     #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
 
     #rgbPred = ndimage.median_filter(rgbPred,3)

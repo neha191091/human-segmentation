@@ -32,7 +32,7 @@ def predict(dir_pred_input_record,
     '''
 
 
-    dataset = Dataset_Input_for_Prediction_Provide(dir_pred_input_record, depth_str='depth', max_depth=1600, min_depth=0)
+    dataset = Dataset_Input_for_Prediction_Provide(dir_pred_input_record, depth_str='depth', max_depth=1600, min_depth=0, std_depth=False)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     print('Data dims from chkpt ', data_dims_from_ckpt)
@@ -120,9 +120,9 @@ def predict(dir_pred_input_record,
                 # Print an overview fairly often.
                 if step % save_prediction_interval == 0:
                     step_vector.append(step)
-                    utils.visualize_predictions_no_labels(pred[0],np.squeeze(corr_depth[0]),path = vis_result_part_path + str(step) + '.png')
+                    utils.visualize_predictions_no_labels(pred[0],np.squeeze(corr_depth[0]),path = vis_result_part_path + str(step) + '.png',std_depth=False)
                     utils.save_predictions(pred[0], np.squeeze(corr_depth[0]),
-                                                path=pred_result_part_path + str(step) + '.png')
+                                                path=pred_result_part_path + str(step) + '.png',std_depth=False)
 
                 step += 1
                 print('step: ',step)
@@ -139,8 +139,8 @@ if __name__ == '__main__':
     # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
 
     #dir_pred_input_record = '/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18'
-    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
-    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
+    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
     #dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
 
     batch_size = 1
@@ -155,7 +155,7 @@ if __name__ == '__main__':
 
     #load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
     load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
-
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_17_08_46_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, standardized, REMOTE
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
