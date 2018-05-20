@@ -149,7 +149,7 @@ int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
 
     //std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_corrected/";
-    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_corrected_300/";
+    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_corrected_TWO/";
 
     bool resize = true; 
     //

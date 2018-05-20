@@ -66,9 +66,9 @@ def _float_feature(value):
 #_DIR_TFRECORDS = _DATA_PATH+'data_single_model_by_4'
 #_DIR_RAWDATA = _DATA_PATH+'raw_data_single_model_by_4'
 
-_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
-#_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300_tf'
-_DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300'
+#_DIR_TFRECORDS = _DATA_PATH+'data_render_example_by_4'
+_DIR_TFRECORDS = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf'
+_DIR_RAWDATA =  '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO'
 
 class DataSet:
     '''
@@ -205,6 +205,7 @@ class Dataset_TF_Create:
         self.num_angles = int(_CONFIG.get(section='data_variety', option='angles'))
 
         self.total_samples = self.num_poses*self.num_angles
+        print('Total Samples: ', self.total_samples)
 
         self.dir_raw_data = dir_raw_data
         self.dir_tf_record = dir_tf_record
@@ -735,10 +736,11 @@ if __name__ == '__main__':
 
     # create tf data
 
-    #dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
+    dataset = Dataset_TF_Create(_DIR_RAWDATA,_DIR_TFRECORDS, max_records_in_tfrec_file=3600, val_fraction=0.1, test_fraction=0.1)
 
     # test tf_provide
 
+    """
     depth, label = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(_DIR_TFRECORDS)
     print('batch_recieved')
     coord = tf.train.Coordinator()
@@ -756,22 +758,19 @@ if __name__ == '__main__':
         plt.imshow(label_val)
         plt.axis('off')
         plt.show()
+    """
 
 
     # test prediction util
 
-    dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
-    dataset.set_resize_factor((120,160))
-    dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
-    depth = np.squeeze(dataset_batch)
-    print(depth.shape)
-    #print('min: ', np.min(depth), 'max', np.max(depth))
-    #depth = np.where(depth >= 2000, 10000, depth)
-    #depth = np.where(depth <= 0, 10000, depth)
-    #depth = misc.imresize(depth, 25, 'cubic')
+    #dataset = Dataset_Input_for_Prediction_Provide('/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18_easyPoses', depth_str='maya', max_depth=90, min_depth=64)
+    #dataset.set_resize_factor((120,160))
+    #dataset_batch = dataset.get_batch_from_pred_input_data(batch_size=1)
+    #depth = np.squeeze(dataset_batch)
     #print(depth.shape)
-    plt.imshow(depth)
-    plt.show()
+    #print('min: ', np.min(depth), 'max', np.max(depth))
+    #plt.imshow(depth)
+    #plt.show()
 
     '''
     The following code simply shows the test data in the tfrecords... comment it out if you just need to generate the data

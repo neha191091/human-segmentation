@@ -197,7 +197,7 @@ if __name__ == '__main__':
     #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
     #dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
-    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_300_tf'
+    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf'
     batch_size = 50
     num_epochs = 100
     lr = 1e-3
