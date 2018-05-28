@@ -38,7 +38,7 @@ def eval(dir_raw_record,
     :return:
     '''
     #dataset = Dataset_Raw_Provide(dir_raw_record,type='test')
-    dataset = Dataset_Raw_Provide(dir_raw_record,type='test',val_fraction = 0, test_fraction = 1)
+    dataset = Dataset_Raw_Provide(dir_raw_record,type='test',val_fraction = 0.1, test_fraction = 0.1)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     print('Data dims from chkpt ', data_dims_from_ckpt)
@@ -168,8 +168,10 @@ if __name__ == '__main__':
     #dir_raw_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_test'
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
 
-    dir_raw_record = '/home/neha/Documents/data/blender_data/render_data_3000_1_pose_by_4'
-    dir_raw_record = '/home/neha/Documents/data/blender_data/render_data'
+    #dir_raw_record = '/home/neha/Documents/data/blender_data/render_data_3000_1_pose_by_4'
+    #dir_raw_record = '/home/neha/Documents/data/blender_data/render_data'
+
+    dir_raw_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO'
 
     batch_size = 2
     num_epochs = 1
@@ -181,7 +183,13 @@ if __name__ == '__main__':
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_11_52_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1, pairs = 300
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_16_26_checkpoint-1.ckpt' #batch_of_10_multi-deconv=1, pairs = 300
     #load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2, pairs = 300
-    load_from_chkpt = _CHKPT_PATH + '2018_05_05_14_05_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1, pairs =600
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_05_14_05_checkpoint-1.ckpt' #batch_of_50_multi-deconv=1, pairs =600
+
+    # load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
+    # load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
+    # load_from_chkpt = _CHKPT_PATH + '2018_05_17_08_46_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, standardized, REMOTE
+    load_from_chkpt = _CHKPT_PATH + '2018_05_20_10_24_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected_TWO - changed scale and positions to match kinect v1 domain, 300, REMOTE
+
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]

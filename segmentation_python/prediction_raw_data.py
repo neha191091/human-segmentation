@@ -1,10 +1,10 @@
 import numpy as np
 import tensorflow as tf
-from segmentation_python.data_utils import Dataset_Input_for_Prediction_Provide
-from segmentation_python.net_main import SegmentationNetwork
+from data_utils import Dataset_Input_for_Prediction_Provide
+from net_main import SegmentationNetwork
 import time
-import segmentation_python.utils as utils
-from segmentation_python.initialize import _CHKPT_PATH, _RESULT_PATH, _DATA_PATH
+import utils as utils
+from initialize import _CHKPT_PATH, _RESULT_PATH, _DATA_PATH
 import os
 import math
 from tensorflow.python.tools import freeze_graph
@@ -20,7 +20,9 @@ def predict(dir_pred_input_record,
           load_from_chkpt=None,
           multi_deconv=1,
           conv_defs=_CONV_DEFS[0],
-          mob_depth_multiplier=1.0):
+          mob_depth_multiplier=1.0,
+          max_depth = 10000,
+          min_depth = 0):
     '''
     Predict segmentation maps from depths
     :param dataset: DataSet object
@@ -32,7 +34,7 @@ def predict(dir_pred_input_record,
     '''
 
 
-    dataset = Dataset_Input_for_Prediction_Provide(dir_pred_input_record, depth_str='depth', max_depth=1600, min_depth=0, std_depth=False)
+    dataset = Dataset_Input_for_Prediction_Provide(dir_pred_input_record, depth_str='depth', max_depth=max_depth, min_depth=min_depth, std_depth=False)
     data_dim = dataset.data_dim
     print('Data dimension: ', data_dim)
     print('Data dims from chkpt ', data_dims_from_ckpt)
@@ -136,11 +138,15 @@ def predict(dir_pred_input_record,
         utils.plot_loss(step_vector, loss_vector, loss_path, 'test')
 
 if __name__ == '__main__':
-    # dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01, test_fraction=0.01)
+
+    max_depth = 10000
+    min_depth = 0
 
     #dir_pred_input_record = '/home/neha/Documents/repo/InSeg_3/Data/bodyMay_7_18'
-    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
+    #max_depth = 1600 #yunus_data
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
+    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/sumit_11_5_2_refined'
     #dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
 
     batch_size = 1
@@ -154,8 +160,10 @@ if __name__ == '__main__':
     # load_from_chkpt = _CHKPT_PATH + '2018_05_03_22_56_checkpoint-1.ckpt' #batch_of_50_multi-deconv=2
 
     #load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
-    load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
+    #load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
     #load_from_chkpt = _CHKPT_PATH + '2018_05_17_08_46_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, standardized, REMOTE
+    load_from_chkpt = _CHKPT_PATH + '2018_05_20_10_24_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected_TWO - changed scale and positions to match kinect v1 domain, 300, REMOTE
+
     multi_deconv = 1
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
@@ -174,5 +182,7 @@ if __name__ == '__main__':
          load_from_chkpt=load_from_chkpt,
          multi_deconv=multi_deconv,
          conv_defs=conv_defs,
-         mob_depth_multiplier=mob_depth_multiplier)
+         mob_depth_multiplier=mob_depth_multiplier,
+         max_depth=max_depth,
+         min_depth=min_depth)
 
