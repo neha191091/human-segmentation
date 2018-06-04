@@ -1,7 +1,7 @@
 from net_mobilenet_v1 import Conv, DepthSepConv
 
 _CONV_DEFS = [[
-                # Original Mobilenet_V1
+                # 0: Original Mobilenet_V1
                 Conv(kernel=[3, 3], stride=2, depth=32),  # 0
                 DepthSepConv(kernel=[3, 3], stride=1, depth=64), # 1
                 DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 2
@@ -18,7 +18,7 @@ _CONV_DEFS = [[
                 DepthSepConv(kernel=[3, 3], stride=1, depth=1024) # 13
             ],
             [
-                # For images that are 120x160 : num parameters - 9923073 for mobile_depth_multiplier = 0.75
+                # 1: For images that are 120x160 : num parameters - 9923073 for mobile_depth_multiplier = 0.75
                 Conv(kernel=[3, 3], stride=2, depth=32),  # 0
                 DepthSepConv(kernel=[3, 3], stride=1, depth=64), # 1
                 DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 2
@@ -31,7 +31,7 @@ _CONV_DEFS = [[
                 DepthSepConv(kernel=[3, 3], stride=1, depth=512), # 9
             ],
             [
-                # For images that are 480x640: num parameters - 11398401 for mobile_depth_multiplier = 0.75
+                # 2: For images that are 480x640: num parameters - 11398401 for mobile_depth_multiplier = 0.75
                 Conv(kernel=[3, 3], stride=4, depth=32),  # 0
                 DepthSepConv(kernel=[3, 3], stride=1, depth=64), # 1
                 DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 2
@@ -44,7 +44,7 @@ _CONV_DEFS = [[
                 DepthSepConv(kernel=[3, 3], stride=2, depth=512),# 9
             ],
             [
-                # For images that are 480x640: num parameters - 2157057 for mobile_depth_multiplier = 0.75 , 3011233 for mobile_depth_multiplier = 1
+                # 3: For images that are 480x640: num parameters - 2157057 for mobile_depth_multiplier = 0.75 , 3011233 for mobile_depth_multiplier = 1
                 Conv(kernel=[3, 3], stride=4, depth=32),  # 0
                 DepthSepConv(kernel=[3, 3], stride=1, depth=64), # 1
                 DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 2
@@ -57,7 +57,7 @@ _CONV_DEFS = [[
                 DepthSepConv(kernel=[3, 3], stride=1, depth=512),# 9
             ],
             [
-                # For images that are 480x640: num parameters - 11245185 for mobile_depth_multiplier = 0.75
+                # 4: For images that are 480x640: num parameters - 11245185 for mobile_depth_multiplier = 0.75
                 Conv(kernel=[3, 3], stride=4, depth=32),  # 0
                 DepthSepConv(kernel=[3, 3], stride=1, depth=64), # 1
                 DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 2
@@ -67,7 +67,43 @@ _CONV_DEFS = [[
                 DepthSepConv(kernel=[3, 3], stride=2, depth=512), # 6
                 DepthSepConv(kernel=[3, 3], stride=1, depth=512), # 7
                 DepthSepConv(kernel=[3, 3], stride=2, depth=512), # 8
-            ]
+            ],
+            [
+                # 5: UNET,
+                # vars: 21265889, mobile_depth_multiplier: 1
+                # vars: 14775489, mobile_depth_multiplier: 0.75
+                Conv(kernel=[3, 3], stride=2, depth=32),  # 0
+                Conv(kernel=[3, 3], stride=1, depth=64),  # 1
+                Conv(kernel=[3, 3], stride=1, depth=64),  # 2
+                Conv(kernel=[3, 3], stride=2, depth=128), # 3
+                Conv(kernel=[3, 3], stride=1, depth=128), # 4
+                Conv(kernel=[3, 3], stride=1, depth=128), # 5
+                Conv(kernel=[3, 3], stride=2, depth=256), # 6
+                Conv(kernel=[3, 3], stride=1, depth=256), # 7
+                Conv(kernel=[3, 3], stride=1, depth=256), # 8
+                Conv(kernel=[3, 3], stride=2, depth=512), # 9
+                Conv(kernel=[3, 3], stride=1, depth=512), # 10
+                Conv(kernel=[3, 3], stride=1, depth=512), # 11
+                #Conv(kernel=[3, 3], stride=1, depth=512), # 9
+            ],
+            [
+                # 6: mobile UNET,
+                # vars: 14363489, mobile_depth_multiplier: 0.75
+                # vars: 10898145, mobile_depth_multiplier: 0.75
+                Conv(kernel=[3, 3], stride=2, depth=32),  # 0
+                DepthSepConv(kernel=[3, 3], stride=1, depth=64),  # 1
+                DepthSepConv(kernel=[3, 3], stride=1, depth=64),  # 2
+                DepthSepConv(kernel=[3, 3], stride=2, depth=128), # 3
+                DepthSepConv(kernel=[3, 3], stride=1, depth=128), # 4
+                DepthSepConv(kernel=[3, 3], stride=1, depth=128), # 5
+                DepthSepConv(kernel=[3, 3], stride=2, depth=256), # 6
+                DepthSepConv(kernel=[3, 3], stride=1, depth=256), # 7
+                DepthSepConv(kernel=[3, 3], stride=1, depth=256), # 8
+                DepthSepConv(kernel=[3, 3], stride=2, depth=512), # 9
+                DepthSepConv(kernel=[3, 3], stride=1, depth=512), # 10
+                DepthSepConv(kernel=[3, 3], stride=1, depth=512), # 11
+                #Conv(kernel=[3, 3], stride=1, depth=512), # 9
+            ],
         ]
 
 class ConvDef:

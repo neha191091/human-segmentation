@@ -53,6 +53,7 @@ def train(dir_tf_record,
 
     conv_defs = _CONV_DEFS[conv_def_num]
     batch_size_tensor = tf.placeholder_with_default(batch_size, shape=[])
+
     depths, labels = Dataset_TF_Provide.get_batch_from_tfrecords_via_queue(dir_tf_record=dir_tf_record,
                                                                            batch_size=batch_size_tensor,
                                                                            num_epochs=num_epochs,
@@ -71,9 +72,8 @@ def train(dir_tf_record,
     print('prediction shape', predictions.shape)
 
     cross_entropy_loss = model.loss(labels)
-    #TODO: Fix if correct
+
     train_op = slim.learning.create_train_op(cross_entropy_loss,tf.train.AdamOptimizer(learning_rate=lr))
-    #train_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cross_entropy_loss)
 
     coord = tf.train.Coordinator()
     init_op = tf.group(tf.global_variables_initializer(),
@@ -197,7 +197,8 @@ if __name__ == '__main__':
     #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
     #dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
-    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf'
+    #dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf'
+    dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
     batch_size = 50
     num_epochs = 100
     lr = 1e-3
@@ -207,9 +208,11 @@ if __name__ == '__main__':
     mob_depth_multiplier = 0.75
     conv_def_num = 1
     data_dims_from_ckpt = None
+    follow_up_convs = 0
+    sep_convs = False
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
 
     train(dir_tf_record=dir_tf_record,
           batch_size=batch_size,

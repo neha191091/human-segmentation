@@ -194,12 +194,15 @@ if __name__ == '__main__':
     mob_depth_multiplier = 0.75
     conv_defs = _CONV_DEFS[1]
     data_dims_from_ckpt = None
+    follow_up_convs = 0
+    sep_convs = False
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt = utils.get_model_details_from_chkpt_path(
-            load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
         conv_defs = _CONV_DEFS[conv_def_num]
-
+    else:
+        print('You must provide a checkpoint to evaluate data')
+        exit()
 
     eval(dir_raw_record=dir_raw_record,
          batch_size=batch_size,

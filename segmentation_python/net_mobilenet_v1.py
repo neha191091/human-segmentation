@@ -230,6 +230,7 @@ def mobilenet_v1_base(inputs,
                             normalizer_fn=slim.batch_norm,
                             scope=end_point)
           end_points[end_point] = net
+          print('end_point = ', end_point, ' ; final_endpoint = ', final_endpoint)
           if end_point == final_endpoint:
             return net, end_points
 

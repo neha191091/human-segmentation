@@ -39,15 +39,36 @@ def get_model_details_from_chkpt_path(chkpt_path):
 
     _CONFIG.read(chkpt_details_path)
 
-    multi_deconv = int(_CONFIG.get(section='model_details', option='multi_deconv'))
-    conv_def_num = int(_CONFIG.get(section='model_details', option='conv_def_num'))
-    mob_depth_multiplier = float(_CONFIG.get(section='model_details', option='mob_depth_multiplier'))
+    try:
+        multi_deconv = int(_CONFIG.get(section='model_details', option='multi_deconv'))
+    except:
+        multi_deconv = 1
+    try:
+        conv_def_num = int(_CONFIG.get(section='model_details', option='conv_def_num'))
+    except:
+        conv_def_num = 0
+    try:
+        mob_depth_multiplier = float(_CONFIG.get(section='model_details', option='mob_depth_multiplier'))
+    except:
+        mob_depth_multiplier = 1.0
     data_dims = _CONFIG.get(section='model_details', option='data_dims')
     data_dims = data_dims.split(',')
     data_dims = list(map(int, data_dims))
     print(data_dims)
 
-    model_details = [multi_deconv, conv_def_num, mob_depth_multiplier, data_dims]
+    try:
+        follow_up_convs = int(_CONFIG.get(section='model_details', option='follow_up_convs'))
+    except:
+        follow_up_convs = 0
+
+    if follow_up_convs:
+        try:
+            sep_convs = bool(int(_CONFIG.get(section='model_details', option='sep_convs')))
+        except:
+            sep_convs = False
+    else:
+        sep_convs = False
+    model_details = [multi_deconv, conv_def_num, mob_depth_multiplier, data_dims, follow_up_convs, sep_convs]
     return model_details
 
 def get_timestamp():
@@ -116,6 +137,9 @@ def print_chkpoint_details(batch_size,
     :param mob_depth_multiplier: mobilenet_depth_multiplier
     :return: N/A
     '''
+    if not os.path.exists(_CHKPT_PATH):
+        os.makedirs(_CHKPT_PATH)
+
     config = configparser.ConfigParser()
 
     config['training_details'] = {}
