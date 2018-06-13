@@ -1,5 +1,4 @@
 import os
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import dateutil.tz
@@ -216,6 +215,8 @@ def plot_loss(points, loss_history, loss_path, data_type='train'):
     :param data_type: train/test
     :return:
     '''
+
+    import matplotlib.pyplot as plt
     plt.title(data_type+" loss")
     plt.plot(points, loss_history)
     plt.xlabel('Iteration')
@@ -225,6 +226,9 @@ def plot_loss(points, loss_history, loss_path, data_type='train'):
     #print("loss graph saved at ", path)
     # Clear Plots
     plt.gcf().clear()
+
+def save_loss(loss_history, loss_npy_path):
+    np.save(loss_npy_path,loss_history)
 
 def accuracy_per_pixel(preds, labels, mask_bkgrnd = True):
     '''
@@ -314,6 +318,8 @@ def visualize_predictions(pred,label,depth,path,std_depth=False):
     :param path: path to which the visualization is saved
     :return:
     '''
+
+    import matplotlib.pyplot as plt
     # predictionlabel2rgb masks out the background
     rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
     #rgbPred = DataSet.label2rgb(pred)
@@ -338,6 +344,9 @@ def visualize_predictions_no_labels(pred,depth,path, std_depth=False):
     :param path: path to which the visualization is saved
     :return:
     '''
+
+    import matplotlib.pyplot as plt
+
     # predictionlabel2rgb masks out the background
     rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
     #rgbPred = DataSet.label2rgb(pred)

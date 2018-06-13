@@ -2,7 +2,6 @@ import glob
 import os
 
 from initialize import _CONFIG, _DATA_PATH
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from scipy import misc
@@ -310,6 +309,7 @@ class Dataset_TF_Create:
 
                 jcnt += 1
 
+        import matplotlib.pyplot as plt
         num_samples = self.total_samples
 
         #if randomize:

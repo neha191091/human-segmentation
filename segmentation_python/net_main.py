@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 from initialize import _DATA_PATH
 import net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
@@ -319,6 +318,9 @@ if __name__ == '__main__':
         print('loss after: ', np.sum(loss))
         pred = sess.run(model.get_predictions(), feed_dict={x: xbatch})
     rgbPred = DataSet.label2rgb(pred[0])
+
+    import matplotlib.pyplot as plt
+
     plt.subplot(1,2,1)
     plt.imshow(rgbPred)
     plt.axis('off')

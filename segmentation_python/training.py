@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 import time
 import utils as utils
 import os
@@ -118,6 +117,7 @@ def train(dir_tf_record,
 
     image_result_part_path = training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
+    loss_npy_path = training_result_path + "loss_npy.npy"
 
     with tf.Session() as sess:
         sess.run(init_op)
@@ -161,7 +161,8 @@ def train(dir_tf_record,
                     acc = utils.accuracy_per_pixel(pred, corr_label)
                     utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
                     utils.save_checkpoint(sess, timestamp, step)
-                    utils.plot_loss(step_vector, loss_vector, loss_path)
+                    #utils.plot_loss(step_vector, loss_vector, loss_path)
+                    utils.save_loss(loss_vector, loss_npy_path)
                     print('Step ',step)
 
                 step += 1
@@ -183,7 +184,8 @@ def train(dir_tf_record,
 
         # Wait for threads to finish.
         coord.join(threads)
-        utils.plot_loss(step_vector, loss_vector, loss_path)
+        #utils.plot_loss(step_vector, loss_vector, loss_path)
+        utils.save_loss(loss_vector, loss_npy_path)
 
         if show_last_prediction:
             for j in range(batch_size):
