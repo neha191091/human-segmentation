@@ -109,6 +109,7 @@ from collections import namedtuple
 import functools
 
 import tensorflow as tf
+import collections
 
 slim = tf.contrib.slim
 
@@ -183,7 +184,7 @@ def mobilenet_v1_base(inputs,
                 allowed.
   """
   depth = lambda d: max(int(d * depth_multiplier), min_depth)
-  end_points = {}
+  end_points = collections.OrderedDict()#{}
 
   # Used to find thinned depths for each layer.
   if depth_multiplier <= 0:

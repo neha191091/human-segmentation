@@ -21,7 +21,9 @@ def train(dir_raw_record,
           load_from_chkpt=None,
           multi_deconv=1,
           mob_depth_multiplier=1.0,
-          conv_def_num = 0):
+          conv_def_num = 0,
+          follow_up_convs = 0,
+          sep_convs = False):
     '''
     Train the network using TfRecords
     :param dir_raw_record: Directory from which the data is produced
@@ -61,7 +63,9 @@ def train(dir_raw_record,
                                 is_training=True,
                                 multi_deconv=multi_deconv,
                                 mob_depth_multiplier=mob_depth_multiplier,
-                                conv_defs=conv_defs)
+                                conv_defs=conv_defs,
+                                follow_up_convs = follow_up_convs,
+                                sep_convs = sep_convs)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -204,4 +208,6 @@ if __name__ == '__main__':
           load_from_chkpt=load_from_chkpt,
           multi_deconv=multi_deconv,
           mob_depth_multiplier=mob_depth_multiplier,
-          conv_def_num=conv_def_num)
+          conv_def_num=conv_def_num,
+          follow_up_convs = follow_up_convs,
+          sep_convs = sep_convs)

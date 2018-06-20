@@ -24,7 +24,9 @@ def train(dir_tf_record,
           load_from_chkpt=None,
           multi_deconv=1,
           conv_def_num = 0,
-          mob_depth_multiplier=1.0):
+          mob_depth_multiplier=1.0,
+          follow_up_convs = 0,
+          sep_convs = False):
     '''
     Train the network using TfRecords
     :param dir_tf_record: Directory from which the data is produced
@@ -65,7 +67,12 @@ def train(dir_tf_record,
                                 is_training=True,
                                 multi_deconv=multi_deconv,
                                 conv_defs=conv_defs,
-                                mob_depth_multiplier=mob_depth_multiplier)
+                                mob_depth_multiplier=mob_depth_multiplier,
+                                follow_up_convs = follow_up_convs,
+                                sep_convs = sep_convs)
+
+
+
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -118,6 +125,14 @@ def train(dir_tf_record,
     image_result_part_path = training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
     loss_npy_path = training_result_path + "loss_npy.npy"
+
+    network_endpoints = model.net_class.end_points
+    print('\nModel Endpoints with Output Shape')
+    for key in network_endpoints:
+        print(key, ", ",network_endpoints[key].shape)
+    print('\n')
+
+    utils.print_model_details(model, metrics_file_path)
 
     with tf.Session() as sess:
         sess.run(init_op)
@@ -199,8 +214,8 @@ if __name__ == '__main__':
     #dataset = DataSet(num_poses=1, num_angles=360, max_records_in_tfrec_file=360, val_fraction=0.1, test_fraction=0.1)
 
     #dir_tf_record = _DATA_PATH+'data_single_model'#_by_4'
-    #dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf'
-    dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
+    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf_300'
+    #dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
     batch_size = 50
     num_epochs = 100
     lr = 1e-3
@@ -208,10 +223,10 @@ if __name__ == '__main__':
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
     multi_deconv = 1
     mob_depth_multiplier = 0.75
-    conv_def_num = 1
+    conv_def_num = 6
     data_dims_from_ckpt = None
-    follow_up_convs = 0
-    sep_convs = False
+    follow_up_convs = 2
+    sep_convs = True
 
     if load_from_chkpt:
         multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
@@ -225,4 +240,6 @@ if __name__ == '__main__':
           load_from_chkpt = load_from_chkpt,
           multi_deconv=multi_deconv,
           conv_def_num=conv_def_num,
-          mob_depth_multiplier=mob_depth_multiplier)
+          mob_depth_multiplier=mob_depth_multiplier,
+          follow_up_convs = follow_up_convs,
+          sep_convs = sep_convs)

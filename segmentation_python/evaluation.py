@@ -20,7 +20,9 @@ def eval(dir_tf_record,
           load_from_chkpt=None,
           multi_deconv=1,
           conv_defs=_CONV_DEFS[0],
-          mob_depth_multiplier=1.0):
+          mob_depth_multiplier=1.0,
+          follow_up_convs = 0,
+          sep_convs = False):
     '''
     Evaluate the network from tfRecords.
     :param dir_tf_record: Directory from which the data is produced
@@ -55,7 +57,9 @@ def eval(dir_tf_record,
                                 dropout_keep_prob=1.0,
                                 multi_deconv=multi_deconv,
                                 conv_defs=conv_defs,
-                                mob_depth_multiplier=mob_depth_multiplier)
+                                mob_depth_multiplier=mob_depth_multiplier,
+                                follow_up_convs = follow_up_convs,
+                                sep_convs = sep_convs)
 
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
@@ -204,4 +208,6 @@ if __name__ == '__main__':
           load_from_chkpt=load_from_chkpt,
           multi_deconv=multi_deconv,
           conv_defs=conv_defs,
-          mob_depth_multiplier=mob_depth_multiplier)
+          mob_depth_multiplier=mob_depth_multiplier,
+          follow_up_convs = follow_up_convs,
+          sep_convs = sep_convs)

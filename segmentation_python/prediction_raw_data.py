@@ -22,7 +22,9 @@ def predict(dir_pred_input_record,
           conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0,
           max_depth = 10000,
-          min_depth = 0):
+          min_depth = 0,
+          follow_up_convs = follow_up_convs,
+          sep_convs = sep_convs):
     '''
     Predict segmentation maps from depths
     :param dataset: DataSet object
@@ -57,7 +59,9 @@ def predict(dir_pred_input_record,
                                 dropout_keep_prob=1.0,
                                 multi_deconv=multi_deconv,
                                 conv_defs=conv_defs,
-                                mob_depth_multiplier=mob_depth_multiplier)
+                                mob_depth_multiplier=mob_depth_multiplier,
+                                follow_up_convs = follow_up_convs,
+                                sep_convs = sep_convs)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -188,5 +192,6 @@ if __name__ == '__main__':
          conv_defs=conv_defs,
          mob_depth_multiplier=mob_depth_multiplier,
          max_depth=max_depth,
-         min_depth=min_depth)
-
+         min_depth=min_depth,
+         follow_up_convs = follow_up_convs,
+         sep_convs = sep_convs)

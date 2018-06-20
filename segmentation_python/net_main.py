@@ -5,6 +5,7 @@ import net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
 from conv_defs import _CONV_DEFS
+import collections
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -93,12 +94,12 @@ class MobileNet_V1:
             sum = tf.reduce_sum(mask_temp, axis=[1,2])
             #sum = sum + (sum == 0)
             sum = tf.cast(sum, tf.float64) + (tf.where(tf.equal(sum, 0), tf.ones_like(sum, dtype=tf.float64), tf.multiply(tf.ones_like(sum, dtype=tf.float64), 0.0)))
-            print('sum: ',sum)
+            #print('sum: ',sum)
             #tiled_sum = tf.tile(sum, 120*160)
             #tf.reshape(tiled_sum,[tf.shape(sum)[0],120,160])
             sum = tf.expand_dims(sum, 1)
             sum = tf.expand_dims(sum, 2)
-            print('sum: ', sum)
+            #print('sum: ', sum)
             mask_temp = mask_temp / sum
             loss_temp = tf.multiply(tf.cast(loss, tf.float64), tf.cast(mask_temp, tf.float64))
             masked_loss = masked_loss + loss_temp
@@ -116,7 +117,7 @@ class MobileNet_V1:
         :param dropout_keep_prob: Dropout probability
         :return: logits from the final deconv layer and endpoints
         """
-        end_points = {}
+        end_points = collections.OrderedDict()#{}
 
         if not multi_deconv:
 
@@ -136,9 +137,13 @@ class MobileNet_V1:
             deconv_logits = slim.conv2d_transpose(logits, num_classes, kernel_size=deconv_size, padding='VALID')
 
         else:
-            print('Multi-deconv, f_endpoint is ', f_endpoint)
+            #print('Multi-deconv, f_endpoint is ', f_endpoint)
             for i in range(f_endpoint,-1,-1):
                 conv_def = conv_defs[i]
+                if i is f_endpoint:
+                    net = slim.dropout(net, keep_prob=dropout_keep_prob, is_training=is_training, scope='Dropout_encoder')
+                    net = slim.conv2d(net, conv_def.depth, conv_def.kernel, stride=1, activation_fn=None, normalizer_fn=None)
+                    end_points['DropoutConv2dEncoder'] = net
                 if i == 0:
                     corr_ep_text ='Input'
                     num_out_filt = num_classes
@@ -153,54 +158,60 @@ class MobileNet_V1:
                         if multi_deconv == 1:
                             # conv2d_transposed with large strides
                             net = slim.conv2d_transpose(net, num_out_filt,conv_def.kernel,stride=conv_def.stride,normalizer_fn=slim.batch_norm)
+                            end_points['DeConv2dtranspose_' + corr_ep_text] = net
                         elif multi_deconv == 2:
                             # resize+conv2d
                             net = tf.image.resize_images(net,[int(net.shape[1]*2),int(net.shape[2]*2)],method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+                            end_points['Deresize_' + corr_ep_text] = net
                             net = slim.conv2d(net, num_out_filt, conv_def.kernel,
                                               stride=1,
                                               normalizer_fn=slim.batch_norm)
+                            end_points['Deconv2d_' + corr_ep_text] = net
                         elif multi_deconv == 3:
                             # resize+sep_conv+pointwise_conv
                             net = tf.image.resize_images(net, [int(net.shape[1]*2),int(net.shape[2]*2)],
                                                          method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+                            end_points['Deresize_' + corr_ep_text] = net
                             net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                         depth_multiplier=1,
                                                         stride=1,
                                                         rate=1,
                                                         normalizer_fn=slim.batch_norm)
+                            end_points['Deconv2dDepthwise_' + corr_ep_text] = net
                             net = slim.conv2d(net, num_out_filt, [1, 1],
                                               stride=1,
                                               normalizer_fn=slim.batch_norm)
+                            end_points['Deconv2dPointwise_' + corr_ep_text] = net
                     else:
-                        print('De' + corr_ep_text, ' shape: ', corr_shape, ' num filters: ', int(conv_def.depth/2))
+                        #print('De' + corr_ep_text, ' shape: ', corr_shape, ' num filters: ', int(conv_def.depth/2))
                         kern_1 = int(corr_shape[1]) - int(net.shape[1]) + 1
                         kern_2 = int(corr_shape[2]) - int(net.shape[2]) + 1
                         net = slim.conv2d_transpose(net, num_out_filt, [kern_1,kern_2], stride=1, padding='VALID', normalizer_fn=slim.batch_norm)
-                        #end_points['Debef' + corr_ep_text] = net
-                    if i is f_endpoint:
-                        net = slim.dropout(net, keep_prob=dropout_keep_prob, is_training=is_training, scope='Dropout_1b')
-                        net = slim.conv2d(net, num_out_filt, conv_def.kernel, stride=1, activation_fn=None, normalizer_fn=None)
+                        end_points['Deconv2dtranspose_' + corr_ep_text] = net
                     if i is not 0:
                         net = tf.concat([net, conv_endpoints[corr_ep_text]], 3)
-                        end_points['Deconcat' + corr_ep_text] = net
-                        print('follow_up_convs: ', follow_up_convs)
+                        end_points['Deconcat_' + corr_ep_text] = net
+                        #print('follow_up_convs: ', follow_up_convs)
                         if follow_up_convs:
                             for j in range(follow_up_convs):
-                                if sep_convs:
+                                if not sep_convs:
                                     net = slim.conv2d(net, num_out_filt, conv_def.kernel,
                                                       stride=1,
                                                       normalizer_fn=slim.batch_norm)
+                                    end_points['DefollowupConv2d' + '_' + str(j+1) + '_' + corr_ep_text] = net
                                 else:
                                     net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                                 depth_multiplier=1,
                                                                 stride=1,
                                                                 rate=1,
                                                                 normalizer_fn=slim.batch_norm)
+
+                                    end_points['DefollowupConv2dDepthwise' + '_' + str(j+1) + '_' + corr_ep_text] = net
                                     net = slim.conv2d(net, num_out_filt, [1, 1],
                                                       stride=1,
                                                       normalizer_fn=slim.batch_norm)
-                                end_points['Defollowup' + '_' + str(j+1) + '_' + corr_ep_text] = net
-                    end_points['Definal' + corr_ep_text] = net
+                                    end_points['DefollowupConv2dPointwise' + '_' + str(j+1) + '_' + corr_ep_text] = net
+                    #end_points['Definal_' + corr_ep_text] = net
 
             deconv_logits = net
 

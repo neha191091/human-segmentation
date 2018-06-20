@@ -206,6 +206,23 @@ def print_metrics(loss, accuracy, step, metrics_file_path):
     print('Step %f: loss = %f acc = %f' % (step, loss, accuracy), file=metrics_file)
     metrics_file.close()
 
+def print_model_details(model, models_file_path):
+    '''
+    Prints training/evaluation metrics
+    :param loss: loss
+    :param accuracy: accuracy
+    :param step: training step
+    :param metrics_file_path: file to which the metrics are saved
+    :return:
+    '''
+    models_file = open(models_file_path,'a+')
+    network_endpoints = model.net_class.end_points
+    print('\nModel Endpoints with Output Shape')
+    for key in network_endpoints:
+        print(key, ", ",network_endpoints[key].shape)
+    print('\n')
+    models_file.close()
+
 def plot_loss(points, loss_history, loss_path, data_type='train'):
     '''
     Plots the loss graph against training iteration
