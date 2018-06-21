@@ -98,7 +98,9 @@ def train(dir_tf_record,
                                  multi_deconv=multi_deconv,
                                  conv_def_num=conv_def_num,
                                  mob_depth_multiplier=mob_depth_multiplier,
-                                 data_dims=data_dim)
+                                 data_dims=data_dim,
+                                 follow_up_convs = follow_up_convs,
+                                 sep_convs = sep_convs)
 
     if load_from_chkpt:
         chkpt_text = str(load_from_chkpt.split('/')[-1].split('.')[0])
@@ -120,7 +122,9 @@ def train(dir_tf_record,
                                  multi_deconv=multi_deconv,
                                  conv_def_num=conv_def_num,
                                  mob_depth_multiplier=mob_depth_multiplier,
-                                 data_dims=data_dim)
+                                 data_dims=data_dim,
+                                 follow_up_convs = follow_up_convs,
+                                 sep_convs = sep_convs)
 
     image_result_part_path = training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
@@ -221,11 +225,11 @@ if __name__ == '__main__':
     lr = 1e-3
     override_tfrecords = None #['train_0']
     load_from_chkpt = None #_CHKPT_PATH+'2018_04_01_15_38_checkpoint-1.ckpt'
-    multi_deconv = 1
-    mob_depth_multiplier = 0.75
+    multi_deconv = 3
+    mob_depth_multiplier = 1
     conv_def_num = 6
     data_dims_from_ckpt = None
-    follow_up_convs = 2
+    follow_up_convs = 1
     sep_convs = True
 
     if load_from_chkpt:

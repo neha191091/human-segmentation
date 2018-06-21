@@ -121,7 +121,9 @@ def print_chkpoint_details(batch_size,
                            multi_deconv,
                            conv_def_num,
                            mob_depth_multiplier,
-                           data_dims
+                           data_dims,
+                           follow_up_convs,
+                           sep_convs
                           ):
     '''
     Prints details associated with training for debugging and analysis
@@ -159,6 +161,8 @@ def print_chkpoint_details(batch_size,
         for i in range(1,len(data_dims)):
             data_dims_string += ','+str(data_dims[i])
     config['model_details']['data_dims'] = data_dims_string
+    config['model_details']['follow_up_convs'] = str(follow_up_convs)
+    config['model_details']['sep_convs'] = str(int(sep_convs))
 
     with open(chkpt_details_file_path, 'w') as configfile:
         config.write(configfile)
@@ -217,10 +221,10 @@ def print_model_details(model, models_file_path):
     '''
     models_file = open(models_file_path,'a+')
     network_endpoints = model.net_class.end_points
-    print('\nModel Endpoints with Output Shape')
+    print('\nModel Endpoints with Output Shape', file=models_file)
     for key in network_endpoints:
-        print(key, ", ",network_endpoints[key].shape)
-    print('\n')
+        print(key, ", ",network_endpoints[key].shape, file=models_file)
+    print('\n', file=models_file)
     models_file.close()
 
 def plot_loss(points, loss_history, loss_path, data_type='train'):
