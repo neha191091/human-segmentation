@@ -6,6 +6,8 @@ from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
 from conv_defs import _CONV_DEFS
 import collections
+import sys
+from tensorflow.python.client import timeline
 
 class Resnet50:
     def __init__(self, inputs, scope='ResNet50'):
@@ -274,9 +276,10 @@ if __name__ == '__main__':
     batch_size = 1
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 1
+    multi_deconv = 3
     mob_depth_multiplier = 1
-    conv_defs = _CONV_DEFS[6]   #_CONV_DEFS[1]
+    conv_def_num = 6
+    conv_defs = _CONV_DEFS[conv_def_num]   #_CONV_DEFS[1]
     data_dims_from_ckpt = None
     follow_up_convs = 1
     sep_convs = True
@@ -299,36 +302,95 @@ if __name__ == '__main__':
     num_params = np.sum([np.product([xi.value for xi in x.get_shape()]) for x in tf.all_variables()])
     print('Number of parameters: ', num_params)
 
-    #TODO: Remove later
-    network_endpoints = model.net_class.end_points
-    for key in sorted(network_endpoints):
-        print("Endpoint ",key, " shape: ",network_endpoints[key].shape)
 
-    #TODO: Remove later
-    #exit()
+    network_endpoints = model.net_class.end_points
+    print('\nModel Endpoints with Output Shape')
+    for key in network_endpoints:
+        print(key, ", ", network_endpoints[key].shape)
+    print('\n')
 
 
     cross_entropy_loss = model.loss(y)
     train_op = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy_loss)
 
+
+
+
+    details_str = "_ConvDef_"+str(conv_def_num)+"_Multideconv_"+str(multi_deconv)+"_Followups_"+\
+                  str(follow_up_convs)+"_Sepconvs_"+str(sep_convs)+"_MobDepthMul_"+str(mob_depth_multiplier)
+
     import time
     #
+    run_metadata = tf.RunMetadata()
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
-        logits_val = sess.run(model.net_class.deconv_logits, feed_dict={x: xbatch})
-        loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
-        print('loss before: ', np.sum(loss))
-        starttime = time.time()
-        for iter in range(20):
-            print(iter)
-            sess.run(train_op, feed_dict={x: xbatch, y: ybatch})
+        #logits_val = sess.run(model.net_class.deconv_logits, feed_dict={x: xbatch})
+        #loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
+        #print('loss before: ', np.sum(loss))
+        #starttime = time.time()
+        #profiler = tf.profiler.Profiler(sess.graph)
 
-        endtime = time.time()
-        print('Time taken for training: ', endtime-starttime)
-        loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
-        print('loss after: ', np.sum(loss))
+        for iter in range(1):
+            print(iter)
+            sess.run(train_op, feed_dict={x: xbatch, y: ybatch},
+               options=tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE),
+               run_metadata=run_metadata)
+
+            fetched_timeline = timeline.Timeline(run_metadata.step_stats)
+            chrome_trace = fetched_timeline.generate_chrome_trace_format()
+            with open(_DATA_PATH+details_str+'.json', 'w') as f:
+                f.write(chrome_trace)
+
+        #endtime = time.time()
+        #print('Time taken for training: ', endtime-starttime)
+        #loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
+        #print('loss after: ', np.sum(loss))
         pred = sess.run(model.get_predictions(), feed_dict={x: xbatch})
     rgbPred = DataSet.label2rgb(pred[0])
+
+
+    ProfileOptionBuilder = tf.profiler.ProfileOptionBuilder
+
+
+    print("\nReport for Number of Parameters")
+    opts = (ProfileOptionBuilder(
+        ProfileOptionBuilder.trainable_variables_parameter()).build()
+            )
+    tf.profiler.profile(
+        tf.get_default_graph(),
+        options=opts)
+
+    print("\nReport for Number of FLOPS")
+    opts = (ProfileOptionBuilder(
+                ProfileOptionBuilder.float_operation()).build())
+    tf.profiler.profile(
+        tf.get_default_graph(),
+        options=opts)
+
+    print("\nReport Time and Memory")
+    opts = (ProfileOptionBuilder(ProfileOptionBuilder.time_and_memory()).build())
+    tf.profiler.profile(
+        tf.get_default_graph(),
+        run_meta=run_metadata,
+        cmd='op',
+        options=opts)
+
+    #tf.profiler.profile(
+    #    tf.get_default_graph(),
+    #    run_meta=run_metadata,
+    #    cmd='code',
+    #    options=opts)
+    # param_stats can be tensorflow.tfprof.GraphNodeProto or
+    # tensorflow.tfprof.MultiGraphNodeProto, depending on the view.
+    # Let's print the root below.
+    #sys.stdout.write('total_params: %d\n' % param_stats.total_parameters)
+
+    #FLOPS = tf.profiler.profile(
+    #tf.get_default_graph(),
+    #options=tf.profiler.ProfileOptionBuilder.float_operation())
+
+    #sys.stdout.write('total_FLOPS: %d\n' % FLOPS)
+
 
     import matplotlib.pyplot as plt
 
