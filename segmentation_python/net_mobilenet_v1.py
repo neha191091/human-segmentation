@@ -244,7 +244,8 @@ def mobilenet_v1_base(inputs,
                                       depth_multiplier=1,
                                       stride=layer_stride,
                                       rate=layer_rate,
-                                      normalizer_fn=slim.batch_norm,
+                                      #normalizer_fn=slim.batch_norm,
+                                      activation_fn=None,
                                       scope=end_point)
 
           end_points[end_point] = net

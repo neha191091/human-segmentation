@@ -177,8 +177,10 @@ class MobileNet_V1:
                             net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                         depth_multiplier=1,
                                                         stride=1,
-                                                        rate=1,
-                                                        normalizer_fn=slim.batch_norm)
+                                                        #normalizer_fn=slim.batch_norm,
+                                                        activation_fn=None,
+                                                        rate=1
+                                                        )
                             end_points['Deconv2dDepthwise_' + corr_ep_text] = net
                             net = slim.conv2d(net, num_out_filt, [1, 1],
                                               stride=1,
@@ -205,8 +207,10 @@ class MobileNet_V1:
                                     net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                                 depth_multiplier=1,
                                                                 stride=1,
-                                                                rate=1,
-                                                                normalizer_fn=slim.batch_norm)
+                                                                #normalizer_fn=slim.batch_norm,
+                                                                activation_fn=None,
+                                                                rate=1
+                                                                )
 
                                     end_points['DefollowupConv2dDepthwise' + '_' + str(j+1) + '_' + corr_ep_text] = net
                                     net = slim.conv2d(net, num_out_filt, [1, 1],
@@ -276,14 +280,13 @@ if __name__ == '__main__':
     batch_size = 1
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 3
+    multi_deconv = 1
     mob_depth_multiplier = 1
     conv_def_num = 6
     conv_defs = _CONV_DEFS[conv_def_num]   #_CONV_DEFS[1]
     data_dims_from_ckpt = None
-    follow_up_convs = 1
+    follow_up_convs = 2
     sep_convs = True
-
     dataset = Dataset_Raw_Provide(dir_raw_record)
 
 
@@ -327,22 +330,30 @@ if __name__ == '__main__':
         #logits_val = sess.run(model.net_class.deconv_logits, feed_dict={x: xbatch})
         #loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
         #print('loss before: ', np.sum(loss))
-        #starttime = time.time()
+        starttime = time.time()
         #profiler = tf.profiler.Profiler(sess.graph)
 
-        for iter in range(1):
+        for iter in range(20):
             print(iter)
+
+            # training profile
             sess.run(train_op, feed_dict={x: xbatch, y: ybatch},
                options=tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE),
                run_metadata=run_metadata)
 
-            fetched_timeline = timeline.Timeline(run_metadata.step_stats)
-            chrome_trace = fetched_timeline.generate_chrome_trace_format()
-            with open(_DATA_PATH+details_str+'.json', 'w') as f:
-                f.write(chrome_trace)
+            # pred profile
+            #sess.run(model.get_predictions(), feed_dict={x: xbatch},
+            #         options=tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE),
+            #         run_metadata=run_metadata)
 
-        #endtime = time.time()
-        #print('Time taken for training: ', endtime-starttime)
+            # Uncomment to save a trace
+            #fetched_timeline = timeline.Timeline(run_metadata.step_stats)
+            #chrome_trace = fetched_timeline.generate_chrome_trace_format()
+            #with open(_DATA_PATH+details_str+'.json', 'w') as f:
+            #    f.write(chrome_trace)
+
+        endtime = time.time()
+        print('Time taken for training: ', endtime-starttime)
         #loss = sess.run(cross_entropy_loss, feed_dict={x: xbatch, y: ybatch})
         #print('loss after: ', np.sum(loss))
         pred = sess.run(model.get_predictions(), feed_dict={x: xbatch})
