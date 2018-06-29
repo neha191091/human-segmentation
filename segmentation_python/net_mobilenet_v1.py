@@ -145,6 +145,7 @@ def mobilenet_v1_base(inputs,
                       depth_multiplier=1.0,
                       conv_defs=None,
                       output_stride=None,
+                      depthsep_inter_norm_activn=True,
                       scope=None):
   """Mobilenet v1.
 
@@ -196,6 +197,13 @@ def mobilenet_v1_base(inputs,
   if output_stride is not None and output_stride not in [8, 16, 32]:
     raise ValueError('Only allowed output_stride values are 8, 16, 32.')
 
+  if depthsep_inter_norm_activn:
+      depthsep_inter_norm = slim.batch_norm
+      depthsep_inter_activn = tf.nn.relu
+  else:
+      depthsep_inter_norm = None
+      depthsep_inter_activn = None
+
   with tf.variable_scope(scope, 'MobilenetV1', [inputs]):
     with slim.arg_scope([slim.conv2d, slim.separable_conv2d], padding='SAME'):
       # The current_stride variable keeps track of the output stride of the
@@ -244,8 +252,8 @@ def mobilenet_v1_base(inputs,
                                       depth_multiplier=1,
                                       stride=layer_stride,
                                       rate=layer_rate,
-                                      #normalizer_fn=slim.batch_norm,
-                                      activation_fn=None,
+                                      normalizer_fn=depthsep_inter_norm,
+                                      activation_fn=depthsep_inter_activn,
                                       scope=end_point)
 
           end_points[end_point] = net

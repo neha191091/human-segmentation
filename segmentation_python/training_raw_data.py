@@ -23,7 +23,8 @@ def train(dir_raw_record,
           mob_depth_multiplier=1.0,
           conv_def_num = 0,
           follow_up_convs = 0,
-          sep_convs = False):
+          sep_convs = False,
+          depthsep_inter_norm_activn = True):
     '''
     Train the network using TfRecords
     :param dir_raw_record: Directory from which the data is produced
@@ -65,7 +66,8 @@ def train(dir_raw_record,
                                 mob_depth_multiplier=mob_depth_multiplier,
                                 conv_defs=conv_defs,
                                 follow_up_convs = follow_up_convs,
-                                sep_convs = sep_convs)
+                                sep_convs = sep_convs,
+                                depthsep_inter_norm_activn = depthsep_inter_norm_activn)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -90,7 +92,8 @@ def train(dir_raw_record,
                                  multi_deconv=multi_deconv,
                                  conv_def_num=conv_def_num,
                                  mob_depth_multiplier=mob_depth_multiplier,
-                                 data_dims=data_dim)
+                                 data_dims=data_dim,
+                                 depthsep_inter_norm_activn = depthsep_inter_norm_activn)
 
     if load_from_chkpt:
         chkpt_text = str(load_from_chkpt.split('/')[-1].split('.')[0])
@@ -112,7 +115,8 @@ def train(dir_raw_record,
                                  multi_deconv=multi_deconv,
                                  conv_def_num=conv_def_num,
                                  mob_depth_multiplier=mob_depth_multiplier,
-                                 data_dims=data_dim)
+                                 data_dims=data_dim,
+                                 depthsep_inter_norm_activn = depthsep_inter_norm_activn)
     image_result_part_path =training_result_path + "train_img_"
     loss_path = training_result_path + "loss.png"
 
@@ -194,9 +198,10 @@ if __name__ == '__main__':
     data_dims_from_ckpt = None
     follow_up_convs = 0
     sep_convs = False
+    depthsep_inter_norm_activn = True
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
 
     #print(conv_defs.ltype)
 
@@ -210,4 +215,5 @@ if __name__ == '__main__':
           mob_depth_multiplier=mob_depth_multiplier,
           conv_def_num=conv_def_num,
           follow_up_convs = follow_up_convs,
-          sep_convs = sep_convs)
+          sep_convs = sep_convs,
+          depthsep_inter_norm_activn = depthsep_inter_norm_activn)

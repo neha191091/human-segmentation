@@ -34,6 +34,7 @@ class MobileNet_V1:
                  conv_defs=_CONV_DEFS[0],
                  follow_up_convs = 0,
                  sep_convs = False,
+                 depthsep_inter_norm_activn = True,
                  scope='MobileNet_V1',
                  reuse=None):
         f_endpoint = len(conv_defs) - 1
@@ -53,15 +54,17 @@ class MobileNet_V1:
                                                             scope=scope,
                                                             min_depth=min_depth,
                                                             depth_multiplier=depth_multiplier,
-                                                            conv_defs=conv_defs)
+                                                            conv_defs=conv_defs,
+                                                            depthsep_inter_norm_activn=depthsep_inter_norm_activn)
                     end_points['Input'] =inputs
                     with tf.variable_scope('ImageLogits'):
                         # Add prediction layers
-                        deconv_logits, extra_endpoints = MobileNet_V1._get_deconvlogits_and_endpoints(net,deconv_size,
-                                                                                                      num_classes,dropout_keep_prob,
-                                                                                                      f_endpoint,end_points, is_training,
+                        deconv_logits, extra_endpoints = MobileNet_V1._get_deconvlogits_and_endpoints(net, deconv_size,
+                                                                                                      num_classes, dropout_keep_prob,
+                                                                                                      f_endpoint, end_points, is_training,
                                                                                                       conv_defs, multi_deconv=multi_deconv,
-                                                                                                      follow_up_convs = follow_up_convs, sep_convs = sep_convs)
+                                                                                                      follow_up_convs = follow_up_convs, sep_convs = sep_convs,
+                                                                                                      depthsep_inter_norm_activn=depthsep_inter_norm_activn)
 
                     end_points.update(extra_endpoints)
                     end_points['ImageLogits'] = deconv_logits
@@ -110,7 +113,8 @@ class MobileNet_V1:
 
     @staticmethod
     def _get_deconvlogits_and_endpoints(net,deconv_size,num_classes,dropout_keep_prob, f_endpoint,conv_endpoints,
-                                        is_training, conv_defs, multi_deconv=1, follow_up_convs = 0, sep_convs = False):
+                                        is_training, conv_defs, multi_deconv=1, follow_up_convs = 0, sep_convs = False,
+                                        depthsep_inter_norm_activn=True):
         """
         Add prediction layers on top of MobileNet_V1
         :param net: Pass the base net
@@ -120,6 +124,13 @@ class MobileNet_V1:
         :return: logits from the final deconv layer and endpoints
         """
         end_points = collections.OrderedDict()#{}
+
+        if depthsep_inter_norm_activn:
+            depthsep_inter_norm = slim.batch_norm
+            depthsep_inter_activn = tf.nn.relu
+        else:
+            depthsep_inter_norm = None
+            depthsep_inter_activn = None
 
         if not multi_deconv:
 
@@ -177,8 +188,8 @@ class MobileNet_V1:
                             net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                         depth_multiplier=1,
                                                         stride=1,
-                                                        #normalizer_fn=slim.batch_norm,
-                                                        activation_fn=None,
+                                                        normalizer_fn=depthsep_inter_norm,
+                                                        activation_fn=depthsep_inter_activn,
                                                         rate=1
                                                         )
                             end_points['Deconv2dDepthwise_' + corr_ep_text] = net
@@ -207,8 +218,8 @@ class MobileNet_V1:
                                     net = slim.separable_conv2d(net, None, conv_def.kernel,
                                                                 depth_multiplier=1,
                                                                 stride=1,
-                                                                #normalizer_fn=slim.batch_norm,
-                                                                activation_fn=None,
+                                                                normalizer_fn=depthsep_inter_norm,
+                                                                activation_fn=depthsep_inter_activn,
                                                                 rate=1
                                                                 )
 
@@ -247,13 +258,13 @@ class MobileNet_V1:
 
 class SegmentationNetwork:
     def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1',
-                 is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=1, mob_depth_multiplier=1, follow_up_convs = 0, sep_convs = False):
+                 is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=1, mob_depth_multiplier=1, follow_up_convs = 0, sep_convs = False, depthsep_inter_norm_activn=True):
 
         #print('follow_up_convs: ', follow_up_convs)
         if(base_net_name == 'MobileNet_V1'):
             net_class = MobileNet_V1(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training,
                                      dropout_keep_prob=dropout_keep_prob, conv_defs=conv_defs, multi_deconv=multi_deconv,
-                                     depth_multiplier=mob_depth_multiplier, follow_up_convs = follow_up_convs, sep_convs = sep_convs)
+                                     depth_multiplier=mob_depth_multiplier, follow_up_convs = follow_up_convs, sep_convs = sep_convs, depthsep_inter_norm_activn=depthsep_inter_norm_activn)
         elif(base_net_name == 'ResNet50'):
             net_class = Resnet50(inputs, scope=scope)
         else:
@@ -287,6 +298,7 @@ if __name__ == '__main__':
     data_dims_from_ckpt = None
     follow_up_convs = 2
     sep_convs = True
+    depthsep_inter_norm_activn = True
     dataset = Dataset_Raw_Provide(dir_raw_record)
 
 
@@ -298,7 +310,7 @@ if __name__ == '__main__':
     y = tf.placeholder(tf.int32, ybatch.shape, name='placeholder_y')
 
     model = SegmentationNetwork(x, dataset.data_dim, conv_defs=conv_defs, multi_deconv=multi_deconv, follow_up_convs = follow_up_convs, sep_convs = sep_convs,
-                                mob_depth_multiplier=mob_depth_multiplier)
+                                mob_depth_multiplier=mob_depth_multiplier, depthsep_inter_norm_activn=depthsep_inter_norm_activn)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     print('prediction shape', model.get_predictions().shape)
 

@@ -692,6 +692,7 @@ class Dataset_Input_for_Prediction_Provide:
         self.next_index = (self.next_index + batch_size) if (self.next_index + batch_size) < len(self.fileNames) else 0
 
         depths = []
+        depths_orig = []
         for i in range(batch_size):
 
             print(i)
@@ -699,6 +700,10 @@ class Dataset_Input_for_Prediction_Provide:
             depthpath = os.path.join(self.dir_pred_input, depthpartpath)
             depth = misc.imread(depthpath, mode='F')
             #depth = np.array([depth])
+
+            depth_orig = depth.copy()
+            depth_orig = np.where(depth_orig <= self.min_depth, BGRD_PREPROCESS, depth_orig)
+            depth_orig = np.where(depth_orig >= self.max_depth, BGRD_PREPROCESS, depth_orig)
 
             #depth = np.where(depth >= self.max_depth, 10000, depth)
             #depth = np.where(depth <= self.min_depth, 10000, depth)
@@ -718,18 +723,27 @@ class Dataset_Input_for_Prediction_Provide:
                 depth = np.where(depth >=BGRD_PREPROCESS, BGRD_POSTPROCESS,
                                  ((depth - depth_min)*(MAX_DEPTH_POSTPROCESS - MIN_DEPTH_POSTPROCESS))/depth_range)
 
+                depth_min = np.min(depth_orig)
+                depth_max = np.max(np.where(depth_orig >= BGRD_PREPROCESS, 0.0, depth_orig))
+                depth_range = depth_max - depth_min if (depth_max - depth_min) > 0 else 1
+                depth_orig = np.where(depth_orig >= BGRD_PREPROCESS, BGRD_POSTPROCESS,
+                                 ((depth_orig - depth_min) * (MAX_DEPTH_POSTPROCESS - MIN_DEPTH_POSTPROCESS)) / depth_range)
 
-            print('depth size bef: ', depth.shape)
+
+            #print('depth size bef: ', depth.shape)
             depth = np.reshape(depth, (depth.shape[0], depth.shape[1],-1))
-            print('depth size af: ', depth.shape)
+            #print('depth size af: ', depth.shape)
 
             depths.append(depth)
 
+            depth_orig = np.reshape(depth_orig, (depth_orig.shape[0], depth_orig.shape[1], -1))
+            depths_orig.append(depth_orig)
+
         if convert2tensor == True:
-            return tf.stack(np.array(depths))
+            return [tf.stack(np.array(depths)), tf.stack(np.array(depths_orig))]
         # print('depths_size: ', len(depths), ' ,labels_size: ', len(labels))
         # print('depth path: ', depthpath, ' label path: ', labelpath)
-        return np.array(depths)
+        return [np.array(depths), np.array(depths_orig)]
 
 
 if __name__ == '__main__':

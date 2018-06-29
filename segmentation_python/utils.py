@@ -65,9 +65,14 @@ def get_model_details_from_chkpt_path(chkpt_path):
             sep_convs = bool(int(_CONFIG.get(section='model_details', option='sep_convs')))
         except:
             sep_convs = False
+        try:
+            depthsep_inter_norm_activn = bool(int(_CONFIG.get(section='model_details', option='depthsep_inter_norm_activn')))
+        except:
+            depthsep_inter_norm_activn = True
     else:
         sep_convs = False
-    model_details = [multi_deconv, conv_def_num, mob_depth_multiplier, data_dims, follow_up_convs, sep_convs]
+        depthsep_inter_norm_activn = True
+    model_details = [multi_deconv, conv_def_num, mob_depth_multiplier, data_dims, follow_up_convs, sep_convs, depthsep_inter_norm_activn]
     return model_details
 
 def get_timestamp():
@@ -123,7 +128,8 @@ def print_chkpoint_details(batch_size,
                            mob_depth_multiplier,
                            data_dims,
                            follow_up_convs,
-                           sep_convs
+                           sep_convs,
+                           depthsep_inter_norm_activn
                           ):
     '''
     Prints details associated with training for debugging and analysis
@@ -163,6 +169,7 @@ def print_chkpoint_details(batch_size,
     config['model_details']['data_dims'] = data_dims_string
     config['model_details']['follow_up_convs'] = str(follow_up_convs)
     config['model_details']['sep_convs'] = str(int(sep_convs))
+    config['model_details']['depthsep_inter_norm_activn'] = str(int(depthsep_inter_norm_activn))
 
     with open(chkpt_details_file_path, 'w') as configfile:
         config.write(configfile)
@@ -381,7 +388,7 @@ def visualize_predictions_no_labels(pred,depth,path, std_depth=False):
     # Clear Plots
     plt.gcf().clear()
 
-def save_predictions(pred,depth,path,interpolation = 'nearest', std_depth= False):
+def save_predictions(pred,depth,path,interpolation = 'nearest', std_depth= False, orig_depth = False):
     '''
     Saves the predicted segmentation map to an image file
     :param pred: prediction
@@ -389,17 +396,26 @@ def save_predictions(pred,depth,path,interpolation = 'nearest', std_depth= False
     :param path: prediction image path
     :return:
     '''
-    #rgbPred = DataSet.label2rgb(pred)
 
-    # predictionlabel2rgb masks out the background
-    rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
-    #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
+    if orig_depth:
+        # Get complete label (including background) when original depth (640x480) is supplied
+        rgbPred = DataSet.label2rgb(pred)
+        rgbPred = misc.imresize(rgbPred, 400, interpolation)
+        depth = np.reshape(depth,[depth.shape[0],depth.shape[1],-1])
+        if std_depth:
+            rgbPred[:,:] = np.where(depth >= 2, [[[0,0,0]]], rgbPred)
+        else:
+            rgbPred[:,:] = np.where(depth >= 10000, [[[0,0,0]]], rgbPred)
+    else:
+        # predictionlabel2rgb masks out the background, use when resized depth (160x120) is supplied
+        rgbPred = DataSet.predictionlabel2rgb(pred, depth, std_depth=std_depth)
+        #rgbPred = DataSet.predictionlabel2rgbsinglepart(pred, depth, part=2)
 
-    #rgbPred = ndimage.median_filter(rgbPred,3)
-    #rgbPred = ndimage.gaussian_filter(rgbPred,3)
-    #rgbPred = DataSet.label2rgb(pred)
-    #print(rgbPred.shape)
-    rgbPred = misc.imresize(rgbPred, 400, interpolation)
+        #rgbPred = ndimage.median_filter(rgbPred,3)
+        #rgbPred = ndimage.gaussian_filter(rgbPred,3)
+        #rgbPred = DataSet.label2rgb(pred)
+        #print(rgbPred.shape)
+        rgbPred = misc.imresize(rgbPred, 400, interpolation)
     misc.imsave(path,rgbPred)
     #misc.imshow(rgbPred)
 

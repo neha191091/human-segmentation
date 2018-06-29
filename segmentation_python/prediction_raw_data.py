@@ -23,8 +23,9 @@ def predict(dir_pred_input_record,
           mob_depth_multiplier=1.0,
           max_depth = 10000,
           min_depth = 0,
-          follow_up_convs = follow_up_convs,
-          sep_convs = sep_convs):
+          follow_up_convs = 0,
+          sep_convs = 0,
+          depthsep_inter_norm_activn = True):
     '''
     Predict segmentation maps from depths
     :param dataset: DataSet object
@@ -61,7 +62,8 @@ def predict(dir_pred_input_record,
                                 conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier,
                                 follow_up_convs = follow_up_convs,
-                                sep_convs = sep_convs)
+                                sep_convs = sep_convs,
+                                depthsep_inter_norm_activn = depthsep_inter_norm_activn)
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
     print('prediction shape', predictions.shape)
@@ -107,7 +109,7 @@ def predict(dir_pred_input_record,
                 # of your ops or variables, you may include them in
                 # the list passed to sess.run() and the value tensors
                 # will be returned in the tuple from the call.
-                depths_data = dataset.get_batch_from_pred_input_data(batch_size, convert2tensor=False)
+                depths_data, depths_orig_data = dataset.get_batch_from_pred_input_data(batch_size, convert2tensor=False)
                 #depths_data = np.repeat(depths_data, 144, axis=0)
                 #labels_data = np.repeat(labels_data, 144, axis=0)
                 # print('shape depth: ', depths_data.shape, ' shape labels: ', labels_data.shape)
@@ -127,8 +129,9 @@ def predict(dir_pred_input_record,
                 if step % save_prediction_interval == 0:
                     step_vector.append(step)
                     utils.visualize_predictions_no_labels(pred[0],np.squeeze(corr_depth[0]),path = vis_result_part_path + str(step) + '.png',std_depth=False)
-                    utils.save_predictions(pred[0], np.squeeze(corr_depth[0]),
-                                                path=pred_result_part_path + str(step) + '.png',std_depth=False)
+
+                    utils.save_predictions(pred[0], np.squeeze(depths_orig_data),
+                                                path=pred_result_part_path + str(step) + '.png',std_depth=False, orig_depth=True) #depths_orig_data
 
                 step += 1
                 print('step: ',step)
@@ -150,7 +153,8 @@ if __name__ == '__main__':
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/christian_dataset/source/yunus2'
     #max_depth = 1600 #yunus_data
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
-    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/sumit_11_5_2_refined'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/sumit_11_5_2_refined'
+    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_sequence'
     #dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
 
     batch_size = 1
@@ -166,7 +170,13 @@ if __name__ == '__main__':
     #load_from_chkpt = _CHKPT_PATH + 'REMOTE_b_50_md_1_total_300_2018_05_03_11_52_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1
     #load_from_chkpt = _CHKPT_PATH + '2018_05_16_07_55_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, REMOTE
     #load_from_chkpt = _CHKPT_PATH + '2018_05_17_08_46_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, standardized, REMOTE
-    load_from_chkpt = _CHKPT_PATH + '2018_05_20_10_24_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected_TWO - changed scale and positions to match kinect v1 domain, 300, REMOTE
+
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_20_22_22_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_2_convdef_5_followup_1_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_26_05_53_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+    load_from_chkpt = _CHKPT_PATH + '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
 
     multi_deconv = 1
     mob_depth_multiplier = 0.75
@@ -174,9 +184,10 @@ if __name__ == '__main__':
     data_dims_from_ckpt = None
     follow_up_convs = 0
     sep_convs = False
+    depthsep_inter_norm_activn = True
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
         conv_defs = _CONV_DEFS[conv_def_num]
     else:
         print('You must provide a checkpoint to get predictions')
@@ -194,4 +205,5 @@ if __name__ == '__main__':
          max_depth=max_depth,
          min_depth=min_depth,
          follow_up_convs = follow_up_convs,
-         sep_convs = sep_convs)
+         sep_convs = sep_convs,
+         depthsep_inter_norm_activn = depthsep_inter_norm_activn)

@@ -22,7 +22,8 @@ def eval(dir_tf_record,
           conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0,
           follow_up_convs = 0,
-          sep_convs = False):
+          sep_convs = False,
+          depthsep_inter_norm_activn = True):
     '''
     Evaluate the network from tfRecords.
     :param dir_tf_record: Directory from which the data is produced
@@ -59,7 +60,8 @@ def eval(dir_tf_record,
                                 conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier,
                                 follow_up_convs = follow_up_convs,
-                                sep_convs = sep_convs)
+                                sep_convs = sep_convs,
+                                depthsep_inter_norm_activn = depthsep_inter_norm_activn)
 
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
@@ -178,12 +180,13 @@ if __name__ == '__main__':
     #chkpt = _CHKPT_PATH + 'chkpt2cpy_2/'+ '2018_03_31_23_58_checkpoint-1.ckpt'#''2017_09_28_21_32_checkpoint-1.ckpt'
 
 
-    dir_tf_record = _DATA_PATH + 'data_complete_by_4'
+    #dir_tf_record = _DATA_PATH + 'data_complete_by_4'
+    dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 10
     override_tfrecords = ['test_0']
-    load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
+    load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'#'2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
     multi_deconv = 1
     mob_f_ep = 9
     mob_depth_multiplier = 0.75
@@ -191,9 +194,10 @@ if __name__ == '__main__':
     data_dims_from_ckpt = None
     follow_up_convs = 0
     sep_convs = False
+    depthsep_inter_norm_activn = True
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
         conv_defs = _CONV_DEFS[conv_def_num]
     else:
         print('You must provide a checkpoint to evaluate data')
@@ -210,4 +214,5 @@ if __name__ == '__main__':
           conv_defs=conv_defs,
           mob_depth_multiplier=mob_depth_multiplier,
           follow_up_convs = follow_up_convs,
-          sep_convs = sep_convs)
+          sep_convs = sep_convs,
+          depthsep_inter_norm_activn = depthsep_inter_norm_activn)

@@ -25,7 +25,8 @@ def eval(dir_raw_record,
           conv_defs=_CONV_DEFS[0],
           mob_depth_multiplier=1.0,
           follow_up_convs = 0,
-          sep_convs = False):
+          sep_convs = False,
+          depthsep_inter_norm_activn = True):
     '''
     Evaluate the network from tfRecords.
     :param dir_raw_record: Directory from which the data is produced
@@ -60,7 +61,8 @@ def eval(dir_raw_record,
                                 conv_defs=conv_defs,
                                 mob_depth_multiplier=mob_depth_multiplier,
                                 follow_up_convs = follow_up_convs,
-                                sep_convs = sep_convs)
+                                sep_convs = sep_convs,
+                                depthsep_inter_norm_activn= depthsep_inter_norm_activn)
 
     print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
@@ -200,9 +202,10 @@ if __name__ == '__main__':
     data_dims_from_ckpt = None
     follow_up_convs = 0
     sep_convs = False
+    depthsep_inter_norm_activn = True
 
     if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
         conv_defs = _CONV_DEFS[conv_def_num]
     else:
         print('You must provide a checkpoint to evaluate data')
@@ -218,4 +221,5 @@ if __name__ == '__main__':
          conv_defs=conv_defs,
          mob_depth_multiplier=mob_depth_multiplier,
          follow_up_convs = follow_up_convs,
-         sep_convs = sep_convs)
+         sep_convs = sep_convs,
+         depthsep_inter_norm_activn = depthsep_inter_norm_activn)
