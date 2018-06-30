@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from data_utils import Dataset_TF_Provide
 from net_main import SegmentationNetwork
 import time
@@ -93,6 +93,7 @@ def eval(dir_tf_record,
         step = 0
         step_vector = []
         loss_vector = []
+        IOU_vector = []
         acc_vector = []
         TP_sum = np.zeros((10,))
         TN_sum = np.zeros((10,))
@@ -134,14 +135,20 @@ def eval(dir_tf_record,
                 FP_sum += FP
                 FN_sum += FN
 
+                IOU = utils.accuracy_IOU(pred, corr_label)
+                acc = utils.accuracy_per_pixel(pred, corr_label)
+
+                IOU_vector.append(IOU)
+                acc_vector.append(acc)
+                step_vector.append(step)
+                loss_vector.append(loss_value)
+
                 # Print an overview fairly often.
                 if step % save_prediction_interval == 0:
                     # mean IOU per batch
-                    acc = utils.accuracy_IOU(pred, corr_label)
-                    utils.print_metrics(loss=loss_value,accuracy=acc,step=step,metrics_file_path=metrics_file_path)
-                    step_vector.append(step)
-                    loss_vector.append(loss_value)
-                    utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+
+                    utils.print_metrics(loss=loss_value,accuracy=acc,IOU=IOU,step=step,metrics_file_path=metrics_file_path)
+                    #utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
 
 
                 step += 1
@@ -152,9 +159,11 @@ def eval(dir_tf_record,
         # When done, ask the threads to stop.
 
             # Get IOU over complete data
-            IOU = np.mean(TP_sum / (TP_sum + FP_sum + FN_sum + _TINY))
+            IOU_overall = np.mean(TP_sum / (TP_sum + FP_sum + FN_sum + _TINY))
             metrics_file = open(metrics_file_path, 'a+')
-            print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU), file=metrics_file)
+            print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU_overall), file=metrics_file)
+            print('Mean accuracy_per_pixel: ' + str(np.mean(np.array(acc_vector))), file = metrics_file)
+            print('Mean IOU: ' + str(np.mean(np.array(IOU_vector))), file = metrics_file)
             metrics_file.close()
 
             #step_vector.append(step)
@@ -169,7 +178,8 @@ def eval(dir_tf_record,
         coord.join(threads)
 
         if show_last_prediction:
-            utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+            #utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+            pass
 
         utils.plot_loss(step_vector, loss_vector, loss_path, 'test')
 
@@ -179,14 +189,23 @@ if __name__ == '__main__':
 
     #chkpt = _CHKPT_PATH + 'chkpt2cpy_2/'+ '2018_03_31_23_58_checkpoint-1.ckpt'#''2017_09_28_21_32_checkpoint-1.ckpt'
 
-
+    print('Starting evaluation script....')
     #dir_tf_record = _DATA_PATH + 'data_complete_by_4'
-    dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
+    #dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
+    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf_300'
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 10
-    override_tfrecords = ['test_0']
-    load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'#'2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
+    override_tfrecords = None#['test_0']
+    #load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
+
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_20_22_22_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_2_convdef_5_followup_1_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_26_05_53_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+    load_from_chkpt = _CHKPT_PATH + '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+
     multi_deconv = 1
     mob_f_ep = 9
     mob_depth_multiplier = 0.75
@@ -202,6 +221,8 @@ if __name__ == '__main__':
     else:
         print('You must provide a checkpoint to evaluate data')
         exit()
+
+    print('start eval')
 
     eval(dir_tf_record=dir_tf_record,
           batch_size=batch_size,

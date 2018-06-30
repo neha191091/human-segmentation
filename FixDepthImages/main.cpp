@@ -149,8 +149,9 @@ int main(int argc, char** argv) {
     std::cout<<"Start conversion\n";
 
     //std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_corrected/";
-    std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_corrected_TWO/";
-
+    //std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_corrected_TWO/";
+    std::string dataPath = "/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/";
+    
     bool resize = true; 
     //
     //bool convert = convertexr2png(depthFilename.str(),0,0);

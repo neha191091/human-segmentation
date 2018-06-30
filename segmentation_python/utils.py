@@ -204,7 +204,7 @@ def print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chk
         print('load_from_chkpt = '+ load_from_chkpt, file=chkpt_details_file)
     chkpt_details_file.close()
 
-def print_metrics(loss, accuracy, step, metrics_file_path):
+def print_metrics(loss, accuracy, step, metrics_file_path, IOU=-1):
     '''
     Prints training/evaluation metrics
     :param loss: loss
@@ -214,7 +214,7 @@ def print_metrics(loss, accuracy, step, metrics_file_path):
     :return:
     '''
     metrics_file = open(metrics_file_path,'a+')
-    print('Step %f: loss = %f acc = %f' % (step, loss, accuracy), file=metrics_file)
+    print('Step %f: loss = %f acc = %f IOU = %f' % (step, loss, accuracy, IOU), file=metrics_file)
     metrics_file.close()
 
 def print_model_details(model, models_file_path):
