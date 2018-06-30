@@ -7,5 +7,5 @@ _PROJECT_PATH = '/home/neha/segmentation/segmentation_python/'
 _CHKPT_PATH = _PROJECT_PATH + 'chkpt/'
 _RESULT_PATH = _PROJECT_PATH + 'result/'
 _DATA_PATH = _PROJECT_PATH + 'data/'
+_MODEL_CMPR_PATH = _PROJECT_PATH + 'model_compare/'
 _TINY = 1e-8
-

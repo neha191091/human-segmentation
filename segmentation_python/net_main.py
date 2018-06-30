@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from initialize import _DATA_PATH
+from initialize import _DATA_PATH, _MODEL_CMPR_PATH
 import net_mobilenet_v1 as mob
 from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
@@ -289,17 +289,17 @@ if __name__ == '__main__':
     # TODO: Dont use this path until fully tested
     # dir_raw_record = _DATA_PATH + 'raw_data_single_model_in_by_4_out_by_1'
 
-    batch_size = 1
+    batch_size = 200
     num_epochs = 1
     lr = 1e-3
-    multi_deconv = 1
+    multi_deconv = 3
     mob_depth_multiplier = 1
     conv_def_num = 6
     conv_defs = _CONV_DEFS[conv_def_num]   #_CONV_DEFS[1]
     data_dims_from_ckpt = None
-    follow_up_convs = 2
+    follow_up_convs = 1
     sep_convs = True
-    depthsep_inter_norm_activn = False
+    depthsep_inter_norm_activn = True
     dataset = Dataset_Raw_Provide(dir_raw_record)
 
 
@@ -332,8 +332,9 @@ if __name__ == '__main__':
 
 
 
-    details_str = "_ConvDef_"+str(conv_def_num)+"_Multideconv_"+str(multi_deconv)+"_Followups_"+\
-                  str(follow_up_convs)+"_Sepconvs_"+str(sep_convs)+"_depthsep_inter_norm_activn_"+str(depthsep_inter_norm_activn)+"_MobDepthMul_"+str(mob_depth_multiplier)+'_no_cuda'
+    details_str = "batch_"+str(batch_size)+"_ConvDef_"+str(conv_def_num)+"_Multideconv_"+str(multi_deconv)+"_Followups_"+\
+                  str(follow_up_convs)+"_Sepconvs_"+str(sep_convs)+"_depthsep_inter_norm_activn_"+str(depthsep_inter_norm_activn)+\
+                  "_MobDepthMul_"+str(mob_depth_multiplier)#+'_no_cuda'
 
     import time
     #
@@ -365,7 +366,7 @@ if __name__ == '__main__':
             # Uncomment to save a trace
             fetched_timeline = timeline.Timeline(run_metadata.step_stats)
             chrome_trace = fetched_timeline.generate_chrome_trace_format()
-            with open(_DATA_PATH+details_str+'.json', 'w') as f:
+            with open(_MODEL_CMPR_PATH+details_str+'.json', 'w') as f:
                 f.write(chrome_trace)
 
         endtime = time.time()

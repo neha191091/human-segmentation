@@ -1,0 +1,891 @@
+No of train samples:  360
+No of test samples:  0
+No of val samples:  0
+total train+val+test:  360
+type =  train
+index start:  0  index end:  359
+human_0_rgb_0.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_0_0001.png
+human_0_rgb_1.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_1_0001.png
+human_0_rgb_2.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_2_0001.png
+human_0_rgb_3.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_3_0001.png
+human_0_rgb_4.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_4_0001.png
+human_0_rgb_5.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_5_0001.png
+human_0_rgb_6.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_6_0001.png
+human_0_rgb_7.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_7_0001.png
+human_0_rgb_8.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_8_0001.png
+human_0_rgb_9.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_9_0001.png
+human_0_rgb_10.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_10_0001.png
+human_0_rgb_11.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_11_0001.png
+human_0_rgb_12.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_12_0001.png
+human_0_rgb_13.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_13_0001.png
+human_0_rgb_14.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_14_0001.png
+human_0_rgb_15.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_15_0001.png
+human_0_rgb_16.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_16_0001.png
+human_0_rgb_17.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_17_0001.png
+human_0_rgb_18.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_18_0001.png
+human_0_rgb_19.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_19_0001.png
+human_0_rgb_20.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_20_0001.png
+human_0_rgb_21.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_21_0001.png
+human_0_rgb_22.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_22_0001.png
+human_0_rgb_23.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_23_0001.png
+human_0_rgb_24.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_24_0001.png
+human_0_rgb_25.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_25_0001.png
+human_0_rgb_26.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_26_0001.png
+human_0_rgb_27.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_27_0001.png
+human_0_rgb_28.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_28_0001.png
+human_0_rgb_29.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_29_0001.png
+human_0_rgb_30.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_30_0001.png
+human_0_rgb_31.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_31_0001.png
+human_0_rgb_32.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_32_0001.png
+human_0_rgb_33.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_33_0001.png
+human_0_rgb_34.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_34_0001.png
+human_0_rgb_35.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_35_0001.png
+human_0_rgb_36.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_36_0001.png
+human_0_rgb_37.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_37_0001.png
+human_0_rgb_38.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_38_0001.png
+human_0_rgb_39.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_39_0001.png
+human_0_rgb_40.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_40_0001.png
+human_0_rgb_41.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_41_0001.png
+human_0_rgb_42.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_42_0001.png
+human_0_rgb_43.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_43_0001.png
+human_0_rgb_44.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_44_0001.png
+human_0_rgb_45.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_45_0001.png
+human_0_rgb_46.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_46_0001.png
+human_0_rgb_47.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_47_0001.png
+human_0_rgb_48.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_48_0001.png
+human_0_rgb_49.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_49_0001.png
+xbatch shape:  (50, 120, 160, 1)
+ybatch shape:  (50, 120, 160)
+end_point =  Conv2d_0  ; final_endpoint =  Conv2d_11_pointwise
+deconv_logits shape:  (50, 120, 160, 11)
+prediction shape (50, 120, 160)
+Number of parameters:  15443169
+
+Model Endpoints with Output Shape
+Conv2d_0 ,  (50, 60, 80, 32)
+Conv2d_1_depthwise ,  (50, 60, 80, 32)
+Conv2d_1_pointwise ,  (50, 60, 80, 64)
+Conv2d_2_depthwise ,  (50, 60, 80, 64)
+Conv2d_2_pointwise ,  (50, 60, 80, 64)
+Conv2d_3_depthwise ,  (50, 30, 40, 64)
+Conv2d_3_pointwise ,  (50, 30, 40, 128)
+Conv2d_4_depthwise ,  (50, 30, 40, 128)
+Conv2d_4_pointwise ,  (50, 30, 40, 128)
+Conv2d_5_depthwise ,  (50, 30, 40, 128)
+Conv2d_5_pointwise ,  (50, 30, 40, 128)
+Conv2d_6_depthwise ,  (50, 15, 20, 128)
+Conv2d_6_pointwise ,  (50, 15, 20, 256)
+Conv2d_7_depthwise ,  (50, 15, 20, 256)
+Conv2d_7_pointwise ,  (50, 15, 20, 256)
+Conv2d_8_depthwise ,  (50, 15, 20, 256)
+Conv2d_8_pointwise ,  (50, 15, 20, 256)
+Conv2d_9_depthwise ,  (50, 8, 10, 256)
+Conv2d_9_pointwise ,  (50, 8, 10, 512)
+Conv2d_10_depthwise ,  (50, 8, 10, 512)
+Conv2d_10_pointwise ,  (50, 8, 10, 512)
+Conv2d_11_depthwise ,  (50, 8, 10, 512)
+Conv2d_11_pointwise ,  (50, 8, 10, 512)
+Input ,  (50, 120, 160, 1)
+DropoutConv2dEncoder ,  (50, 8, 10, 512)
+Deconv2dtranspose_Conv2d_8_pointwise ,  (50, 15, 20, 256)
+Deconcat_Conv2d_8_pointwise ,  (50, 15, 20, 512)
+DefollowupConv2dDepthwise_1_Conv2d_8_pointwise ,  (50, 15, 20, 512)
+DefollowupConv2dPointwise_1_Conv2d_8_pointwise ,  (50, 15, 20, 256)
+DefollowupConv2dDepthwise_2_Conv2d_8_pointwise ,  (50, 15, 20, 256)
+DefollowupConv2dPointwise_2_Conv2d_8_pointwise ,  (50, 15, 20, 256)
+DeConv2dtranspose_Conv2d_5_pointwise ,  (50, 30, 40, 128)
+Deconcat_Conv2d_5_pointwise ,  (50, 30, 40, 256)
+DefollowupConv2dDepthwise_1_Conv2d_5_pointwise ,  (50, 30, 40, 256)
+DefollowupConv2dPointwise_1_Conv2d_5_pointwise ,  (50, 30, 40, 128)
+DefollowupConv2dDepthwise_2_Conv2d_5_pointwise ,  (50, 30, 40, 128)
+DefollowupConv2dPointwise_2_Conv2d_5_pointwise ,  (50, 30, 40, 128)
+DeConv2dtranspose_Conv2d_2_pointwise ,  (50, 60, 80, 64)
+Deconcat_Conv2d_2_pointwise ,  (50, 60, 80, 128)
+DefollowupConv2dDepthwise_1_Conv2d_2_pointwise ,  (50, 60, 80, 128)
+DefollowupConv2dPointwise_1_Conv2d_2_pointwise ,  (50, 60, 80, 64)
+DefollowupConv2dDepthwise_2_Conv2d_2_pointwise ,  (50, 60, 80, 64)
+DefollowupConv2dPointwise_2_Conv2d_2_pointwiseParsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              0
+-min_occurrence             0
+-step                       -1
+-order_by                   name
+-account_type_regexes       _trainable_variables
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     params
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # parameters
+_TFProfRoot (--/15.43m params)
+  SegmentationNet (--/15.43m params)
+    SegmentationNet/Conv2d_0 (--/320 params)
+      SegmentationNet/Conv2d_0/BatchNorm (--/32 params)
+        SegmentationNet/Conv2d_0/BatchNorm/beta (32, 32/32 params)
+      SegmentationNet/Conv2d_0/weights (3x3x1x32, 288/288 params)
+    SegmentationNet/Conv2d_10_depthwise (--/5.12k params)
+      SegmentationNet/Conv2d_10_depthwise/biases (512, 512/512 params)
+      SegmentationNet/Conv2d_10_depthwise/depthwise_weights (3x3x512x1, 4.61k/4.61k params)
+    SegmentationNet/Conv2d_10_pointwise (--/262.66k params)
+      SegmentationNet/Conv2d_10_pointwise/BatchNorm (--/512 params)
+        SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta (512, 512/512 params)
+      SegmentationNet/Conv2d_10_pointwise/weights (1x1x512x512, 262.14k/262.14k params)
+    SegmentationNet/Conv2d_11_depthwise (--/5.12k params)
+      SegmentationNet/Conv2d_11_depthwise/biases (512, 512/512 params)
+      SegmentationNet/Conv2d_11_depthwise/depthwise_weights (3x3x512x1, 4.61k/4.61k params)
+    SegmentationNet/Conv2d_11_pointwise (--/262.66k params)
+      SegmentationNet/Conv2d_11_pointwise/BatchNorm (--/512 params)
+        SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta (512, 512/512 params)
+      SegmentationNet/Conv2d_11_pointwise/weights (1x1x512x512, 262.14k/262.14k params)
+    SegmentationNet/Conv2d_1_depthwise (--/320 params)
+      SegmentationNet/Conv2d_1_depthwise/biases (32, 32/32 params)
+      SegmentationNet/Conv2d_1_depthwise/depthwise_weights (3x3x32x1, 288/288 params)
+    SegmentationNet/Conv2d_1_pointwise (--/2.11k params)
+      SegmentationNet/Conv2d_1_pointwise/BatchNorm (--/64 params)
+        SegmentationNet/Conv2d_1_pointwise/BatchNorm/beta (64, 64/64 params)
+      SegmentationNet/Conv2d_1_pointwise/weights (1x1x32x64, 2.05k/2.05k params)
+    SegmentationNet/Conv2d_2_depthwise (--/640 params)
+      SegmentationNet/Conv2d_2_depthwise/biases (64, 64/64 params)
+      SegmentationNet/Conv2d_2_depthwise/depthwise_weights (3x3x64x1, 576/576 params)
+    SegmentationNet/Conv2d_2_pointwise (--/4.16k params)
+      SegmentationNet/Conv2d_2_pointwise/BatchNorm (--/64 params)
+        SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta (64, 64/64 params)
+      SegmentationNet/Conv2d_2_pointwise/weights (1x1x64x64, 4.10k/4.10k params)
+    SegmentationNet/Conv2d_3_depthwise (--/640 params)
+      SegmentationNet/Conv2d_3_depthwise/biases (64, 64/64 params)
+      SegmentationNet/Conv2d_3_depthwise/depthwise_weights (3x3x64x1, 576/576 params)
+    SegmentationNet/Conv2d_3_pointwise (--/8.32k params)
+      SegmentationNet/Conv2d_3_pointwise/BatchNorm (--/128 params)
+        SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta (128, 128/128 params)
+      SegmentationNet/Conv2d_3_pointwise/weights (1x1x64x128, 8.19k/8.19k params)
+    SegmentationNet/Conv2d_4_depthwise (--/1.28k params)
+      SegmentationNet/Conv2d_4_depthwise/biases (128, 128/128 params)
+      SegmentationNet/Conv2d_4_depthwise/depthwise_weights (3x3x128x1, 1.15k/1.15k params)
+    SegmentationNet/Conv2d_4_pointwise (--/16.51k params)
+      SegmentationNet/Conv2d_4_pointwise/BatchNorm (--/128 params)
+        SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta (128, 128/128 params)
+      SegmentationNet/Conv2d_4_pointwise/weights (1x1x128x128, 16.38k/16.38k params)
+    SegmentationNet/Conv2d_5_depthwise (--/1.28k params)
+      SegmentationNet/Conv2d_5_depthwise/biases (128, 128/128 params)
+      SegmentationNet/Conv2d_5_depthwise/depthwise_weights (3x3x128x1, 1.15k/1.15k params)
+    SegmentationNet/Conv2d_5_pointwise (--/16.51k params)
+      SegmentationNet/Conv2d_5_pointwise/BatchNorm (--/128 params)
+        SegmentationNet/Conv2d_5_pointwise/BatchNorm/beta (128, 128/128 params)
+      SegmentationNet/Conv2d_5_pointwise/weights (1x1x128x128, 16.38k/16.38k params)
+    SegmentationNet/Conv2d_6_depthwise (--/1.28k params)
+      SegmentationNet/Conv2d_6_depthwise/biases (128, 128/128 params)
+      SegmentationNet/Conv2d_6_depthwise/depthwise_weights (3x3x128x1, 1.15k/1.15k params)
+    SegmentationNet/Conv2d_6_pointwise (--/33.02k params)
+      SegmentationNet/Conv2d_6_pointwise/BatchNorm (--/256 params)
+        SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta (256, 256/256 params)
+      SegmentationNet/Conv2d_6_pointwise/weights (1x1x128x256, 32.77k/32.77k params)
+    SegmentationNet/Conv2d_7_depthwise (--/2.56k params)
+      SegmentationNet/Conv2d_7_depthwise/biases (256, 256/256 params)
+      SegmentationNet/Conv2d_7_depthwise/depthwise_weights (3x3x256x1, 2.30k/2.30k params)
+    SegmentationNet/Conv2d_7_pointwise (--/65.79k params)
+      SegmentationNet/Conv2d_7_pointwise/BatchNorm (--/256 params)
+        SegmentationNet/Conv2d_7_pointwise/BatchNorm/beta (256, 256/256 params)
+      SegmentationNet/Conv2d_7_pointwise/weights (1x1x256x256, 65.54k/65.54k params)
+    SegmentationNet/Conv2d_8_depthwise (--/2.56k params)
+      SegmentationNet/Conv2d_8_depthwise/biases (256, 256/256 params)
+      SegmentationNet/Conv2d_8_depthwise/depthwise_weights (3x3x256x1, 2.30k/2.30k params)
+    SegmentationNet/Conv2d_8_pointwise (--/65.79k params)
+      SegmentationNet/Conv2d_8_pointwise/BatchNorm (--/256 params)
+        SegmentationNet/Conv2d_8_pointwise/BatchNorm/beta (256, 256/256 params)
+      SegmentationNet/Conv2d_8_pointwise/weights (1x1x256x256, 65.54k/65.54k params)
+    SegmentationNet/Conv2d_9_depthwise (--/2.56k params)
+      SegmentationNet/Conv2d_9_depthwise/biases (256, 256/256 params)
+      SegmentationNet/Conv2d_9_depthwise/depthwise_weights (3x3x256x1, 2.30k/2.30k params)
+    SegmentationNet/Conv2d_9_pointwise (--/131.58k params)
+      SegmentationNet/Conv2d_9_pointwise/BatchNorm (--/512 params)
+        SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta (512, 512/512 params)
+      SegmentationNet/Conv2d_9_pointwise/weights (1x1x256x512, 131.07k/131.07k params)
+    SegmentationNet/ImageLogits (--/14.54m params)
+      SegmentationNet/ImageLogits/Conv (--/2.36m params)
+        SegmentationNet/ImageLogits/Conv/biases (512, 512/512 params)
+        SegmentationNet/ImageLogits/Conv/weights (3x3x512x512, 2.36m/2.36m params)
+      SegmentationNet/ImageLogits/Conv2d_transpose (--/11.53m params)
+        SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm (--/256 params)
+          SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta (256, 256/256 params)
+        SegmentationNet/ImageLogits/Conv2d_transpose/weights (8x11x256x512, 11.53m/11.53m params)
+      SegmentationNet/ImageLogits/Conv2d_transpose_1 (--/295.04k params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm (--/128 params)
+          SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/beta (128, 128/128 params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_1/weights (3x3x128x256, 294.91k/294.91k params)
+      SegmentationNet/ImageLogits/Conv2d_transpose_2 (--/73.79k params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm (--/64 params)
+          SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/beta (64, 64/64 params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_2/weights (3x3x64x128, 73.73k/73.73k params)
+      SegmentationNet/ImageLogits/Conv2d_transpose_3 (--/6.35k params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm (--/11 params)
+          SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/beta (11, 11/11 params)
+        SegmentationNet/ImageLogits/Conv2d_transpose_3/weights (3x3x11x64, 6.34k/6.34k params)
+      SegmentationNet/ImageLogits/Conv_1 (--/131.33k params)
+        SegmentationNet/ImageLogits/Conv_1/BatchNorm (--/256 params)
+          SegmentationNet/ImageLogits/Conv_1/BatchNorm/beta (256, 256/256 params)
+        SegmentationNet/ImageLogits/Conv_1/weights (1x1x512x256, 131.07k/131.07k params)
+      SegmentationNet/ImageLogits/Conv_2 (--/65.79k params)
+        SegmentationNet/ImageLogits/Conv_2/BatchNorm (--/256 params)
+          SegmentationNet/ImageLogits/Conv_2/BatchNorm/beta (256, 256/256 params)
+        SegmentationNet/ImageLogits/Conv_2/weights (1x1x256x256, 65.54k/65.54k params)
+      SegmentationNet/ImageLogits/Conv_3 (--/32.90k params)
+        SegmentationNet/ImageLogits/Conv_3/BatchNorm (--/128 params)
+          SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta (128, 128/128 params)
+        SegmentationNet/ImageLogits/Conv_3/weights (1x1x256x128, 32.77k/32.77k params)
+      SegmentationNet/ImageLogits/Conv_4 (--/16.51k params)
+        SegmentationNet/ImageLogits/Conv_4/BatchNorm (--/128 params)
+          SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta (128, 128/128 params)
+        SegmentationNet/ImageLogits/Conv_4/weights (1x1x128x128, 16.38k/16.38k params)
+      SegmentationNet/ImageLogits/Conv_5 (--/8.26k params)
+        SegmentationNet/ImageLogits/Conv_5/BatchNorm (--/64 params)
+          SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta (64, 64/64 params)
+        SegmentationNet/ImageLogits/Conv_5/weights (1x1x128x64, 8.19k/8.19k params)
+      SegmentationNet/ImageLogits/Conv_6 (--/4.16k params)
+        SegmentationNet/ImageLogits/Conv_6/BatchNorm (--/64 params)
+          SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta (64, 64/64 params)
+        SegmentationNet/ImageLogits/Conv_6/weights (1x1x64x64, 4.10k/4.10k params)
+      SegmentationNet/ImageLogits/SeparableConv2d (--/5.12k params)
+        SegmentationNet/ImageLogits/SeparableConv2d/biases (512, 512/512 params)
+        SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights (3x3x512x1, 4.61k/4.61k params)
+      SegmentationNet/ImageLogits/SeparableConv2d_1 (--/2.56k params)
+        SegmentationNet/ImageLogits/SeparableConv2d_1/biases (256, 256/256 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights (3x3x256x1, 2.30k/2.30k params)
+      SegmentationNet/ImageLogits/SeparableConv2d_2 (--/2.56k params)
+        SegmentationNet/ImageLogits/SeparableConv2d_2/biases (256, 256/256 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights (3x3x256x1, 2.30k/2.30k params)
+      SegmentationNet/ImageLogits/SeparableConv2d_3 (--/1.28k params)
+        SegmentationNet/ImageLogits/SeparableConv2d_3/biases (128, 128/128 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights (3x3x128x1, 1.15k/1.15k params)
+      SegmentationNet/ImageLogits/SeparableConv2d_4 (--/1.28k params)
+        SegmentationNet/ImageLogits/SeparableConv2d_4/biases (128, 128/128 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights (3x3x128x1, 1.15k/1.15k params)
+      SegmentationNet/ImageLogits/SeparableConv2d_5 (--/640 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_5/biases (64, 64/64 params)
+        SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights (3x3x64x1, 576/576 params)
+
+======================End of Report==========================
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              1
+-min_occurrence             0
+-step                       -1
+-order_by                   float_ops
+-account_type_regexes       .*
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     float_ops
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # float_ops
+_TFProfRoot (--/904.20b flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/conv2d_transpose (346.03b/346.03b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose/conv2d_transpose_grad/Conv2DBackpropFilter (346.03b/346.03b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose/conv2d_transpose_grad/Conv2D (92.27b/92.27b flops)
+  SegmentationNet/ImageLogits/Conv/Conv2D (18.87b/18.87b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_2/conv2d_transpose_grad/Conv2DBackpropFilter (8.85b/8.85b flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/conv2d_transpose (8.85b/8.85b flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/conv2d_transpose (8.85b/8.85b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_1/conv2d_transpose_grad/Conv2D (8.85b/8.85b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_1/conv2d_transpose_grad/Conv2DBackpropFilter (8.85b/8.85b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_2/conv2d_transpose_grad/Conv2D (8.85b/8.85b flops)
+  SegmentationNet/ImageLogits/Conv_3/Conv2D (3.93b/3.93b flops)
+  SegmentationNet/ImageLogits/Conv_5/Conv2D (3.93b/3.93b flops)
+  SegmentationNet/ImageLogits/Conv_1/Conv2D (3.93b/3.93b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_3/conv2d_transpose_grad/Conv2D (3.04b/3.04b flops)
+  gradients/SegmentationNet/ImageLogits/Conv2d_transpose_3/conv2d_transpose_grad/Conv2DBackpropFilter (3.04b/3.04b flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/conv2d_transpose (3.04b/3.04b flops)
+  SegmentationNet/SegmentationNet/Conv2d_10_pointwise/Conv2D (2.10b/2.10b flops)
+  SegmentationNet/SegmentationNet/Conv2d_11_pointwise/Conv2D (2.10b/2.10b flops)
+  SegmentationNet/SegmentationNet/Conv2d_4_pointwise/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/ImageLogits/Conv_2/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/ImageLogits/Conv_4/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/ImageLogits/Conv_6/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/SegmentationNet/Conv2d_7_pointwise/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Conv2D (1.97b/1.97b flops)
+  SegmentationNet/SegmentationNet/Conv2d_9_pointwise/Conv2D (1.05b/1.05b flops)
+  SegmentationNet/SegmentationNet/Conv2d_3_pointwise/Conv2D (983.04m/983.04m flops)
+  SegmentationNet/SegmentationNet/Conv2d_1_pointwise/Conv2D (983.04m/983.04m flops)
+  SegmentationNet/SegmentationNet/Conv2d_6_pointwise/Conv2D (983.04m/983.04m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise (552.96m/552.96m flops)
+  SegmentationNet/SegmentationNet/Conv2d_2_depthwise/depthwise (276.48m/276.48m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise (276.48m/276.48m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise (276.48m/276.48m flops)
+  SegmentationNet/SegmentationNet/Conv2d_4_depthwise/depthwise (138.24m/138.24m flops)
+  SegmentationNet/SegmentationNet/Conv2d_1_depthwise/depthwise (138.24m/138.24m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise (138.24m/138.24m flops)
+  SegmentationNet/SegmentationNet/Conv2d_0/Conv2D (138.24m/138.24m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d/depthwise (138.24m/138.24m flops)
+  SegmentationNet/SegmentationNet/Conv2d_5_depthwise/depthwise (138.24m/138.24m flops)
+  SegmentationNet/SegmentationNet/Conv2d_8_depthwise/depthwise (69.12m/69.12m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise (69.12m/69.12m flops)
+  SegmentationNet/SegmentationNet/Conv2d_7_depthwise/depthwise (69.12m/69.12m flops)
+  SegmentationNet/SegmentationNet/Conv2d_3_depthwise/depthwise (69.12m/69.12m flops)
+  SegmentationNet/SegmentationNet/Conv2d_10_depthwise/depthwise (36.86m/36.86m flops)
+  SegmentationNet/SegmentationNet/Conv2d_11_depthwise/depthwise (36.86m/36.86m flops)
+  SegmentationNet/SegmentationNet/Conv2d_6_depthwise/depthwise (34.56m/34.56m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_4/BiasAdd (30.72m/30.72m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d_4/BiasAdd_grad/BiasAddGrad (30.72m/30.72m flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/weights/Initializer/random_uniform (11.53m/23.07m flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/weights/Initializer/random_uniform/mul (11.53m/11.53m flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/SegmentationNet/Conv2d_9_depthwise/depthwise (18.43m/18.43m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_2/BiasAdd (15.36m/15.36m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_5/BiasAdd (15.36m/15.36m flops)
+  gradients/AddN_3 (15.36m/15.36m flops)
+  SegmentationNet/SegmentationNet/Conv2d_2_depthwise/BiasAdd (15.36m/15.36m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d_5/BiasAdd_grad/BiasAddGrad (15.36m/15.36m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_2_depthwise/BiasAdd_grad/BiasAddGrad (15.36m/15.36m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d_2/BiasAdd_grad/BiasAddGrad (15.36m/15.36m flops)
+  SegmentationNet/predictions (9.60m/9.60m flops)
+  gradients/AddN (8.64m/8.64m flops)
+  SegmentationNet/SegmentationNet/Conv2d_5_depthwise/BiasAdd (7.68m/7.68m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d/BiasAdd (7.68m/7.68m flops)
+  SegmentationNet/SegmentationNet/Conv2d_1_depthwise/BiasAdd (7.68m/7.68m flops)
+  gradients/AddN_2 (7.68m/7.68m flops)
+  SegmentationNet/SegmentationNet/Conv2d_4_depthwise/BiasAdd (7.68m/7.68m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_3/BiasAdd (7.68m/7.68m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_1_depthwise/BiasAdd_grad/BiasAddGrad (7.68m/7.68m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d_3/BiasAdd_grad/BiasAddGrad (7.68m/7.68m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_4_depthwise/BiasAdd_grad/BiasAddGrad (7.68m/7.68m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_5_depthwise/BiasAdd_grad/BiasAddGrad (7.68m/7.68m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d/BiasAdd_grad/BiasAddGrad (7.68m/7.68m flops)
+  SegmentationNet/ImageLogits/Conv/weights/Initializer/random_uniform (2.36m/4.72m flops)
+    SegmentationNet/ImageLogits/Conv/weights/Initializer/random_uniform/mul (2.36m/2.36m flops)
+    SegmentationNet/ImageLogits/Conv/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform (2.05m/4.10m flops)
+    SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/mul (2.05m/2.05m flops)
+    SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/sub (1/1 flops)
+  SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BiasAdd (3.84m/3.84m flops)
+  SegmentationNet/SegmentationNet/Conv2d_7_depthwise/BiasAdd (3.84m/3.84m flops)
+  SegmentationNet/SegmentationNet/Conv2d_8_depthwise/BiasAdd (3.84m/3.84m flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_1/BiasAdd (3.84m/3.84m flops)
+  gradients/AddN_1 (3.84m/3.84m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BiasAdd_grad/BiasAddGrad (3.84m/3.84m flops)
+  gradients/SegmentationNet/ImageLogits/SeparableConv2d_1/BiasAdd_grad/BiasAddGrad (3.84m/3.84m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_8_depthwise/BiasAdd_grad/BiasAddGrad (3.84m/3.84m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_7_depthwise/BiasAdd_grad/BiasAddGrad (3.84m/3.84m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/mul_grad/mul_1 (2.05m/2.05m flops)
+  SegmentationNet/SegmentationNet/Conv2d_11_depthwise/BiasAdd (2.05m/2.05m flops)
+  SegmentationNet/ImageLogits/Dropout_encoder/dropout/add (2.05m/2.05m flops)
+  SegmentationNet/ImageLogits/Dropout_encoder/dropout/div (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/mul_grad/mul (2.05m/2.05m flops)
+  SegmentationNet/ImageLogits/Dropout_encoder/dropout/mul (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/div_grad/mul (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/div_grad/RealDiv_2 (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/div_grad/RealDiv_1 (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/div_grad/RealDiv (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Dropout_encoder/dropout/div_grad/Neg (2.05m/2.05m flops)
+  SegmentationNet/SegmentationNet/Conv2d_10_depthwise/BiasAdd (2.05m/2.05m flops)
+  SegmentationNet/ImageLogits/Conv/BiasAdd (2.05m/2.05m flops)
+  gradients/SegmentationNet/ImageLogits/Conv/BiasAdd_grad/BiasAddGrad (2.05m/2.05m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_11_depthwise/BiasAdd_grad/BiasAddGrad (2.05m/2.05m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_10_depthwise/BiasAdd_grad/BiasAddGrad (2.05m/2.05m flops)
+  SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BiasAdd (1.92m/1.92m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BiasAdd_grad/BiasAddGrad (1.92m/1.92m flops)
+  SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BiasAdd (1.02m/1.02m flops)
+  gradients/SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BiasAdd_grad/BiasAddGrad (1.02m/1.02m flops)
+  gradients/Mul_8_grad/mul (960.00k/960.00k flops)
+  truediv_8 (960.00k/960.00k flops)
+  truediv_7 (960.00k/960.00k flops)
+  truediv_6 (960.00k/960.00k flops)
+  truediv_5 (960.00k/960.00k flops)
+  truediv_4 (960.00k/960.00k flops)
+  truediv_3 (960.00k/960.00k flops)
+  truediv_2 (960.00k/960.00k flops)
+  truediv_1 (960.00k/960.00k flops)
+  truediv (960.00k/960.00k flops)
+  gradients/Mul_14_grad/mul (960.00k/960.00k flops)
+  add_3 (960.00k/960.00k flops)
+  add_19 (960.00k/960.00k flops)
+  add_17 (960.00k/960.00k flops)
+  truediv_9 (960.00k/960.00k flops)
+  add_15 (960.00k/960.00k flops)
+  add_13 (960.00k/960.00k flops)
+  add_11 (960.00k/960.00k flops)
+  add_1 (960.00k/960.00k flops)
+  add_7 (960.00k/960.00k flops)
+  add_9 (960.00k/960.00k flops)
+  gradients/Mul_10_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_10_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_12_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_12_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_8_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_14_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_16_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_16_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_18_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_18_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_20_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_20_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_22_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_22_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_4_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_4_grad/mul_1 (960.00k/960.00k flops)
+  gradients/Mul_6_grad/mul (960.00k/960.00k flops)
+  gradients/Mul_6_grad/mul_1 (960.00k/960.00k flops)
+  add_5 (960.00k/960.00k flops)
+  Equal_3 (960.00k/960.00k flops)
+  Equal (960.00k/960.00k flops)
+  Equal_1 (960.00k/960.00k flops)
+  Equal_11 (960.00k/960.00k flops)
+  Equal_13 (960.00k/960.00k flops)
+  Equal_15 (960.00k/960.00k flops)
+  Equal_17 (960.00k/960.00k flops)
+  Equal_19 (960.00k/960.00k flops)
+  Equal_5 (960.00k/960.00k flops)
+  Equal_7 (960.00k/960.00k flops)
+  Equal_9 (960.00k/960.00k flops)
+  Mul (960.00k/960.00k flops)
+  Mul_10 (960.00k/960.00k flops)
+  Mul_16 (960.00k/960.00k flops)
+  Mul_18 (960.00k/960.00k flops)
+  Mul_2 (960.00k/960.00k flops)
+  Mul_20 (960.00k/960.00k flops)
+  Mul_14 (960.00k/960.00k flops)
+  Mul_22 (960.00k/960.00k flops)
+  Mul_4 (960.00k/960.00k flops)
+  Mul_12 (960.00k/960.00k flops)
+  Mul_6 (960.00k/960.00k flops)
+  Mul_8 (960.00k/960.00k flops)
+  Mul_1 (960.00k/960.00k flops)
+  Sum (960.00k/960.00k flops)
+  Sum_9 (959.95k/959.95k flops)
+  Sum_8 (959.95k/959.95k flops)
+  Sum_7 (959.95k/959.95k flops)
+  Sum_6 (959.95k/959.95k flops)
+  Sum_5 (959.95k/959.95k flops)
+  Sum_4 (959.95k/959.95k flops)
+  Sum_3 (959.95k/959.95k flops)
+  Sum_2 (959.95k/959.95k flops)
+  Sum_10 (959.95k/959.95k flops)
+  Sum_1 (959.95k/959.95k flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/weights/Initializer/random_uniform (294.91k/589.83k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/weights/Initializer/random_uniform/mul (294.91k/294.91k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_11_pointwise/weights/Initializer/random_uniform (262.14k/524.29k flops)
+    SegmentationNet/Conv2d_11_pointwise/weights/Initializer/random_uniform/mul (262.14k/262.14k flops)
+    SegmentationNet/Conv2d_11_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_10_pointwise/weights/Initializer/random_uniform (262.14k/524.29k flops)
+    SegmentationNet/Conv2d_10_pointwise/weights/Initializer/random_uniform/mul (262.14k/262.14k flops)
+    SegmentationNet/Conv2d_10_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_1/weights/Initializer/random_uniform (131.07k/262.14k flops)
+    SegmentationNet/ImageLogits/Conv_1/weights/Initializer/random_uniform/mul (131.07k/131.07k flops)
+    SegmentationNet/ImageLogits/Conv_1/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_9_pointwise/weights/Initializer/random_uniform (131.07k/262.14k flops)
+    SegmentationNet/Conv2d_9_pointwise/weights/Initializer/random_uniform/mul (131.07k/131.07k flops)
+    SegmentationNet/Conv2d_9_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/weights/Initializer/random_uniform (73.73k/147.46k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/weights/Initializer/random_uniform/mul (73.73k/73.73k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_2/weights/Initializer/random_uniform (65.54k/131.07k flops)
+    SegmentationNet/ImageLogits/Conv_2/weights/Initializer/random_uniform/mul (65.54k/65.54k flops)
+    SegmentationNet/ImageLogits/Conv_2/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_7_pointwise/weights/Initializer/random_uniform (65.54k/131.07k flops)
+    SegmentationNet/Conv2d_7_pointwise/weights/Initializer/random_uniform/mul (65.54k/65.54k flops)
+    SegmentationNet/Conv2d_7_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_8_pointwise/weights/Initializer/random_uniform (65.54k/131.07k flops)
+    SegmentationNet/Conv2d_8_pointwise/weights/Initializer/random_uniform/mul (65.54k/65.54k flops)
+    SegmentationNet/Conv2d_8_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_6_pointwise/weights/Initializer/random_uniform (32.77k/65.54k flops)
+    SegmentationNet/Conv2d_6_pointwise/weights/Initializer/random_uniform/mul (32.77k/32.77k flops)
+    SegmentationNet/Conv2d_6_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_3/weights/Initializer/random_uniform (32.77k/65.54k flops)
+    SegmentationNet/ImageLogits/Conv_3/weights/Initializer/random_uniform/mul (32.77k/32.77k flops)
+    SegmentationNet/ImageLogits/Conv_3/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_5_pointwise/weights/Initializer/random_uniform (16.38k/32.77k flops)
+    SegmentationNet/Conv2d_5_pointwise/weights/Initializer/random_uniform/mul (16.38k/16.38k flops)
+    SegmentationNet/Conv2d_5_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_4_pointwise/weights/Initializer/random_uniform (16.38k/32.77k flops)
+    SegmentationNet/Conv2d_4_pointwise/weights/Initializer/random_uniform/mul (16.38k/16.38k flops)
+    SegmentationNet/Conv2d_4_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_4/weights/Initializer/random_uniform (16.38k/32.77k flops)
+    SegmentationNet/ImageLogits/Conv_4/weights/Initializer/random_uniform/mul (16.38k/16.38k flops)
+    SegmentationNet/ImageLogits/Conv_4/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_3_pointwise/weights/Initializer/random_uniform (8.19k/16.39k flops)
+    SegmentationNet/Conv2d_3_pointwise/weights/Initializer/random_uniform/mul (8.19k/8.19k flops)
+    SegmentationNet/Conv2d_3_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_5/weights/Initializer/random_uniform (8.19k/16.39k flops)
+    SegmentationNet/ImageLogits/Conv_5/weights/Initializer/random_uniform/mul (8.19k/8.19k flops)
+    SegmentationNet/ImageLogits/Conv_5/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/weights/Initializer/random_uniform (6.34k/12.67k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/weights/Initializer/random_uniform/mul (6.34k/6.34k flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_11_depthwise/depthwise_weights/Initializer/random_uniform (4.61k/9.22k flops)
+    SegmentationNet/Conv2d_11_depthwise/depthwise_weights/Initializer/random_uniform/mul (4.61k/4.61k flops)
+    SegmentationNet/Conv2d_11_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_10_depthwise/depthwise_weights/Initializer/random_uniform (4.61k/9.22k flops)
+    SegmentationNet/Conv2d_10_depthwise/depthwise_weights/Initializer/random_uniform/mul (4.61k/4.61k flops)
+    SegmentationNet/Conv2d_10_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights/Initializer/random_uniform (4.61k/9.22k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights/Initializer/random_uniform/mul (4.61k/4.61k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_2_pointwise/weights/Initializer/random_uniform (4.10k/8.19k flops)
+    SegmentationNet/Conv2d_2_pointwise/weights/Initializer/random_uniform/mul (4.10k/4.10k flops)
+    SegmentationNet/Conv2d_2_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv_6/weights/Initializer/random_uniform (4.10k/8.19k flops)
+    SegmentationNet/ImageLogits/Conv_6/weights/Initializer/random_uniform/mul (4.10k/4.10k flops)
+    SegmentationNet/ImageLogits/Conv_6/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights/Initializer/random_uniform (2.30k/4.61k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights/Initializer/random_uniform/mul (2.30k/2.30k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_8_depthwise/depthwise_weights/Initializer/random_uniform (2.30k/4.61k flops)
+    SegmentationNet/Conv2d_8_depthwise/depthwise_weights/Initializer/random_uniform/mul (2.30k/2.30k flops)
+    SegmentationNet/Conv2d_8_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_7_depthwise/depthwise_weights/Initializer/random_uniform (2.30k/4.61k flops)
+    SegmentationNet/Conv2d_7_depthwise/depthwise_weights/Initializer/random_uniform/mul (2.30k/2.30k flops)
+    SegmentationNet/Conv2d_7_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_9_depthwise/depthwise_weights/Initializer/random_uniform (2.30k/4.61k flops)
+    SegmentationNet/Conv2d_9_depthwise/depthwise_weights/Initializer/random_uniform/mul (2.30k/2.30k flops)
+    SegmentationNet/Conv2d_9_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights/Initializer/random_uniform (2.30k/4.61k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights/Initializer/random_uniform/mul (2.30k/2.30k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_1_pointwise/weights/Initializer/random_uniform (2.05k/4.10k flops)
+    SegmentationNet/Conv2d_1_pointwise/weights/Initializer/random_uniform/mul (2.05k/2.05k flops)
+    SegmentationNet/Conv2d_1_pointwise/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/Initializer/random_uniform (1.15k/2.31k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/Initializer/random_uniform/mul (1.15k/1.15k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_6_depthwise/depthwise_weights/Initializer/random_uniform (1.15k/2.31k flops)
+    SegmentationNet/Conv2d_6_depthwise/depthwise_weights/Initializer/random_uniform/mul (1.15k/1.15k flops)
+    SegmentationNet/Conv2d_6_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_5_depthwise/depthwise_weights/Initializer/random_uniform (1.15k/2.31k flops)
+    SegmentationNet/Conv2d_5_depthwise/depthwise_weights/Initializer/random_uniform/mul (1.15k/1.15k flops)
+    SegmentationNet/Conv2d_5_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_4_depthwise/depthwise_weights/Initializer/random_uniform (1.15k/2.31k flops)
+    SegmentationNet/Conv2d_4_depthwise/depthwise_weights/Initializer/random_uniform/mul (1.15k/1.15k flops)
+    SegmentationNet/Conv2d_4_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights/Initializer/random_uniform (1.15k/2.31k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights/Initializer/random_uniform/mul (1.15k/1.15k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg_1 (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg_1/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg_1/Sub (512/512 flops)
+  SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/AssignMovingAvg/Sub (512/512 flops)
+  SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg_1 (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg_1/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg_1/Sub (512/512 flops)
+  SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/AssignMovingAvg/Sub (512/512 flops)
+  SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg/Sub (512/512 flops)
+  SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg_1 (512/1.54k flops)
+    SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg_1/Mul (512/512 flops)
+    SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/AssignMovingAvg_1/Sub (512/512 flops)
+  SegmentationNet/Conv2d_3_depthwise/depthwise_weights/Initializer/random_uniform (576/1.15k flops)
+    SegmentationNet/Conv2d_3_depthwise/depthwise_weights/Initializer/random_uniform/mul (576/576 flops)
+    SegmentationNet/Conv2d_3_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_2_depthwise/depthwise_weights/Initializer/random_uniform (576/1.15k flops)
+    SegmentationNet/Conv2d_2_depthwise/depthwise_weights/Initializer/random_uniform/mul (576/576 flops)
+    SegmentationNet/Conv2d_2_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights/Initializer/random_uniform (576/1.15k flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights/Initializer/random_uniform/mul (576/576 flops)
+    SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv_1/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/ImageLogits/Conv_2/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg/Sub (256/256 flops)
+  SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg_1 (256/768 flops)
+    SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg_1/Mul (256/256 flops)
+    SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/AssignMovingAvg_1/Sub (256/256 flops)
+  SegmentationNet/Conv2d_1_depthwise/depthwise_weights/Initializer/random_uniform (288/577 flops)
+    SegmentationNet/Conv2d_1_depthwise/depthwise_weights/Initializer/random_uniform/mul (288/288 flops)
+    SegmentationNet/Conv2d_1_depthwise/depthwise_weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/Conv2d_0/weights/Initializer/random_uniform (288/577 flops)
+    SegmentationNet/Conv2d_0/weights/Initializer/random_uniform/mul (288/288 flops)
+    SegmentationNet/Conv2d_0/weights/Initializer/random_uniform/sub (1/1 flops)
+  SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv_3/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv_4/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_1/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg_1 (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg_1/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg_1/Sub (128/128 flops)
+  SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg (128/384 flops)
+    SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg/Mul (128/128 flops)
+    SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/AssignMovingAvg/Sub (128/128 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg (64/192 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg/Sub (64/64 flops)
+  SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg_1 (64/192 flops)
+    SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg_1/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg_1/Sub (64/64 flops)
+  SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg (64/192 flops)
+    SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg/Mul (64/64 flops)
+    SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg/Sub (64/64 flops)
+  SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg_1 (64/192 flops)
+    SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg_1/Mul (64/64 flops)
+    SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg_1/Sub (64/64 flops)
+  SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg (64/192 flops)
+    SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg/Mul (64/64 flops)
+    SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/AssignMovingAvg/Sub (64/64 flops)
+  SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg (64/192 flops)
+    SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg/Sub (64/64 flops)
+  SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg_1 (64/192 flops)
+    SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg_1/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv_5/BatchNorm/AssignMovingAvg_1/Sub (64/64 flops)
+  SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg_1 (64/192 flops)
+    SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg_1/Mul (64/64 flops)
+    SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/AssignMovingAvg_1/Sub (64/64 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg_1 (64/192 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg_1/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_2/BatchNorm/AssignMovingAvg_1/Sub (64/64 flops)
+  SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg (64/192 flops)
+    SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg/Mul (64/64 flops)
+    SegmentationNet/ImageLogits/Conv_6/BatchNorm/AssignMovingAvg/Sub (64/64 flops)
+  SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg (32/96 flops)
+    SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg/Mul (32/32 flops)
+    SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg/Sub (32/32 flops)
+  SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg_1 (32/96 flops)
+    SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg_1/Mul (32/32 flops)
+    SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/AssignMovingAvg_1/Sub (32/32 flops)
+  Mul_11 (50/50 flops)
+  Mul_15 (50/50 flops)
+  Equal_4 (50/50 flops)
+  Equal_6 (50/50 flops)
+  Mul_13 (50/50 flops)
+  Equal_2 (50/50 flops)
+  Equal_8 (50/50 flops)
+  Equal_10 (50/50 flops)
+  Equal_18 (50/50 flops)
+  Equal_12 (50/50 flops)
+  add_14 (50/50 flops)
+  Equal_16 (50/50 flops)
+  Equal_14 (50/50 flops)
+  Equal_20 (50/50 flops)
+  Mul_19 (50/50 flops)
+  add (50/50 flops)
+  add_10 (50/50 flops)
+  add_12 (50/50 flops)
+  add_16 (50/50 flops)
+  add_18 (50/50 flops)
+  Mul_17 (50/50 flops)
+  add_2 (50/50 flops)
+  add_4 (50/50 flops)
+  add_6 (50/50 flops)
+  add_8 (50/50 flops)
+  Mul_9 (50/50 flops)
+  Mul_7 (50/50 flops)
+  Mul_5 (50/50 flops)
+  Mul_3 (50/50 flops)
+  Mul_21 (50/50 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg_1 (11/33 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg_1/Mul (11/11 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg_1/Sub (11/11 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg (11/33 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg/Mul (11/11 flops)
+    SegmentationNet/ImageLogits/Conv2d_transpose_3/BatchNorm/AssignMovingAvg/Sub (11/11 flops)
+  Adam/mul_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/mul_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_3/mul (1/1 flops)
+  Adam/mul (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/mul_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_2/mul (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/mul_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose_1/mul (1/1 flops)
+  SparseSoftmaxCrossEntropyWithLogits/add (1/1 flops)
+  SparseSoftmaxCrossEntropyWithLogits/sub (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/mul_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/mul (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/add_1 (1/1 flops)
+  SegmentationNet/ImageLogits/Conv2d_transpose/add (1/1 flops)
+
+======================End of Report==========================
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  1
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 1
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              0
+-min_occurrence             0
+-step                       -1
+-order_by                   micros
+-account_type_regexes       .*
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     bytes,micros
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | requested bytes | total execution time | accelerator execution time | cpu execution time
+Conv2D                      1634.76MB (100.00%, 21.91%),     718.88ms (100.00%, 72.11%),      24.05ms (100.00%, 14.20%),     694.84ms (100.00%, 83.97%)
+Conv2DBackpropInput          3497.88MB (78.09%, 46.88%),      237.68ms (27.89%, 23.84%),      108.73ms (85.80%, 64.19%),      128.95ms (16.03%, 15.58%)
+FusedBatchNorm               1470.85MB (31.21%, 19.71%),         16.82ms (4.04%, 1.69%),        15.34ms (21.61%, 9.05%),          1.49ms (0.45%, 0.18%)
+DepthwiseConv2dNative          626.15MB (11.49%, 8.39%),         14.03ms (2.36%, 1.41%),        13.58ms (12.55%, 8.02%),           445us (0.27%, 0.05%)
+Relu                                  0B (0.00%, 0.00%),          3.59ms (0.95%, 0.36%),          3.19ms (4.54%, 1.89%),           395us (0.22%, 0.05%)
+BiasAdd                               0B (0.00%, 0.00%),          3.35ms (0.59%, 0.34%),          3.01ms (2.65%, 1.77%),           346us (0.17%, 0.04%)
+ConcatV2                        215.04MB (3.10%, 2.88%),          1.19ms (0.25%, 0.12%),          1.09ms (0.88%, 0.64%),           103us (0.13%, 0.01%)
+VariableV2                            0B (0.00%, 0.00%),           465us (0.13%, 0.05%),             0us (0.23%, 0.00%),           465us (0.11%, 0.06%)
+ArgMax                            8.26MB (0.22%, 0.11%),           241us (0.09%, 0.02%),           189us (0.23%, 0.11%),            52us (0.06%, 0.01%)
+Identity                              0B (0.00%, 0.00%),           228us (0.06%, 0.02%),             0us (0.12%, 0.00%),           228us (0.05%, 0.03%)
+Mul                                   0B (0.00%, 0.00%),           162us (0.04%, 0.02%),            98us (0.12%, 0.06%),            64us (0.02%, 0.01%)
+Add                                   0B (0.00%, 0.00%),           132us (0.02%, 0.01%),            78us (0.06%, 0.05%),            54us (0.02%, 0.01%)
+RandomUniform                     8.19MB (0.11%, 0.11%),           110us (0.01%, 0.01%),            32us (0.02%, 0.02%),            78us (0.01%, 0.01%)
+
+======================End of Report==========================
+ ,  (50, 60, 80, 64)
+DeConv2dtranspose_Input ,  (50, 120, 160, 11)
+ImageLogits ,  (50, 120, 160, 11)
+Predictions ,  (50, 120, 160)
+
+
+0
+Running eval trace for iter :  0
+Finished eval trace
+Time taken for training:  0.96871018409729
+
+Report for Number of Parameters
+
+Report for Number of FLOPS
+
+Report Time and Memory
