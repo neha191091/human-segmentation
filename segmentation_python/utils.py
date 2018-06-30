@@ -258,6 +258,10 @@ def plot_loss(points, loss_history, loss_path, data_type='train'):
 def save_loss(loss_history, loss_npy_path):
     np.save(loss_npy_path,loss_history)
 
+def load_loss(loss_npy_path):
+    loss = np.load(loss_npy_path)
+    return loss
+
 def accuracy_per_pixel(preds, labels, mask_bkgrnd = True):
     '''
     Calculates the per_pixel accuracy for predicted and actual label
