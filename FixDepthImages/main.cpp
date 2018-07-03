@@ -150,9 +150,10 @@ int main(int argc, char** argv) {
 
     //std::string dataPath = "/home/neha/Documents/data/blender_data/render_data_corrected/";
     //std::string dataPath = "/home/neha/segmentation/data/blender_data/render_data_corrected_TWO/";
-    std::string dataPath = "/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/";
-    
-    bool resize = true; 
+    //std::string dataPath = "/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/";
+    std::string dataPath = "/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_12_models_full_res/";
+
+    bool resize = false;
     //
     //bool convert = convertexr2png(depthFilename.str(),0,0);
     

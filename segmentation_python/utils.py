@@ -490,8 +490,45 @@ if __name__ == '__main__':
     '''
     test : - the min and max values of depth in tfrecord files
     '''
+    '''
     depths_arr, labels_arr = get_n_records_from_tf_record(tf_record = _PROJECT_PATH+'data/data_complete_by_4/TfRecordFile_train_0.tfrecords', n=10, height=120, width=160)
     for i in range(len(depths_arr)):
         depth = depths_arr[i]
         #depth[depth == 34464] = 0
         print('min value of depth: ', np.min(depth), ' max value of depth: ', np.max(depth))
+    '''
+
+    '''
+    get plots- validation and training loss
+    '''
+    main_dir = '/media/neha/ubuntu/data/segmentation/chkpt2cpy_final/'
+
+    #chkpt_dir = 'unet_mobdepth_1_deconv_1_convdef_5_followups_2_sepconvs_False'
+    #chkpt_dir = 'unet_mobdepth_1_deconv_2_convdef_5_followups_1_sepconvs_False'
+    #chkpt_dir = 'unet-mobile_mobdepth_1_deconv_3_convdef_6_followups_1_sepconvs_True_with_intermediate_layers'
+    #chkpt_dir = 'unet-mobile_mobdepth_1_deconv_3_convdef_6_followups_1_sepconvs_True_WITHOUT_intermediate_layers'
+    #chkpt_dir = 'unet-mobile_mobdepth_1_deconv_1_convdef_6_followups_2_sepconvs_True_with_intermediate_layers'
+    chkpt_dir = 'unet-mobile_mobdepth_1_deconv_1_convdef_6_followups_2_sepconvs_True_WITHOUT_intermediate_layers'
+
+    train_path = 'loss/loss_train.npy'
+    val_path = 'loss/loss_val.npy'
+
+    loss_save_path = main_dir+'loss/'+chkpt_dir+'_loss.png'
+
+    loss_train = load_loss(main_dir+chkpt_dir+'/'+train_path)
+    loss_val = load_loss(main_dir+chkpt_dir+'/'+val_path)
+
+    print(chkpt_dir)
+    print('total_points: ', len(loss_train), ' loss_train: ', loss_train)
+    print('total_points: ', len(loss_val), 'loss_val: ', loss_val)
+
+    import matplotlib.pyplot as plt
+
+    plt.plot(np.arange(len(loss_train)), loss_train, label='Training')
+    #plt.plot(np.arange(len(loss_val))*10000, loss_val, 'green', label='Validation')
+    plt.xlabel('Iteration')
+    plt.ylabel('Loss')
+    plt.legend()
+    #plt.axis([0, 6, 0, 20])
+    plt.savefig(loss_save_path)
+    plt.gcf().clear()
