@@ -1,4 +1,4 @@
-'2018_06_14_09_12_checkpoint10000.ckpt'
+impo'2018_06_14_09_12_checkpoint10000.ckpt'
 unet_mobdepth_1_deconv_1_convdef_5_followups_2_sepconvs_False/
 total_points:  46080  loss_train:  [  1.31686489e-03   1.08361440e-03   1.05394923e-03 ...,   2.59736278e-06
    3.54400316e-06   2.95913163e-06]

@@ -1,0 +1,46 @@
+No of train samples:  360
+No of test samples:  0
+No of val samples:  0
+total train+val+test:  360
+type =  train
+index start:  0  index end:  359
+human_0_rgb_0.png
+/home/neha/segmentation/segmentation_python/data/render_data_360_by_4/human_0_depth_0_0001.png
+xbatch shape:  (1, 120, 160, 1)
+ybatch shape:  (1, 120, 160)
+deconv_logits shape:  (1, 120, 160, 11)
+prediction shape (1, 120, 160)
+Number of parameters:  23625697
+
+Model Endpoints with Output Shape
+Conv2d_0 ,  (1, 60, 80, 32)
+Conv2d_1 ,  (1, 60, 80, 64)
+Conv2d_2 ,  (1, 60, 80, 64)
+Conv2d_3 ,  (1, 30, 40, 128)
+Conv2d_4 ,  (1, 30, 40, 128)
+Conv2d_5 ,  (1, 30, 40, 128)
+Conv2d_6 ,  (1, 15, 20, 256)
+Conv2d_7 ,  (1, 15, 20, 256)
+Conv2d_8 ,  (1, 15, 20, 256)
+Conv2d_9 ,  (1, 8, 10, 512)
+Conv2d_10 ,  (1, 8, 10, 512)
+Conv2d_11 ,  (1, 8, 10, 512)
+Input ,  (1, 120, 160, 1)
+DropoutConv2dEncoder ,  (1, 8, 10, 512)
+Deconv2dtranspose_Conv2d_8 ,  (1, 15, 20, 256)
+Deconcat_Conv2d_8 ,  (1, 15, 20, 512)
+DefollowupConv2d_1_Conv2d_8 ,  (1, 15, 20, 256)
+Deresize_Conv2d_5 ,  (1, 30, 40, 256)
+Deconv2d_Conv2d_5 ,  (1, 30, 40, 128)
+Deconcat_Conv2d_5 ,  (1, 30, 40, 256)
+DefollowupConv2d_1_Conv2d_5 ,  (1, 30, 40, 128)
+Deresize_Conv2d_2 ,  (1, 60, 80, 128)
+Deconv2d_Conv2d_2 ,  (1, 60, 80, 64)
+Deconcat_Conv2d_2 ,  (1, 60, 80, 128)
+DefollowupConv2d_1_Conv2d_2 ,  (1, 60, 80, 64)
+Deresize_Input ,  (1, 120, 160, 64)
+Deconv2d_Input ,  (1, 120, 160, 11)
+ImageLogits ,  (1, 120, 160, 11)
+Predictions ,  (1, 120, 160)
+
+

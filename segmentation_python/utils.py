@@ -501,7 +501,7 @@ if __name__ == '__main__':
     '''
     get plots- validation and training loss
     '''
-    main_dir = '/media/neha/ubuntu/data/segmentation/chkpt2cpy_final/'
+    main_dir = '/media/neha/ubuntu/data/segmentation/validation/'
 
     #chkpt_dir = 'unet_mobdepth_1_deconv_1_convdef_5_followups_2_sepconvs_False'
     #chkpt_dir = 'unet_mobdepth_1_deconv_2_convdef_5_followups_1_sepconvs_False'

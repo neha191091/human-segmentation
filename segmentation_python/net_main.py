@@ -283,13 +283,13 @@ if __name__ == '__main__':
     # WARNING: Do not run this file directly ... use the following code for only testing the functionality #
 
     #dir_raw_record = _DATA_PATH + 'raw_data_single_model'
-    #dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
-    dir_raw_record = _DATA_PATH + 'render_data_360_by_4'
+    dir_raw_record = _DATA_PATH + 'raw_data_single_model_by_4'
+    #dir_raw_record = _DATA_PATH + 'render_data_360_by_4'
 
     # TODO: Dont use this path until fully tested
     # dir_raw_record = _DATA_PATH + 'raw_data_single_model_in_by_4_out_by_1'
 
-    batch_size = 200
+    batch_size = 1
     num_epochs = 1
     lr = 1e-3
     multi_deconv = 3
