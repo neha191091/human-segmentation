@@ -40,8 +40,8 @@ def val(dir_tf_record,
     '''
     data_dim = utils.get_img_dim_from_data_dir(dir_tf_record)
 
-    print('Data dimension: ', data_dim)
-    print('Data dims from chkpt ', data_dims_from_ckpt)
+    #print('Data dimension: ', data_dim)
+    #print('Data dims from chkpt ', data_dims_from_ckpt)
 
     if load_from_chkpt and (not data_dims_from_ckpt == data_dim):
         print('The data dimensions from chkpt and data do not match')
@@ -67,9 +67,9 @@ def val(dir_tf_record,
                                 sep_convs = sep_convs,
                                 depthsep_inter_norm_activn = depthsep_inter_norm_activn)
 
-    print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
+    #print('deconv_logits shape: ', model.net_class.deconv_logits.shape)
     predictions = model.get_predictions()
-    print('prediction shape', predictions.shape)
+    #print('prediction shape', predictions.shape)
 
     cross_entropy_loss = model.loss(labels)
 
@@ -156,9 +156,9 @@ def val(dir_tf_record,
             # Get IOU over complete data
             IOU_overall = np.mean(TP_sum / (TP_sum + FP_sum + FN_sum + _TINY))
             metrics_file = open(metrics_file_path, 'a+')
-            print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU_overall), file=metrics_file)
-            print('Mean accuracy_per_pixel: ' + str(np.mean(np.array(acc_vector))), file = metrics_file)
-            print('Mean IOU: ' + str(np.mean(np.array(IOU_vector))), file = metrics_file)
+            #print('IOU OVER COMPLETE EVALUATION DATA: ' + str(IOU_overall), file=metrics_file)
+            #print('Mean accuracy_per_pixel: ' + str(np.mean(np.array(acc_vector))), file = metrics_file)
+            #print('Mean IOU: ' + str(np.mean(np.array(IOU_vector))), file = metrics_file)
             metrics_file.close()
 
             #step_vector.append(step)
@@ -167,7 +167,7 @@ def val(dir_tf_record,
             coord.request_stop()
 
         end_time = time.time()
-        print('Time taken for evaluation: ', end_time - start_time)
+        #print('Time taken for evaluation: ', end_time - start_time)
 
         # Wait for threads to finish.
         coord.join(threads)
@@ -177,7 +177,7 @@ def val(dir_tf_record,
             pass
 
         #utils.plot_loss(step_vector, loss_vector, loss_path, 'test')
-        return np.mean(np.array(loss_vector))
+        return np.mean(np.array(loss_vector)), np.mean(np.array(IOU_vector)), np.mean(np.array(acc_vector))
 
 if __name__ == '__main__':
     #dataset = DataSet(num_poses=53, num_angles=360, max_records_in_tfrec_file=3600, val_fraction=0.01,
@@ -194,13 +194,13 @@ if __name__ == '__main__':
     override_tfrecords = None#['test_0']
     #load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
 
-    load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
-    #load_from_chkpt = _CHKPT_PATH + '2018_06_20_22_22_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_2_convdef_5_followup_1_sepconv_0_intermediateActvnNorm_1_mobdepth=1
-    #load_from_chkpt = _CHKPT_PATH + '2018_06_26_05_53_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_1_mobdepth=1
-    #load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_1_mobdepth=1
-    #load_from_chkpt = _CHKPT_PATH + '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
-    #load_from_chkpt = _CHKPT_PATH + '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
-
+    #chkpt = '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #chkpt = '2018_06_20_22_22_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_2_convdef_5_followup_1_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #chkpt = '2018_06_26_05_53_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    chkpt = '2018_06_21_01_52_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #chkpt = '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+    #chkpt = '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+    load_from_chkpt = _CHKPT_PATH + chkpt
     multi_deconv = 1
     mob_f_ep = 9
     mob_depth_multiplier = 0.75
@@ -222,6 +222,8 @@ if __name__ == '__main__':
     chkpt_iter = 0
 
     loss_array = []
+    IOU_array = []
+    acc_array = []
 
     timestamp = utils.get_timestamp()
 
@@ -229,7 +231,7 @@ if __name__ == '__main__':
 
         tf.reset_default_graph()
 
-        loss = val(dir_tf_record=dir_tf_record,
+        loss_val, IOU_val, acc_val = val(dir_tf_record=dir_tf_record,
                   batch_size=batch_size,
                   num_epochs=num_epochs,
                   timestamp = timestamp,
@@ -244,8 +246,38 @@ if __name__ == '__main__':
                   sep_convs = sep_convs,
                   depthsep_inter_norm_activn = depthsep_inter_norm_activn)
 
-        loss_array.append(loss)
+        loss_array.append(loss_val)
+        IOU_array.append(IOU_val)
+        acc_array.append(acc_val)
 
         chkpt_iter += 10000
 
-    utils.save_loss(np.array(loss_array), _RESULT_PATH + '_validation_' + '%s' % timestamp + '_loss_npy.npy')
+    tf.reset_default_graph()
+
+    loss_val, IOU_val, acc_val = val(dir_tf_record=dir_tf_record,
+              batch_size=batch_size,
+              num_epochs=num_epochs,
+              timestamp = timestamp,
+              data_dims_from_ckpt = data_dims_from_ckpt,
+              override_tfrecords=override_tfrecords,
+              load_from_chkpt=load_from_chkpt,
+              chkpt_iter = -1,
+              multi_deconv=multi_deconv,
+              conv_defs=conv_defs,
+              mob_depth_multiplier=mob_depth_multiplier,
+              follow_up_convs = follow_up_convs,
+              sep_convs = sep_convs,
+              depthsep_inter_norm_activn = depthsep_inter_norm_activn)
+
+    loss_array.append(loss_val)
+    IOU_array.append(IOU_val)
+    acc_array.append(acc_val)
+
+    utils.save_loss(np.array(loss_array), _RESULT_PATH + chkpt + '_loss_val.npy')
+    utils.save_loss(np.array(IOU_array), _RESULT_PATH + chkpt + '_IOU_val.npy')
+    utils.save_loss(np.array(acc_array), _RESULT_PATH + chkpt + '_acc_val.npy')
+
+    print('Loss: ', loss_array)
+    print('IOU: ', IOU_array)
+    print('Acc: ', acc_array)
+    print('chkpt: ', chkpt)

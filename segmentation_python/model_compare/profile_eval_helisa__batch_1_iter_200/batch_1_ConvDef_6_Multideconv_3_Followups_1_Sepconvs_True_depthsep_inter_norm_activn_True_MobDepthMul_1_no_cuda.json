@@ -1,0 +1,5900 @@
+{
+    "traceEvents": [
+        {
+            "args": {
+                "name": "Allocators"
+            },
+            "ph": "M",
+            "pid": 0,
+            "name": "process_name"
+        },
+        {
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/device:CPU:0 Compute"
+            },
+            "ph": "M",
+            "pid": 1,
+            "name": "process_name"
+        },
+        {
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/device:CPU:0 Tensors"
+            },
+            "ph": "M",
+            "pid": 2,
+            "name": "process_name"
+        },
+        {
+            "args": {
+                "op": "NoOp",
+                "name": "_SOURCE"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913194,
+            "pid": 1,
+            "dur": 47,
+            "cat": "Op",
+            "name": "NoOp"
+        },
+        {
+            "args": {
+                "op": "_Arg",
+                "name": "_arg_placeholder_x_0_0"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913299,
+            "pid": 1,
+            "dur": 37,
+            "cat": "Op",
+            "name": "_Arg"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913302,
+            "pid": 1,
+            "dur": 42,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913351,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 0,
+            "ts": 1530731357913344,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 0,
+            "ts": 1530731357913351,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913349,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_9_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913324,
+            "pid": 1,
+            "dur": 45,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913312,
+            "pid": 1,
+            "dur": 63,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/stack"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913362,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913379,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 1,
+            "ts": 1530731357913372,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 1,
+            "ts": 1530731357913379,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357913306,
+            "pid": 1,
+            "dur": 85,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913387,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913375,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913387,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_9_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_9_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913383,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 2,
+            "ts": 1530731357913369,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 4,
+            "id": 2,
+            "ts": 1530731357913383,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/weights"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913408,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913414,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913430,
+            "pid": 1,
+            "dur": 9,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/weights"
+            },
+            "ph": "X",
+            "tid": 6,
+            "ts": 1530731357913299,
+            "pid": 1,
+            "dur": 140,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913444,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 3,
+            "ts": 1530731357913437,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 3,
+            "ts": 1530731357913444,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_10_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913417,
+            "pid": 1,
+            "dur": 42,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913456,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 7,
+            "ts": 1530731357913377,
+            "pid": 1,
+            "dur": 94,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/weights",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913462,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 6,
+            "id": 4,
+            "ts": 1530731357913439,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 4,
+            "ts": 1530731357913462,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/weights"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/keep_prob"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913475,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_10_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_10_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913469,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913479,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 7,
+            "id": 5,
+            "ts": 1530731357913471,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 5,
+            "ts": 1530731357913479,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Shape"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913492,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/sub"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913513,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913503,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "dur": 120,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913500,
+            "pid": 1,
+            "dur": 29,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/min"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913527,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913529,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 6,
+            "ts": 1530731357913523,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 6,
+            "ts": 1530731357913529,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913543,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913538,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 7,
+            "ts": 1530731357913521,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 2,
+            "id": 7,
+            "ts": 1530731357913538,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913410,
+            "pid": 1,
+            "dur": 130,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 8,
+            "ts": 1530731357913396,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 4,
+            "id": 8,
+            "ts": 1530731357913410,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/size_2"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913561,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_11_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913567,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/concat/axis"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913579,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 8,
+            "ts": 1530731357913408,
+            "pid": 1,
+            "dur": 185,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 9,
+            "ts": 1530731357913391,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 8,
+            "id": 9,
+            "ts": 1530731357913408,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_11_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_11_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913593,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 10,
+            "ts": 1530731357913588,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 10,
+            "ts": 1530731357913593,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/weights"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/size"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913594,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 6,
+            "ts": 1530731357913467,
+            "pid": 1,
+            "dur": 147,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_0/weights"
+            },
+            "ph": "X",
+            "tid": 7,
+            "ts": 1530731357913486,
+            "pid": 1,
+            "dur": 140,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913615,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv/biases"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913618,
+            "pid": 1,
+            "dur": 29,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_0/weights",
+                "name": "SegmentationNet/Conv2d_0/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913637,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 7,
+            "id": 11,
+            "ts": 1530731357913626,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 11,
+            "ts": 1530731357913637,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/weights"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913538,
+            "pid": 1,
+            "dur": 114,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913613,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/size_1"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913650,
+            "pid": 1,
+            "dur": 16,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913579,
+            "pid": 1,
+            "dur": 90,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_0/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357913573,
+            "pid": 1,
+            "dur": 103,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv/biases",
+                "name": "SegmentationNet/ImageLogits/Conv/biases/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913663,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 12,
+            "ts": 1530731357913647,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv/biases"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 12,
+            "ts": 1530731357913663,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv/biases"
+        },
+        {
+            "args": {
+                "op": "Const",
+                "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/Const"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913671,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Const"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913677,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 13,
+            "ts": 1530731357913669,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 2,
+            "id": 13,
+            "ts": 1530731357913677,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv/weights",
+                "name": "SegmentationNet/ImageLogits/Conv/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913680,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 14,
+            "ts": 1530731357913633,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 14,
+            "ts": 1530731357913680,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv/weights"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_0/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_0/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913684,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 15,
+            "ts": 1530731357913676,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 3,
+            "id": 15,
+            "ts": 1530731357913684,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913670,
+            "pid": 1,
+            "dur": 31,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913686,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_6_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913701,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357913703,
+            "pid": 1,
+            "dur": 22,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913710,
+            "pid": 1,
+            "dur": 16,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 16,
+            "ts": 1530731357913701,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 16,
+            "ts": 1530731357913710,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_6_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357913708,
+            "pid": 1,
+            "dur": 24,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_6_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_6_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913728,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357913731,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 17,
+            "ts": 1530731357913725,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 17,
+            "ts": 1530731357913731,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_7_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913803,
+            "pid": 1,
+            "dur": 26,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_7_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_7_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913834,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_7_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913857,
+            "pid": 1,
+            "dur": 26,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_7_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_7_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913888,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_7_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913907,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_7_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_7_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913931,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_7_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913950,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_7_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_7_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913972,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_1_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357913989,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_1_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_1_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914012,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_8_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914029,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_8_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_8_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914052,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_8_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914072,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_8_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_8_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914093,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914110,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914134,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_8_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914154,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "RandomUniform",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Shape",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/RandomUniform"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357913691,
+            "pid": 1,
+            "dur": 478,
+            "cat": "Op",
+            "name": "RandomUniform"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 18,
+            "ts": 1530731357913504,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Shape"
+        },
+        {
+            "ph": "t",
+            "tid": 5,
+            "id": 18,
+            "ts": 1530731357913691,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Shape"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_8_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_8_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914179,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_1_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914198,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_1_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_1_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914222,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_8_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914241,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_8_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_8_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914266,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Mul",
+                "input1": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/sub",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/RandomUniform",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/mul"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914195,
+            "pid": 1,
+            "dur": 80,
+            "cat": "Op",
+            "name": "Mul"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 19,
+            "ts": 1530731357914169,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/RandomUniform"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 19,
+            "ts": 1530731357914195,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/RandomUniform"
+        },
+        {
+            "ph": "s",
+            "tid": 0,
+            "id": 20,
+            "ts": 1530731357913523,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/sub"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 20,
+            "ts": 1530731357914195,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/sub"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914283,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914309,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Add",
+                "input1": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/min",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/mul",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914283,
+            "pid": 1,
+            "dur": 55,
+            "cat": "Op",
+            "name": "Add"
+        },
+        {
+            "ph": "s",
+            "tid": 0,
+            "id": 21,
+            "ts": 1530731357913538,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/min"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 21,
+            "ts": 1530731357914283,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform/min"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914329,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914353,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_1/weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914373,
+            "pid": 1,
+            "dur": 22,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Add",
+                "input1": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/random_uniform",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/keep_prob",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/add"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914347,
+            "pid": 1,
+            "dur": 49,
+            "cat": "Op",
+            "name": "Add"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_1/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_1/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914400,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_2_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914418,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_2_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_2_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914440,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 6,
+            "ts": 1530731357913627,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914457,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914478,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913714,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 22,
+            "ts": 1530731357913709,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 4,
+            "id": 22,
+            "ts": 1530731357913714,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914495,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914514,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914492,
+            "pid": 1,
+            "dur": 33,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914512,
+            "pid": 1,
+            "dur": 32,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914532,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 23,
+            "ts": 1530731357914525,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 23,
+            "ts": 1530731357914532,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914552,
+            "pid": 1,
+            "dur": 81,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 24,
+            "ts": 1530731357914544,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 24,
+            "ts": 1530731357914552,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914556,
+            "pid": 1,
+            "dur": 93,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914647,
+            "pid": 1,
+            "dur": 26,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914660,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Floor",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/add",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Floor"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914403,
+            "pid": 1,
+            "dur": 277,
+            "cat": "Op",
+            "name": "Floor"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 25,
+            "ts": 1530731357914396,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/add"
+        },
+        {
+            "ph": "t",
+            "tid": 3,
+            "id": 25,
+            "ts": 1530731357914403,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/add"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914678,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914686,
+            "pid": 1,
+            "dur": 24,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_3_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914697,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_4/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914692,
+            "pid": 1,
+            "dur": 26,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914716,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_3_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_3_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914721,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_4/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_4/weights/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914724,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914742,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_3_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914741,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_2_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914740,
+            "pid": 1,
+            "dur": 24,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914760,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_3_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_3_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914767,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_2_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_2_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914770,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_6_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_6_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357913738,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 26,
+            "ts": 1530731357913732,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 4,
+            "id": 26,
+            "ts": 1530731357913738,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914777,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914785,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914791,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914805,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914811,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914805,
+            "pid": 1,
+            "dur": 24,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914817,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_5/weights"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914825,
+            "pid": 1,
+            "dur": 22,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914830,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 6,
+            "ts": 1530731357913736,
+            "pid": 1,
+            "dur": 28,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_5/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_5/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914853,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914854,
+            "pid": 1,
+            "dur": 16,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 7,
+            "ts": 1530731357913749,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914873,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 6,
+            "id": 27,
+            "ts": 1530731357913764,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 27,
+            "ts": 1530731357914873,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914872,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914879,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914897,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 28,
+            "ts": 1530731357914891,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 28,
+            "ts": 1530731357914897,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914902,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 29,
+            "ts": 1530731357914897,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 29,
+            "ts": 1530731357914902,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914895,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 7,
+            "id": 30,
+            "ts": 1530731357913770,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 3,
+            "id": 30,
+            "ts": 1530731357914895,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357914896,
+            "pid": 1,
+            "dur": 22,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights",
+                "name": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914924,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 31,
+            "ts": 1530731357914918,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 31,
+            "ts": 1530731357914924,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_3/weights"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914916,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914921,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914925,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_2/weights"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357914530,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914944,
+            "pid": 1,
+            "dur": 10,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 32,
+            "ts": 1530731357914939,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 32,
+            "ts": 1530731357914944,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_3/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_3/weights/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914943,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_5_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914943,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914954,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_5_pointwise/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914961,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_5_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_5_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914966,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 33,
+            "ts": 1530731357914961,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_pointwise/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 33,
+            "ts": 1530731357914966,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_pointwise/weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914963,
+            "pid": 1,
+            "dur": 20,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_2/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_2/weights/read"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914969,
+            "pid": 1,
+            "dur": 17,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 34,
+            "ts": 1530731357914547,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_2/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 3,
+            "id": 34,
+            "ts": 1530731357914969,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_2/weights"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_5_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_5_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357914982,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/Conv_6/weights"
+            },
+            "ph": "X",
+            "tid": 4,
+            "ts": 1530731357914976,
+            "pid": 1,
+            "dur": 19,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357914989,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 35,
+            "ts": 1530731357914983,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 35,
+            "ts": 1530731357914989,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta"
+            },
+            "ph": "X",
+            "tid": 2,
+            "ts": 1530731357914986,
+            "pid": 1,
+            "dur": 18,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/Conv_6/weights",
+                "name": "SegmentationNet/ImageLogits/Conv_6/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357915000,
+            "pid": 1,
+            "dur": 13,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 36,
+            "ts": 1530731357914995,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 36,
+            "ts": 1530731357915000,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/weights"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights"
+            },
+            "ph": "X",
+            "tid": 3,
+            "ts": 1530731357914994,
+            "pid": 1,
+            "dur": 21,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 1,
+            "ts": 1530731357915009,
+            "pid": 1,
+            "dur": 11,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 37,
+            "ts": 1530731357915004,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 1,
+            "id": 37,
+            "ts": 1530731357915009,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357915022,
+            "pid": 1,
+            "dur": 14,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 38,
+            "ts": 1530731357915015,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 38,
+            "ts": 1530731357915022,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta",
+                "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta/read"
+            },
+            "ph": "X",
+            "tid": 5,
+            "ts": 1530731357914835,
+            "pid": 1,
+            "dur": 12,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 39,
+            "ts": 1530731357914829,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta"
+        },
+        {
+            "ph": "t",
+            "tid": 5,
+            "id": 39,
+            "ts": 1530731357914835,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta"
+        },
+        {
+            "args": {
+                "op": "VariableV2",
+                "name": "SegmentationNet/Conv2d_4_pointwise/weights"
+            },
+            "ph": "X",
+            "tid": 6,
+            "ts": 1530731357914840,
+            "pid": 1,
+            "dur": 33,
+            "cat": "Op",
+            "name": "VariableV2"
+        },
+        {
+            "args": {
+                "op": "Identity",
+                "input0": "SegmentationNet/Conv2d_4_pointwise/weights",
+                "name": "SegmentationNet/Conv2d_4_pointwise/weights/read"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357915207,
+            "pid": 1,
+            "dur": 23,
+            "cat": "Op",
+            "name": "Identity"
+        },
+        {
+            "ph": "s",
+            "tid": 6,
+            "id": 40,
+            "ts": 1530731357914873,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/weights"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 40,
+            "ts": 1530731357915207,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/weights"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_0/weights/read",
+                "input0": "_arg_placeholder_x_0_0",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_0/Conv2D"
+            },
+            "ph": "X",
+            "tid": 8,
+            "ts": 1530731357913658,
+            "pid": 1,
+            "dur": 1715,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 0,
+            "id": 41,
+            "ts": 1530731357913336,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "_arg_placeholder_x_0_0"
+        },
+        {
+            "ph": "t",
+            "tid": 8,
+            "id": 41,
+            "ts": 1530731357913658,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "_arg_placeholder_x_0_0"
+        },
+        {
+            "ph": "s",
+            "tid": 0,
+            "id": 42,
+            "ts": 1530731357913650,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 8,
+            "id": 42,
+            "ts": 1530731357913658,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_0/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_0/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357915389,
+            "pid": 1,
+            "dur": 1514,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 8,
+            "id": 43,
+            "ts": 1530731357915373,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/Conv2D"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 43,
+            "ts": 1530731357915389,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 44,
+            "ts": 1530731357913470,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 44,
+            "ts": 1530731357915389,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 45,
+            "ts": 1530731357913699,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 45,
+            "ts": 1530731357915389,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_0/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_0/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357916917,
+            "pid": 1,
+            "dur": 107,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_0/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357917032,
+            "pid": 1,
+            "dur": 1013,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 46,
+            "ts": 1530731357913744,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 46,
+            "ts": 1530731357917032,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357918066,
+            "pid": 1,
+            "dur": 3217,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 47,
+            "ts": 1530731357913470,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 47,
+            "ts": 1530731357918066,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_0/BatchNorm/Const"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 48,
+            "ts": 1530731357914914,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 48,
+            "ts": 1530731357918066,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_1_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357921295,
+            "pid": 1,
+            "dur": 113,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_1_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357921419,
+            "pid": 1,
+            "dur": 1073,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_1_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357922511,
+            "pid": 1,
+            "dur": 2510,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357925033,
+            "pid": 1,
+            "dur": 120,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_2_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_1_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357925180,
+            "pid": 1,
+            "dur": 1817,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_2_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357927013,
+            "pid": 1,
+            "dur": 2505,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357929529,
+            "pid": 1,
+            "dur": 100,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_2_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357929635,
+            "pid": 1,
+            "dur": 1130,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 49,
+            "ts": 1530731357914783,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 49,
+            "ts": 1530731357929635,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357930778,
+            "pid": 1,
+            "dur": 2126,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 5,
+            "id": 50,
+            "ts": 1530731357914847,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 50,
+            "ts": 1530731357930778,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_2_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357932913,
+            "pid": 1,
+            "dur": 90,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357933009,
+            "pid": 1,
+            "dur": 1685,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 51,
+            "ts": 1530731357914731,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 51,
+            "ts": 1530731357933009,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_3_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357934716,
+            "pid": 1,
+            "dur": 829,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357935559,
+            "pid": 1,
+            "dur": 67,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_3_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357935632,
+            "pid": 1,
+            "dur": 557,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 52,
+            "ts": 1530731357914778,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 52,
+            "ts": 1530731357935632,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357936203,
+            "pid": 1,
+            "dur": 1219,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 53,
+            "ts": 1530731357914823,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 53,
+            "ts": 1530731357936203,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_3_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357937431,
+            "pid": 1,
+            "dur": 80,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_3_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357937518,
+            "pid": 1,
+            "dur": 772,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 54,
+            "ts": 1530731357914829,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 54,
+            "ts": 1530731357937518,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357938302,
+            "pid": 1,
+            "dur": 1175,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 55,
+            "ts": 1530731357914870,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 55,
+            "ts": 1530731357938302,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357939488,
+            "pid": 1,
+            "dur": 73,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_4_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357939568,
+            "pid": 1,
+            "dur": 946,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357940529,
+            "pid": 1,
+            "dur": 1154,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 56,
+            "ts": 1530731357914914,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 56,
+            "ts": 1530731357940529,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_4_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357941692,
+            "pid": 1,
+            "dur": 77,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_5_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_4_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357941775,
+            "pid": 1,
+            "dur": 779,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_5_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357942567,
+            "pid": 1,
+            "dur": 1153,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357943729,
+            "pid": 1,
+            "dur": 79,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_5_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357943815,
+            "pid": 1,
+            "dur": 943,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 57,
+            "ts": 1530731357914978,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 57,
+            "ts": 1530731357943815,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_5_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_5_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357944772,
+            "pid": 1,
+            "dur": 1176,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357945956,
+            "pid": 1,
+            "dur": 64,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357946026,
+            "pid": 1,
+            "dur": 633,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 58,
+            "ts": 1530731357913726,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 58,
+            "ts": 1530731357946026,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_6_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357946670,
+            "pid": 1,
+            "dur": 372,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357947050,
+            "pid": 1,
+            "dur": 37,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_6_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357947091,
+            "pid": 1,
+            "dur": 520,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 59,
+            "ts": 1530731357913751,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 59,
+            "ts": 1530731357947091,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_6_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_6_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357947623,
+            "pid": 1,
+            "dur": 786,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 60,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 60,
+            "ts": 1530731357947623,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357948421,
+            "pid": 1,
+            "dur": 81,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_7_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_6_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357948511,
+            "pid": 1,
+            "dur": 1279,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_7_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357949804,
+            "pid": 1,
+            "dur": 725,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 61,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 61,
+            "ts": 1530731357949804,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357950538,
+            "pid": 1,
+            "dur": 56,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_7_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357950599,
+            "pid": 1,
+            "dur": 947,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_7_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357951558,
+            "pid": 1,
+            "dur": 675,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 62,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 62,
+            "ts": 1530731357951558,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357952241,
+            "pid": 1,
+            "dur": 62,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_8_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_7_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357952307,
+            "pid": 1,
+            "dur": 1208,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_8_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357953527,
+            "pid": 1,
+            "dur": 696,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 63,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 63,
+            "ts": 1530731357953527,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357954231,
+            "pid": 1,
+            "dur": 56,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_8_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357954292,
+            "pid": 1,
+            "dur": 958,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_8_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357955262,
+            "pid": 1,
+            "dur": 692,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 64,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 64,
+            "ts": 1530731357955262,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357955967,
+            "pid": 1,
+            "dur": 66,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_9_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357956039,
+            "pid": 1,
+            "dur": 342,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357956387,
+            "pid": 1,
+            "dur": 248,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 65,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 65,
+            "ts": 1530731357956387,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "s",
+            "tid": 8,
+            "id": 66,
+            "ts": 1530731357913593,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 66,
+            "ts": 1530731357956387,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357956643,
+            "pid": 1,
+            "dur": 24,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_9_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357956671,
+            "pid": 1,
+            "dur": 627,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 67,
+            "ts": 1530731357913403,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 67,
+            "ts": 1530731357956671,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_9_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_9_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357957316,
+            "pid": 1,
+            "dur": 532,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357957859,
+            "pid": 1,
+            "dur": 44,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357957908,
+            "pid": 1,
+            "dur": 625,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 68,
+            "ts": 1530731357913540,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 68,
+            "ts": 1530731357957908,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357958545,
+            "pid": 1,
+            "dur": 517,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 69,
+            "ts": 1530731357913561,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 69,
+            "ts": 1530731357958545,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357959074,
+            "pid": 1,
+            "dur": 38,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_10_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357959117,
+            "pid": 1,
+            "dur": 1205,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 70,
+            "ts": 1530731357913488,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_pointwise/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 70,
+            "ts": 1530731357959117,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_pointwise/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357960338,
+            "pid": 1,
+            "dur": 502,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 6,
+            "id": 71,
+            "ts": 1530731357913647,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 71,
+            "ts": 1530731357960338,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_10_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357960849,
+            "pid": 1,
+            "dur": 36,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_10_pointwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357960890,
+            "pid": 1,
+            "dur": 664,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 72,
+            "ts": 1530731357913652,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 72,
+            "ts": 1530731357960890,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357961566,
+            "pid": 1,
+            "dur": 446,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 73,
+            "ts": 1530731357913539,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 73,
+            "ts": 1530731357961566,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_depthwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357962021,
+            "pid": 1,
+            "dur": 32,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/Conv2d_11_pointwise/weights/read",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_depthwise/Relu",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357962057,
+            "pid": 1,
+            "dur": 1079,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357963152,
+            "pid": 1,
+            "dur": 391,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 74,
+            "ts": 1530731357913692,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 74,
+            "ts": 1530731357963152,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/Conv2d_11_pointwise/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357963553,
+            "pid": 1,
+            "dur": 40,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "RealDiv",
+                "input1": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/keep_prob",
+                "input0": "SegmentationNet/SegmentationNet/Conv2d_11_pointwise/Relu",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/div"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357963597,
+            "pid": 1,
+            "dur": 66,
+            "cat": "Op",
+            "name": "RealDiv"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 75,
+            "ts": 1530731357913487,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/keep_prob"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 75,
+            "ts": 1530731357963597,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/keep_prob"
+        },
+        {
+            "args": {
+                "op": "Mul",
+                "input1": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Floor",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/div",
+                "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/mul"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357963668,
+            "pid": 1,
+            "dur": 49,
+            "cat": "Op",
+            "name": "Mul"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 76,
+            "ts": 1530731357914680,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Floor"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 76,
+            "ts": 1530731357963668,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/Floor"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv/weights/read",
+                "input0": "SegmentationNet/ImageLogits/Dropout_encoder/dropout/mul",
+                "name": "SegmentationNet/ImageLogits/Conv/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357963722,
+            "pid": 1,
+            "dur": 9061,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "BiasAdd",
+                "input1": "SegmentationNet/ImageLogits/Conv/biases/read",
+                "input0": "SegmentationNet/ImageLogits/Conv/Conv2D",
+                "name": "SegmentationNet/ImageLogits/Conv/BiasAdd"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357972809,
+            "pid": 1,
+            "dur": 101,
+            "cat": "Op",
+            "name": "BiasAdd"
+        },
+        {
+            "args": {
+                "op": "Conv2DBackpropInput",
+                "input2": "SegmentationNet/ImageLogits/Conv/BiasAdd",
+                "input1": "SegmentationNet/ImageLogits/Conv2d_transpose/weights/read",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/stack",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/conv2d_transpose"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731357972915,
+            "pid": 1,
+            "dur": 59048,
+            "cat": "Op",
+            "name": "Conv2DBackpropInput"
+        },
+        {
+            "ph": "s",
+            "tid": 4,
+            "id": 77,
+            "ts": 1530731357913380,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/stack"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 77,
+            "ts": 1530731357972915,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/stack"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/conv2d_transpose",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358031995,
+            "pid": 1,
+            "dur": 802,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 78,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 78,
+            "ts": 1530731358031995,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 79,
+            "ts": 1530731357913726,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 79,
+            "ts": 1530731358031995,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv2d_transpose/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358032811,
+            "pid": 1,
+            "dur": 67,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ConcatV2",
+                "input2": "SegmentationNet/ImageLogits/concat/axis",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_8_pointwise/Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv2d_transpose/Relu",
+                "name": "SegmentationNet/ImageLogits/concat"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358032884,
+            "pid": 1,
+            "dur": 128,
+            "cat": "Op",
+            "name": "ConcatV2"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/concat",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358033027,
+            "pid": 1,
+            "dur": 785,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_pointwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358033826,
+            "pid": 1,
+            "dur": 1266,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358035101,
+            "pid": 1,
+            "dur": 78,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_1/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_1/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358035186,
+            "pid": 1,
+            "dur": 1766,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_1/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358036964,
+            "pid": 1,
+            "dur": 682,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 80,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 80,
+            "ts": 1530731358036964,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_1/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_1/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358037655,
+            "pid": 1,
+            "dur": 64,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ResizeNearestNeighbor",
+                "input1": "SegmentationNet/ImageLogits/size",
+                "input0": "SegmentationNet/ImageLogits/Conv_1/Relu",
+                "name": "SegmentationNet/ImageLogits/ResizeNearestNeighbor"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358037724,
+            "pid": 1,
+            "dur": 193,
+            "cat": "Op",
+            "name": "ResizeNearestNeighbor"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 81,
+            "ts": 1530731357913605,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/size"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 81,
+            "ts": 1530731358037724,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/size"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/ResizeNearestNeighbor",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358037929,
+            "pid": 1,
+            "dur": 1403,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_1/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358039345,
+            "pid": 1,
+            "dur": 2172,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 82,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 82,
+            "ts": 1530731358039345,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_1/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_1/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358041530,
+            "pid": 1,
+            "dur": 93,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_2/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_1/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_2/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358041629,
+            "pid": 1,
+            "dur": 1774,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 83,
+            "ts": 1530731357914986,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_2/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 83,
+            "ts": 1530731358041629,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_2/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_2/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358043415,
+            "pid": 1,
+            "dur": 1216,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_2/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_2/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358044640,
+            "pid": 1,
+            "dur": 79,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ConcatV2",
+                "input2": "SegmentationNet/ImageLogits/concat/axis",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_5_pointwise/Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_2/Relu",
+                "name": "SegmentationNet/ImageLogits/concat_1"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358044725,
+            "pid": 1,
+            "dur": 132,
+            "cat": "Op",
+            "name": "ConcatV2"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/concat_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358044870,
+            "pid": 1,
+            "dur": 1774,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_2/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358046656,
+            "pid": 1,
+            "dur": 2050,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 84,
+            "ts": 1530731357913401,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 84,
+            "ts": 1530731358046656,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 85,
+            "ts": 1530731357915002,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 85,
+            "ts": 1530731358046656,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_2/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_2/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358048715,
+            "pid": 1,
+            "dur": 100,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_3/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_2/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_3/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358048823,
+            "pid": 1,
+            "dur": 1784,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 86,
+            "ts": 1530731357914955,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_3/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 86,
+            "ts": 1530731358048823,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_3/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_3/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358050620,
+            "pid": 1,
+            "dur": 1128,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_3/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_3/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358051757,
+            "pid": 1,
+            "dur": 63,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ResizeNearestNeighbor",
+                "input1": "SegmentationNet/ImageLogits/size_1",
+                "input0": "SegmentationNet/ImageLogits/Conv_3/Relu",
+                "name": "SegmentationNet/ImageLogits/ResizeNearestNeighbor_1"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358051826,
+            "pid": 1,
+            "dur": 381,
+            "cat": "Op",
+            "name": "ResizeNearestNeighbor"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 87,
+            "ts": 1530731357913666,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/size_1"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 87,
+            "ts": 1530731358051826,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/size_1"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/ResizeNearestNeighbor_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358052218,
+            "pid": 1,
+            "dur": 2743,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_3/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358054976,
+            "pid": 1,
+            "dur": 4138,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_3/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_3/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358059125,
+            "pid": 1,
+            "dur": 143,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_4/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_3/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_4/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358059277,
+            "pid": 1,
+            "dur": 1912,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "ph": "s",
+            "tid": 2,
+            "id": 88,
+            "ts": 1530731357914735,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_4/weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 88,
+            "ts": 1530731358059277,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_4/weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_4/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358061205,
+            "pid": 1,
+            "dur": 2136,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_4/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_4/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358063350,
+            "pid": 1,
+            "dur": 100,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ConcatV2",
+                "input2": "SegmentationNet/ImageLogits/concat/axis",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_2_pointwise/Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_4/Relu",
+                "name": "SegmentationNet/ImageLogits/concat_2"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358063460,
+            "pid": 1,
+            "dur": 258,
+            "cat": "Op",
+            "name": "ConcatV2"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/concat_2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358063733,
+            "pid": 1,
+            "dur": 2756,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 89,
+            "ts": 1530731357914967,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 89,
+            "ts": 1530731358063733,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise_weights/read"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_6_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_4/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358066502,
+            "pid": 1,
+            "dur": 4392,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 90,
+            "ts": 1530731357915020,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 90,
+            "ts": 1530731358066502,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_4/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_4/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358070904,
+            "pid": 1,
+            "dur": 144,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_5/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_4/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_5/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358071055,
+            "pid": 1,
+            "dur": 1933,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_5/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358073006,
+            "pid": 1,
+            "dur": 2150,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 3,
+            "id": 91,
+            "ts": 1530731357913404,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 91,
+            "ts": 1530731358073006,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_5/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_5/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358075165,
+            "pid": 1,
+            "dur": 95,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ResizeNearestNeighbor",
+                "input1": "SegmentationNet/ImageLogits/size_2",
+                "input0": "SegmentationNet/ImageLogits/Conv_5/Relu",
+                "name": "SegmentationNet/ImageLogits/ResizeNearestNeighbor_2"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358075268,
+            "pid": 1,
+            "dur": 896,
+            "cat": "Op",
+            "name": "ResizeNearestNeighbor"
+        },
+        {
+            "args": {
+                "op": "DepthwiseConv2dNative",
+                "input1": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise_weights/read",
+                "input0": "SegmentationNet/ImageLogits/ResizeNearestNeighbor_2",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358076176,
+            "pid": 1,
+            "dur": 5409,
+            "cat": "Op",
+            "name": "DepthwiseConv2dNative"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta/read",
+                "input1": "SegmentationNet/SegmentationNet/Conv2d_3_depthwise/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_5/depthwise",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358081611,
+            "pid": 1,
+            "dur": 8103,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 92,
+            "ts": 1530731357914677,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta/read"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 92,
+            "ts": 1530731358081611,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/beta/read"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_5/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/SeparableConv2d_5/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358089726,
+            "pid": 1,
+            "dur": 231,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "Conv2D",
+                "input1": "SegmentationNet/ImageLogits/Conv_6/weights/read",
+                "input0": "SegmentationNet/ImageLogits/SeparableConv2d_5/Relu",
+                "name": "SegmentationNet/ImageLogits/Conv_6/Conv2D"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358089966,
+            "pid": 1,
+            "dur": 1250,
+            "cat": "Op",
+            "name": "Conv2D"
+        },
+        {
+            "args": {
+                "op": "FusedBatchNorm",
+                "input2": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/beta/read",
+                "input1": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/Const",
+                "input0": "SegmentationNet/ImageLogits/Conv_6/Conv2D",
+                "input3": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "input4": "SegmentationNet/SegmentationNet/Conv2d_9_depthwise/BatchNorm/Const_1",
+                "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/FusedBatchNorm"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358091244,
+            "pid": 1,
+            "dur": 3771,
+            "cat": "Op",
+            "name": "FusedBatchNorm"
+        },
+        {
+            "ph": "s",
+            "tid": 1,
+            "id": 93,
+            "ts": 1530731357913684,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/Const"
+        },
+        {
+            "ph": "t",
+            "tid": 0,
+            "id": 93,
+            "ts": 1530731358091244,
+            "pid": 1,
+            "cat": "DataFlow",
+            "name": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/Const"
+        },
+        {
+            "args": {
+                "op": "Relu",
+                "input0": "SegmentationNet/ImageLogits/Conv_6/BatchNorm/FusedBatchNorm",
+                "name": "SegmentationNet/ImageLogits/Conv_6/Relu"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358095024,
+            "pid": 1,
+            "dur": 105,
+            "cat": "Op",
+            "name": "Relu"
+        },
+        {
+            "args": {
+                "op": "ArgMax",
+                "input1": "SegmentationNet/ImageLogits/concat/axis",
+                "input0": "SegmentationNet/ImageLogits/Conv_6/Relu",
+                "name": "SegmentationNet/predictions"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358095135,
+            "pid": 1,
+            "dur": 675,
+            "cat": "Op",
+            "name": "ArgMax"
+        },
+        {
+            "args": {
+                "op": "_Retval",
+                "input0": "SegmentationNet/predictions",
+                "name": "_retval_SegmentationNet/predictions_0_0"
+            },
+            "ph": "X",
+            "tid": 0,
+            "ts": 1530731358095823,
+            "pid": 1,
+            "dur": 15,
+            "cat": "Op",
+            "name": "_Retval"
+        }
+    ]
+}
