@@ -1,0 +1,41 @@
+impo'2018_06_14_09_12_checkpoint10000.ckpt'
+unet_mobdepth_1_deconv_1_convdef_5_followups_2_sepconvs_False/
+total_points:  46080  loss_train:  [  1.31686489e-03   1.08361440e-03   1.05394923e-03 ...,   2.59736278e-06
+   3.54400316e-06   2.95913163e-06]
+total_points:  5 loss_val:  [  1.01363990e-03   5.28844555e-05   5.37638818e-05   6.58435398e-05
+   7.87351094e-05]
+
+'2018_06_20_22_22_checkpoint20000.ckpt'
+unet_mobdepth_1_deconv_2_convdef_5_followups_1_sepconvs_False/
+total_points:  46080  loss_train:  [  1.14165337e-03   9.52910617e-04   8.32833149e-04 ...,   2.10722164e-06
+   2.87814967e-06   2.12260129e-06]
+total_points:  5 loss_val:  [  1.11122415e-03   6.61995265e-05   5.75185498e-05   6.00462864e-05
+   6.65800635e-05]
+
+'2018_06_21_01_52_checkpoint10000.ckpt'
+unet-mobile_mobdepth_1_deconv_3_convdef_6_followups_1_sepconvs_True_with_intermediate_layers/
+total_points:  46080  loss_train:  [  1.26335883e-03   1.17298690e-03   1.15608278e-03 ...,   3.72485241e-06
+   4.18863528e-06   4.41708331e-06]
+total_points:  5 loss_val:  [  1.01091885e-03   5.04678117e-05   5.18986996e-05   5.76291973e-05
+   5.72469345e-05]
+
+'2018_06_25_06_56_checkpoint10000.ckpt'
+unet-mobile_mobdepth_1_deconv_3_convdef_6_followups_1_sepconvs_True_WITHOUT_intermediate_layers/
+total_points:  46080  loss_train:  [  1.03667739e-03   1.04578968e-03   9.08509020e-04 ...,   4.75909002e-06
+   4.30958492e-06   3.85158839e-06]
+total_points:  5 loss_val:  [  1.01172130e-03   5.23337939e-05   5.85344738e-05   6.74323289e-05
+   7.06361229e-05]
+
+'2018_06_26_05_53_checkpoint30000.ckpt'
+unet-mobile_mobdepth_1_deconv_1_convdef_6_followups_2_sepconvs_True_with_intermediate_layers/
+total_points:  46080  loss_train:  [  1.19354006e-03   1.11813638e-03   1.07619076e-03 ...,   3.51365620e-06
+   3.05119802e-06   2.87470420e-06]
+total_points:  5 loss_val:  [  1.01212664e-03   5.16871980e-05   7.33025348e-05   4.85017822e-05
+   5.42831579e-05]
+
+'2018_06_25_20_18_checkpoint10000.ckpt'
+unet-mobile_mobdepth_1_deconv_1_convdef_6_followups_2_sepconvs_True_WITHOUT_intermediate_layers/
+total_points:  46080  loss_train:  [  1.22606251e-03   1.09761640e-03   1.00155094e-03 ...,   3.76026478e-06
+   3.36000251e-06   5.20604603e-06]
+total_points:  5 loss_val:  [  1.01167390e-03   4.60315867e-05   5.42281860e-05   7.42041082e-05
+   7.62180524e-05]

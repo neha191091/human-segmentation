@@ -1,8 +1,0 @@
-raw_data_single_model_by_4: 9923073, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=9, mob_depth_multiplier=0.75)
-raw_data_single_model:	    2157057, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=9, mob_depth_multiplier=0.75)
-raw_data_single_model:	   39150849, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=13, mob_depth_multiplier=0.75)
-raw_data_single_model:	    3011233, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=9, mob_depth_multiplier=1)
-raw_data_single_model:	   38691201, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=10, mob_depth_multiplier=0.75) del_layers = [9,10,11]
-raw_data_single_model:	   11245185, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=8, mob_depth_multiplier=0.75) del_layers = [8,9,10,11,12,13] add_layer: stride=2, depth=512
-raw_data_single_model:	   11398401, model = SegmentationNetwork(x, dataset.data_dim, multi_deconv=True, mob_f_ep=9, mob_depth_multiplier=0.75) del_layers = [9,10,11,12,13] add_layer: stride=2, depth=512
-

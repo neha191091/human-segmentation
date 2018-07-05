@@ -85,6 +85,7 @@ def eval(dir_tf_record,
     utils.print_test_details(batch_size, num_epochs, override_tfrecords, load_from_chkpt,
                              metrics_file_path)
     image_result_part_path = evaluation_result_path + "test_image_"
+    pred_result_part_path = evaluation_result_path + "pred_image_"
     loss_path = evaluation_result_path + "loss.png"
 
     with tf.Session() as sess:
@@ -126,7 +127,7 @@ def eval(dir_tf_record,
                 # pred = sess.run(model.get_predictions())
                 # last_label = sess.run(labels)
 
-                print('pred shape: ', pred.shape)
+                #print('pred shape: ', pred.shape)
                 # print('last label shape: ', last_label.shape)
 
                 TP, TN, FP, FN = utils.get_confusion_matrix(pred, corr_label)
@@ -148,8 +149,10 @@ def eval(dir_tf_record,
                     # mean IOU per batch
 
                     utils.print_metrics(loss=loss_value,accuracy=acc,IOU=IOU,step=step,metrics_file_path=metrics_file_path)
-                    #utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
-
+                    utils.visualize_predictions(pred[0],np.squeeze(corr_label[0]),np.squeeze(corr_depth[0]),path = image_result_part_path + str(step) + '.png')
+                    utils.save_predictions(pred[0], np.squeeze(corr_depth[0]),
+                                           path=pred_result_part_path + str(step) + '.png', std_depth=False,
+                                           orig_depth=False)
 
                 step += 1
 
@@ -191,12 +194,12 @@ if __name__ == '__main__':
 
     print('Starting evaluation script....')
     #dir_tf_record = _DATA_PATH + 'data_complete_by_4'
-    #dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
-    dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf_300'
+    dir_tf_record = '/media/neha/ubuntu/data/segmentation/render_data_corrected_TWO_tf_300'
+    #dir_tf_record = '/home/neha/segmentation/' + 'data/blender_data/render_data_corrected_TWO_tf_300'
     batch_size = 2
     num_epochs = 1
     save_prediction_interval = 10
-    override_tfrecords = None#['test_0']
+    override_tfrecords = ['test_0']
     #load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
 
     #load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1

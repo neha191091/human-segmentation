@@ -154,8 +154,11 @@ if __name__ == '__main__':
     #max_depth = 1600 #yunus_data
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_refined'
     #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/sumit_11_5_2_refined'
-    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_sequence'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/neha_11_5_2_sequence'
     #dir_pred_input_record = _DATA_PATH + 'raw_data_render_example_by_4'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/real_data_samples_2'
+    #dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/render_data_samples'
+    dir_pred_input_record = '/media/neha/ubuntu/data/segmentation/render_data_samples_2'
 
     batch_size = 1
     num_epochs = 1
