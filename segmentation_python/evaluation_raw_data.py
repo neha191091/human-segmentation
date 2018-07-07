@@ -196,20 +196,14 @@ if __name__ == '__main__':
     # load_from_chkpt = _CHKPT_PATH + '2018_05_17_08_46_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected, 300, standardized, REMOTE
     load_from_chkpt = _CHKPT_PATH + '2018_05_20_10_24_checkpoint-1.ckpt'  # batch_of_50_multi-deconv=1, corrected_TWO - changed scale and positions to match kinect v1 domain, 300, REMOTE
 
-    multi_deconv = 1
-    mob_depth_multiplier = 0.75
-    conv_defs = _CONV_DEFS[1]
-    data_dims_from_ckpt = None
-    follow_up_convs = 0
-    sep_convs = False
-    depthsep_inter_norm_activn = True
 
-    if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
-        conv_defs = _CONV_DEFS[conv_def_num]
-    else:
+    if not load_from_chkpt:
         print('You must provide a checkpoint to evaluate data')
         exit()
+
+    multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(
+        load_from_chkpt)
+    conv_defs = _CONV_DEFS[conv_def_num]
 
     eval(dir_raw_record=dir_raw_record,
          batch_size=batch_size,

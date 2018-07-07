@@ -1,7 +1,8 @@
 import numpy as np
 import tensorflow as tf
 from initialize import _DATA_PATH, _MODEL_CMPR_PATH
-import net_mobilenet_v1 as mob
+#import net_mobilenet_v1 as mob
+import build_net as bn
 from tensorflow.contrib import slim
 from data_utils import DataSet, Dataset_Raw_Provide, labels_list
 from conv_defs import _CONV_DEFS
@@ -9,13 +10,13 @@ import collections
 import sys
 from tensorflow.python.client import timeline
 
-class Resnet50:
+class Atrous_Conv_Network:
     def __init__(self, inputs, scope='ResNet50'):
         self.deconv_logits = None
         self.end_points = {}
         pass
 
-class MobileNet_V1:
+class Unet:
 
     final_endpoint_array = ['Conv2d_0', 'Conv2d_1', 'Conv2d_2',
                             'Conv2d_3', 'Conv2d_4', 'Conv2d_5',
@@ -35,21 +36,21 @@ class MobileNet_V1:
                  follow_up_convs = 0,
                  sep_convs = False,
                  depthsep_inter_norm_activn = True,
-                 scope='MobileNet_V1',
+                 scope='Unet',
                  reuse=None):
         f_endpoint = len(conv_defs) - 1
-        final_endpoint = MobileNet_V1.final_endpoint_array[f_endpoint]
-        if isinstance(conv_defs[f_endpoint], mob.DepthSepConv):
+        final_endpoint = Unet.final_endpoint_array[f_endpoint]
+        if isinstance(conv_defs[f_endpoint], bn.DepthSepConv):
             final_endpoint = final_endpoint + '_pointwise'
 
-        with tf.variable_scope(scope, 'MobileNet_V1', [inputs, num_classes],
+        with tf.variable_scope(scope, 'Unet', [inputs, num_classes],
                                reuse=reuse) as scope:
             # set is_training=passed value for all the batch norm and drop out layers in the net
             with slim.arg_scope([slim.batch_norm, slim.dropout],
                                 is_training=is_training):
                 # set decay for batch_norm as 0.9 for all the batch norm layers in the net
                 with slim.arg_scope([slim.batch_norm], decay=0.9):
-                    net, end_points = mob.mobilenet_v1_base(inputs,
+                    net, end_points = bn.build_net(inputs,
                                                             final_endpoint=final_endpoint,
                                                             scope=scope,
                                                             min_depth=min_depth,
@@ -59,7 +60,7 @@ class MobileNet_V1:
                     end_points['Input'] =inputs
                     with tf.variable_scope('ImageLogits'):
                         # Add prediction layers
-                        deconv_logits, extra_endpoints = MobileNet_V1._get_deconvlogits_and_endpoints(net, deconv_size,
+                        deconv_logits, extra_endpoints = Unet._get_deconvlogits_and_endpoints(net, deconv_size,
                                                                                                       num_classes, dropout_keep_prob,
                                                                                                       f_endpoint, end_points, is_training,
                                                                                                       conv_defs, multi_deconv=multi_deconv,
@@ -75,6 +76,8 @@ class MobileNet_V1:
         self.end_points = end_points
 
     def loss(self, labels, loss_func = tf.nn.sparse_softmax_cross_entropy_with_logits):
+
+        #TODO: Investigate the possibility of using Jaccard Index too - https://arxiv.org/pdf/1705.08790.pdf
 
         loss = loss_func(labels=labels, logits=self.deconv_logits)
         #print('loss shape: ', loss)
@@ -116,7 +119,7 @@ class MobileNet_V1:
                                         is_training, conv_defs, multi_deconv=1, follow_up_convs = 0, sep_convs = False,
                                         depthsep_inter_norm_activn=True):
         """
-        Add prediction layers on top of MobileNet_V1
+        Add prediction layers on top of the Network
         :param net: Pass the base net
         :param deconv_size: Size of the original image
         :param num_classes: Number of classes
@@ -134,7 +137,7 @@ class MobileNet_V1:
 
         if not multi_deconv:
 
-            kernel_size = MobileNet_V1._reduced_kernel_size_for_small_input(net, [7, 7])
+            kernel_size = Unet._reduced_kernel_size_for_small_input(net, [7, 7])
             net = slim.avg_pool2d(net, kernel_size, padding='VALID',
                                   scope='AvgPool_1a')
             end_points['AvgPool_1a'] = net
@@ -161,8 +164,8 @@ class MobileNet_V1:
                     corr_ep_text ='Input'
                     num_out_filt = num_classes
                 else:
-                    corr_ep_text = MobileNet_V1.final_endpoint_array[i-1]
-                    if isinstance(conv_defs[i-1], mob.DepthSepConv):
+                    corr_ep_text = Unet.final_endpoint_array[i-1]
+                    if isinstance(conv_defs[i-1], bn.DepthSepConv):
                         corr_ep_text = corr_ep_text + '_pointwise'
                     num_out_filt = int(conv_def.depth / 2)
                 corr_shape = conv_endpoints[corr_ep_text].shape
@@ -257,18 +260,20 @@ class MobileNet_V1:
         return kernel_size_out
 
 class SegmentationNetwork:
-    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='MobileNet_V1',
-                 is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=1, mob_depth_multiplier=1, follow_up_convs = 0, sep_convs = False, depthsep_inter_norm_activn=True):
+    def __init__(self, inputs, image_size, num_classes=11,  scope='SegmentationNet', base_net_name='Unet',
+                 is_training = True, dropout_keep_prob=0.999, conv_defs=None, multi_deconv=1, mob_depth_multiplier=1,
+                 follow_up_convs = 0, sep_convs = False, depthsep_inter_norm_activn=True):
 
         #print('follow_up_convs: ', follow_up_convs)
-        if(base_net_name == 'MobileNet_V1'):
-            net_class = MobileNet_V1(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training,
-                                     dropout_keep_prob=dropout_keep_prob, conv_defs=conv_defs, multi_deconv=multi_deconv,
-                                     depth_multiplier=mob_depth_multiplier, follow_up_convs = follow_up_convs, sep_convs = sep_convs, depthsep_inter_norm_activn=depthsep_inter_norm_activn)
-        elif(base_net_name == 'ResNet50'):
-            net_class = Resnet50(inputs, scope=scope)
+        if(base_net_name == 'Unet'):
+            net_class = Unet(inputs, image_size, num_classes=num_classes, scope=scope, is_training=is_training,
+                             dropout_keep_prob=dropout_keep_prob, conv_defs=conv_defs, multi_deconv=multi_deconv,
+                             depth_multiplier=mob_depth_multiplier, follow_up_convs = follow_up_convs, sep_convs = sep_convs,
+                             depthsep_inter_norm_activn=depthsep_inter_norm_activn)
+        elif(base_net_name == 'Atrous_Conv_Network'):
+            net_class = Atrous_Conv_Network(inputs, scope=scope)
         else:
-            raise ValueError('You must choose from ''MobileNet_V1'' or ''ResNet50''')
+            raise ValueError('You must choose from ''Unet'' or ''Atrous_Conv_Network''')
 
         self.net_class = net_class
 

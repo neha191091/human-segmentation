@@ -200,6 +200,7 @@ if __name__ == '__main__':
     num_epochs = 1
     save_prediction_interval = 10
     override_tfrecords = ['test_0']
+
     #load_from_chkpt = _CHKPT_PATH + '2017_09_25_06_36_checkpoint-1.ckpt'#'2018_03_31_23_58_checkpoint-1.ckpt'
 
     #load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
@@ -209,21 +210,14 @@ if __name__ == '__main__':
     #load_from_chkpt = _CHKPT_PATH + '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
     load_from_chkpt = _CHKPT_PATH + '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
 
-    multi_deconv = 1
-    mob_f_ep = 9
-    mob_depth_multiplier = 0.75
-    conv_defs = _CONV_DEFS[1]
-    data_dims_from_ckpt = None
-    follow_up_convs = 0
-    sep_convs = False
-    depthsep_inter_norm_activn = True
 
-    if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
-        conv_defs = _CONV_DEFS[conv_def_num]
-    else:
+    if not load_from_chkpt:
         print('You must provide a checkpoint to evaluate data')
         exit()
+
+    multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(
+        load_from_chkpt)
+    conv_defs = _CONV_DEFS[conv_def_num]
 
     print('start eval')
 

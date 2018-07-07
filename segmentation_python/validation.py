@@ -201,25 +201,21 @@ if __name__ == '__main__':
     #chkpt = '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
     #chkpt = '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
     load_from_chkpt = _CHKPT_PATH + chkpt
-    multi_deconv = 1
-    mob_f_ep = 9
-    mob_depth_multiplier = 0.75
-    conv_defs = _CONV_DEFS[1]
-    data_dims_from_ckpt = None
-    follow_up_convs = 0
-    sep_convs = False
-    depthsep_inter_norm_activn = True
 
-    if load_from_chkpt:
-        multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
-        conv_defs = _CONV_DEFS[conv_def_num]
-    else:
+    if not load_from_chkpt:
         print('You must provide a checkpoint to evaluate data')
         exit()
+
+
+    multi_deconv, conv_def_num, mob_depth_multiplier, data_dims_from_ckpt, follow_up_convs, sep_convs, depthsep_inter_norm_activn = utils.get_model_details_from_chkpt_path(load_from_chkpt)
+    conv_defs = _CONV_DEFS[conv_def_num]
+
 
     print('start eval')
 
     chkpt_iter = 0
+    chkpt_max = 40000
+    chkpt_step = 10000
 
     loss_array = []
     IOU_array = []
@@ -227,7 +223,7 @@ if __name__ == '__main__':
 
     timestamp = utils.get_timestamp()
 
-    while(chkpt_iter < 40001):
+    while(chkpt_iter < chkpt_max+1):
 
         tf.reset_default_graph()
 
@@ -250,7 +246,7 @@ if __name__ == '__main__':
         IOU_array.append(IOU_val)
         acc_array.append(acc_val)
 
-        chkpt_iter += 10000
+        chkpt_iter += chkpt_step
 
     tf.reset_default_graph()
 

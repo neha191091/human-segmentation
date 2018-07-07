@@ -1,4 +1,4 @@
-from net_mobilenet_v1 import Conv, DepthSepConv
+from build_net import Conv, DepthSepConv
 
 _CONV_DEFS = [[
                 # 0: Original Mobilenet_V1
