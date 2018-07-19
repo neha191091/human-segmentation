@@ -4,7 +4,7 @@ from segmentation_python.data_utils import DataSet
 from segmentation_python.net_main import SegmentationNetwork
 import time
 import segmentation_python.utils as utils
-from segmentation_python.initialize import _RESULT_PATH
+from segmentation_python.initialize import _RESULT_PATH, _CHKPT_PATH
 import os
 import math
 from tensorflow.python.tools import freeze_graph
@@ -206,17 +206,30 @@ if __name__ == '__main__':
     batch_size = 1
     num_epochs = 1
     #override_tfrecords = ['/home/neha/Documents/repo/segmentation/segmentation_python/data/data_single_model_by_4/TfRecordFile_train_0.tfrecords']
-    chkpt = '/home/neha/Documents/repo/segmentation/segmentation_python/chkpt/2017_09_25_06_36_checkpoint-1.ckpt'
+    #chkpt = '/home/neha/Documents/repo/segmentation/segmentation_python/chkpt/2017_09_25_06_36_checkpoint-1.ckpt'
 
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_14_09_12_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_5_followup_2_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_20_22_22_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_2_convdef_5_followup_1_sepconv_0_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_26_05_53_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_21_01_52_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_1_mobdepth=1
+    #load_from_chkpt = _CHKPT_PATH + '2018_06_25_20_18_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_1_convdef_6_followup_2_sepconv_1_intermediateActvnNorm_0_mobdepth=1
+    load_from_chkpt = _CHKPT_PATH + '2018_06_25_06_56_checkpoint-1.ckpt'  # batch_50_trainedon_300-CORRECTED_multideconv_3_convdef_6_followup_1_sepconv_1_intermediateActvnNorm_0_mobdepth=1
 
-    dir = '/home/neha/Documents/repo/segmentation/segmentation_python/SaveFiles'
-    output_graph_path = dir + '/Frozen_Graph.pb'
+    dir = '/home/neha/Documents/repo/segmentation/segmentation_python/SaveFiles/'
+    #frozen_graph_name = 'unet_transposed'
+    #frozen_graph_name = 'unet_resized'
+    #frozen_graph_name = 'unet_depthSep_transposed'
+    #frozen_graph_name = 'unet_depthSep_resized'
+    #frozen_graph_name = 'unet_depthSep_transposed_noLayers'
+    frozen_graph_name = 'unet_depthSep_resized_noLayers'
+
+    output_graph_path = dir + frozen_graph_name + '.pb'
 
     #TODO: Uncomment when you want to freeze the graph
-    #input_graph_path = save_input_graph(dataset=dataset, input_graph_dir=dir, load_from_chkpt = chkpt)
-    #freeze_pred(input_graph_path,output_graph_path,chkpt)
+    input_graph_path = save_input_graph(input_graph_dir=dir, load_from_chkpt = load_from_chkpt)
+    freeze_pred(input_graph_path,output_graph_path,load_from_chkpt)
 
-    run_graph(dir_record,output_graph_path,chkpt)
+    #run_graph(dir_record,output_graph_path,chkpt)
 
 
 
