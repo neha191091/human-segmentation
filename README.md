@@ -4,9 +4,10 @@ Segmentation Training
 This project segments human body parts from depth models. For further information, read [Semantic_Segmentation_IDP_Report](segmentation_python/Documents/Semantic_Segmentation_IDP_Report.pdf).  
 This project obtains and preprocess the training data, trains the segmentation graph, and freezes the graph to a protobuf file for later inference in C++.
 
-Features
+Features/Prerequisites
 --------
 * **Data Gathering** - Done using scans derived from CAESAR dataset (https://graphics.soe.ucsc.edu/data/BodyModels/), coloring script 'color_all_registered_meshes' and blender scripts 'blender_scripts_render_plys'
+* **Preprocessing** - make sure to preprocess the data before initiating training/evaluation (FixDepthImages)
 * **Preprocessing** - make sure to preprocess the data before initiating training/evaluation (FixDepthImages)
 * **Model Definition** - 6 models have been defined in total (see segmentation_python/net_main.py), using various different parameters set during training - 
     * **multi_deconv** - defines the kind of upampling operation for deconvolution - 1 - transposed, 2 - resize + convolution, 3 - resize + depthwise convolution, None
