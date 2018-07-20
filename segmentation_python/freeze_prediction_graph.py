@@ -1,15 +1,15 @@
 import numpy as np
 import tensorflow as tf
-from segmentation_python.data_utils import DataSet
-from segmentation_python.net_main import SegmentationNetwork
+from data_utils import DataSet
+from net_main import SegmentationNetwork
 import time
-import segmentation_python.utils as utils
-from segmentation_python.initialize import _RESULT_PATH, _CHKPT_PATH
+import utils as utils
+from initialize import _RESULT_PATH, _CHKPT_PATH
 import os
 import math
 from tensorflow.python.tools import freeze_graph
-from segmentation_python.data_utils import Dataset_Raw_Provide, Dataset_Input_for_Prediction_Provide
-from segmentation_python.conv_defs import _CONV_DEFS
+from data_utils import Dataset_Raw_Provide, Dataset_Input_for_Prediction_Provide
+from conv_defs import _CONV_DEFS
 
 '''
 Tools to freeze the network graph with trained weights so that it can be loaded without 
