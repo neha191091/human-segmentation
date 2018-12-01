@@ -3,12 +3,15 @@ Segmentation Training
 
 This project is a consequence of an internal course requirement during my masters. Its goal is to segment human body parts from depth images. I compared my results on several different U-Net based models, with particular focus on high speed and accuracy.  
   
-This project obtains and preprocess the training data, trains the segmentation graph, and freezes the graph to a protobuf file for later inference in C++.
+This project obtains and preprocess the training data, trains the segmentation graph, and freezes the graph to a protobuf file for later inference in C++. 
+
+Further development of this work (not included in this repository) focused on combining the segmented depth maps using KinectFusion to provide a segmented 3D point cloud/mesh. 
+
+For further information and references, please read [Semantic_Segmentation_IDP_Report](segmentation_python/Documents/Semantic_Segmentation_IDP_Report.pdf).  
 
 Features/Prerequisites
 --------
 * **Data Gathering** - Done using scans derived from CAESAR dataset (https://graphics.soe.ucsc.edu/data/BodyModels/), coloring script 'color_all_registered_meshes' and blender scripts 'blender_scripts_render_plys'
-* **Preprocessing** - make sure to preprocess the data before initiating training/evaluation (FixDepthImages)
 * **Preprocessing** - make sure to preprocess the data before initiating training/evaluation (FixDepthImages)
 * **Model Definition** - 6 models have been defined in total (see [net_main.py](segmentation_python/net_main.py)), using various different parameters set during training - 
     * **multi_deconv** - defines the kind of upampling operation for deconvolution - 1 - transposed, 2 - resize + convolution, 3 - resize + depthwise convolution, None
