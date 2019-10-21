@@ -70,5 +70,5 @@ url==0.4.1
 urllib3==1.22
 urllib5==5.0.0
 wcwidth==0.1.7
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 widgetsnbextension==3.0.0
