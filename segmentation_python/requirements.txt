@@ -58,7 +58,7 @@ seaborn==0.8
 simplegeneric==0.8.1
 six==1.11.0
 tensorboard==1.7.0
-tensorflow==1.7.0
+tensorflow==2.5.1
 tensorflow-tensorboard==0.4.0rc2
 termcolor==1.1.0
 terminado==0.6
